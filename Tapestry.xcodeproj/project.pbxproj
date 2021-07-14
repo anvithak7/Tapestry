@@ -19,6 +19,9 @@
 		9E430D49269C9C2B00C0B571 /* TapestryUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D48269C9C2B00C0B571 /* TapestryUITests.m */; };
 		9E430D59269E136900C0B571 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9E430D58269E136900C0B571 /* Keys.plist */; };
 		9E430D5C269E164D00C0B571 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D5B269E164D00C0B571 /* LoginViewController.m */; };
+		9E430D5F269E3A3F00C0B571 /* ComposeStoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D5E269E3A3F00C0B571 /* ComposeStoryViewController.m */; };
+		9E430D62269E3CC100C0B571 /* AddGroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D61269E3CC100C0B571 /* AddGroupsViewController.m */; };
+		9E430D65269F3D0100C0B571 /* NewUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D64269F3D0100C0B571 /* NewUserViewController.m */; };
 		BAC26881E50874E261006A77 /* Pods_Tapestry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CED42AE8DCC4FEDB9E95E72 /* Pods_Tapestry.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +69,12 @@
 		9E430D58269E136900C0B571 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		9E430D5A269E164D00C0B571 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		9E430D5B269E164D00C0B571 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		9E430D5D269E3A3F00C0B571 /* ComposeStoryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeStoryViewController.h; sourceTree = "<group>"; };
+		9E430D5E269E3A3F00C0B571 /* ComposeStoryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeStoryViewController.m; sourceTree = "<group>"; };
+		9E430D60269E3CC100C0B571 /* AddGroupsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddGroupsViewController.h; sourceTree = "<group>"; };
+		9E430D61269E3CC100C0B571 /* AddGroupsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddGroupsViewController.m; sourceTree = "<group>"; };
+		9E430D63269F3D0100C0B571 /* NewUserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewUserViewController.h; sourceTree = "<group>"; };
+		9E430D64269F3D0100C0B571 /* NewUserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewUserViewController.m; sourceTree = "<group>"; };
 		A3EA13843EC42B98569A41AE /* Pods_TapestryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TapestryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D85BF7482663768E2DA14120 /* Pods-Tapestry-TapestryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tapestry-TapestryUITests.release.xcconfig"; path = "Target Support Files/Pods-Tapestry-TapestryUITests/Pods-Tapestry-TapestryUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -175,6 +184,12 @@
 			children = (
 				9E430D5A269E164D00C0B571 /* LoginViewController.h */,
 				9E430D5B269E164D00C0B571 /* LoginViewController.m */,
+				9E430D5D269E3A3F00C0B571 /* ComposeStoryViewController.h */,
+				9E430D5E269E3A3F00C0B571 /* ComposeStoryViewController.m */,
+				9E430D60269E3CC100C0B571 /* AddGroupsViewController.h */,
+				9E430D61269E3CC100C0B571 /* AddGroupsViewController.m */,
+				9E430D63269F3D0100C0B571 /* NewUserViewController.h */,
+				9E430D64269F3D0100C0B571 /* NewUserViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -434,10 +449,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E430D62269E3CC100C0B571 /* AddGroupsViewController.m in Sources */,
 				9E430D5C269E164D00C0B571 /* LoginViewController.m in Sources */,
 				9E430D23269C9C2A00C0B571 /* AppDelegate.m in Sources */,
 				9E430D34269C9C2A00C0B571 /* main.m in Sources */,
 				9E430D26269C9C2A00C0B571 /* SceneDelegate.m in Sources */,
+				9E430D5F269E3A3F00C0B571 /* ComposeStoryViewController.m in Sources */,
+				9E430D65269F3D0100C0B571 /* NewUserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

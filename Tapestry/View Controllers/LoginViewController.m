@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *signUpButton;
 
 @end
 
@@ -33,10 +34,14 @@
                 [self createAlert:@"Unable to login. Please check your credentials or your internet connection and try again!" error:@"Login Failed"];
             } else {
                 NSLog(@"User registered successfully");
-                [self performSegueWithIdentifier:@"LogInToFeed" sender:nil]; // Manually segue to logged in view
+                [self performSegueWithIdentifier:@"LoginToHome" sender:nil]; // Manually segue to logged in view
             }
         }];
     }
+}
+
+- (IBAction)onTapSignUp:(id)sender {
+    [self performSegueWithIdentifier:@"LoginToSignUp" sender:nil];
 }
 
 - (IBAction)onTapAnywhere:(id)sender {
