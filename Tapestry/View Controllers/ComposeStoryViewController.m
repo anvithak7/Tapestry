@@ -6,6 +6,9 @@
 //
 
 #import "ComposeStoryViewController.h"
+#import "LoginViewController.h"
+#import "SceneDelegate.h"
+#import "Parse/Parse.h"
 
 @interface ComposeStoryViewController () <UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *storyTextView;
@@ -48,6 +51,17 @@
 - (IBAction)onTapAddGroups:(id)sender {
     
 }
+- (IBAction)onTapLogout:(id)sender {
+    SceneDelegate *myDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    myDelegate.window.rootViewController = loginViewController;
+    [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+        // PFUser.current() will now be nil
+    }];
+}
+
+
 
 /*
 #pragma mark - Navigation
