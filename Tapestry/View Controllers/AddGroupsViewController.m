@@ -58,9 +58,9 @@
     if (!self.createGroupShow) {
         [UIView animateWithDuration:0.2 animations:^{
             CGRect joinButtonFrame = self.joinGroupButton.frame;
-            joinButtonFrame.origin.y += 300;
+            joinButtonFrame.origin.y += 136;
             CGRect joinViewFrame = self.joinGroupView.frame;
-            joinViewFrame.origin.y += 300;
+            joinViewFrame.origin.y += 136;
             self.joinGroupButton.frame = joinButtonFrame;
             self.joinGroupView.frame = joinViewFrame;
             self.createNewView.alpha = 1;
@@ -71,9 +71,9 @@
     } else if (self.createGroupShow) {
         [UIView animateWithDuration:0.2 animations:^{
             CGRect joinButtonFrame = self.joinGroupButton.frame;
-            joinButtonFrame.origin.y -= 300;
+            joinButtonFrame.origin.y -= 136;
             CGRect joinViewFrame = self.joinGroupView.frame;
-            joinViewFrame.origin.y -= 300;
+            joinViewFrame.origin.y -= 136;
             self.joinGroupButton.frame = joinButtonFrame;
             self.joinGroupView.frame = joinViewFrame;
             self.createNewView.alpha = 0;
@@ -92,9 +92,9 @@
     if (self.joinMoved) {
         [UIView animateWithDuration:0.2 animations:^{
             CGRect joinButtonFrame = self.joinGroupButton.frame;
-            joinButtonFrame.origin.y -= 300;
+            joinButtonFrame.origin.y -= 136;
             CGRect joinViewFrame = self.joinGroupView.frame;
-            joinViewFrame.origin.y -= 300;
+            joinViewFrame.origin.y -= 136;
             self.joinGroupButton.frame = joinButtonFrame;
             self.joinGroupView.frame = joinViewFrame;
             self.joinMoved = NO;
@@ -133,35 +133,40 @@
 }
 
 - (IBAction)joinGroup:(id)sender {
-    PFQuery *query = [PFQuery queryWithClassName:@"Group"];
-    [query whereKey:@"groupInviteCode" equalTo:self.inviteCodeEntryField.text];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *group, NSError *error) {
-        if (error != nil) {
-            [self createAlert:@"Unable to join tapestry. Please check your internet connection and try again!" error:@"Unable to Join Tapestry"];
-            NSLog(@"Error: %@", error.localizedDescription);
-        } else {
-            Group *groupToJoin = group[0];
-            NSLog(@"%@", groupToJoin);
-            [groupToJoin fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-                if (error) {
-                    NSLog(@"Error: %@", error.localizedDescription);
-                } else {
-                    NSLog(@"Members array!!!!! : %@", groupToJoin[@"membersArray"]);
-                    [groupToJoin addUniqueObject:PFUser.currentUser forKey:@"membersArray"];
-                    [PFUser.currentUser addObject:groupToJoin forKey:@"groups"];
-                    [PFObject saveAllInBackground:@[groupToJoin, PFUser.currentUser] block:^(BOOL succeeded, NSError * _Nullable error) {
-                        if (succeeded) {
-                            NSLog(@"Current user groups %@", PFUser.currentUser[@"groups"]);
-                            NSLog(@"%@", groupToJoin.membersArray);
-                            self.doneJoining.alpha = 1;
-                        } else {
-                            NSLog(@"Error: %@", error.localizedDescription);
-                        }
-                    }];
-                }
-            }];
-        }
-    }];
+    if ([self.inviteCodeEntryField hasText]) {
+        PFQuery *query = [PFQuery queryWithClassName:@"Group"];
+        [query whereKey:@"groupInviteCode" equalTo:self.inviteCodeEntryField.text];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *group, NSError *error) {
+            if (error != nil) {
+                [self createAlert:@"Unable to join tapestry. Please check your internet connection and try again!" error:@"Unable to Join Tapestry"];
+                NSLog(@"Error: %@", error.localizedDescription);
+            } else {
+                Group *groupToJoin = group[0];
+                NSLog(@"%@", groupToJoin);
+                [groupToJoin fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                    if (error) {
+                        NSLog(@"Error: %@", error.localizedDescription);
+                    } else {
+                        NSLog(@"Members array!!!!! : %@", groupToJoin[@"membersArray"]);
+                        [groupToJoin addUniqueObject:PFUser.currentUser forKey:@"membersArray"];
+                        [PFUser.currentUser addObject:groupToJoin forKey:@"groups"];
+                        [PFObject saveAllInBackground:@[groupToJoin, PFUser.currentUser] block:^(BOOL succeeded, NSError * _Nullable error) {
+                            if (succeeded) {
+                                NSLog(@"Current user groups %@", PFUser.currentUser[@"groups"]);
+                                NSLog(@"%@", groupToJoin.membersArray);
+                                self.doneJoining.alpha = 1;
+                            } else {
+                                NSLog(@"Error: %@", error.localizedDescription);
+                            }
+                        }];
+                    }
+                }];
+            }
+        }];
+    }
+    else {
+        [self createAlert:@"Please input a valid tapestry invite code and try again!" error:@"Unable to Join Tapestry"];
+    }
 }
 
 - (IBAction)onTapDone:(id)sender {

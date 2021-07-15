@@ -234,10 +234,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="auR-Cj-ujW">
-                                <rect key="frame" x="153" y="433" width="109" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="auR-Cj-ujW">
+                                <rect key="frame" x="107" y="443" width="200" height="30"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="R6e-87-Sqx"/>
+                                    <constraint firstAttribute="height" constant="30" id="sNH-XW-65c"/>
+                                </constraints>
                                 <state key="normal" title="Join a Tapestry!">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -250,119 +253,14 @@
                                     <action selector="onTapJoin:" destination="DVJ-kQ-JQM" eventType="touchUpInside" id="8Ao-aO-1ul"/>
                                 </connections>
                             </button>
-                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cCz-2y-u3g">
-                                <rect key="frame" x="38" y="375" width="356" height="208"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Group Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UxE-ab-dt2">
-                                        <rect key="frame" x="20" y="20" width="316" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="groupNameEditingChanged:" destination="DVJ-kQ-JQM" eventType="editingChanged" id="okW-DE-mue"/>
-                                        </connections>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rqo-hO-MU1">
-                                        <rect key="frame" x="20" y="62" width="55" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.7679741382598877" green="0.89096498489379883" blue="0.94017153978347778" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Just Me">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RgC-QL-A89">
-                                        <rect key="frame" x="95" y="62" width="51" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.96434926652048303" green="1" blue="0.71523847344258917" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" title="Friends">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z3p-LA-O6u">
-                                        <rect key="frame" x="161" y="62" width="44" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.8900753498296915" green="1" blue="0.76938274896221026" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" title="Family">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NhX-Eh-mI7">
-                                        <rect key="frame" x="20" y="100" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Create"/>
-                                        <connections>
-                                            <action selector="instantiateGroup:" destination="DVJ-kQ-JQM" eventType="touchUpInside" id="gBI-M7-HuX"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your Group's Invite Code:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OYc-tF-oKa">
-                                        <rect key="frame" x="20" y="138" width="194" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Press create to generate an invite code!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4l-pA-acX">
-                                        <rect key="frame" x="20" y="167" width="328" height="16"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" fixedFrame="YES" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="N62-bj-0ce">
-                                        <rect key="frame" x="77" y="106" width="20" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.57802763413623004" green="0.725328079377762" blue="0.28087201205534673" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
-                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cok-In-hKO">
-                                <rect key="frame" x="61" y="471" width="292" height="112"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Paste in your invite code here!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DMd-AT-Ek6">
-                                        <rect key="frame" x="20" y="20" width="252" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ugj-38-mjN">
-                                        <rect key="frame" x="27" y="62" width="33" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Join!"/>
-                                        <connections>
-                                            <action selector="joinGroup:" destination="DVJ-kQ-JQM" eventType="touchUpInside" id="0Pl-I6-dCq"/>
-                                        </connections>
-                                    </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" fixedFrame="YES" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Hiz-8i-hvq">
-                                        <rect key="frame" x="66" y="68" width="20" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.57802763410000002" green="0.72532807939999999" blue="0.28087201210000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gSE-R8-Fhp">
-                                <rect key="frame" x="138" y="337" width="156" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gSE-R8-Fhp">
+                                <rect key="frame" x="107" y="333" width="200" height="30"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                <state key="normal" title="Create a New Tapestry">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="4V1-5Z-6Dr"/>
+                                    <constraint firstAttribute="width" constant="200" id="lqo-2y-2Hf"/>
+                                </constraints>
+                                <state key="normal" title="Create a New Tapestry!">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -374,10 +272,188 @@
                                     <action selector="onTapCreate:" destination="DVJ-kQ-JQM" eventType="touchUpInside" id="usZ-4t-wn5"/>
                                 </connections>
                             </button>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cCz-2y-u3g">
+                                <rect key="frame" x="8" y="371" width="398" height="120"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Group Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UxE-ab-dt2">
+                                        <rect key="frame" x="8" y="8" width="382" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="groupNameEditingChanged:" destination="DVJ-kQ-JQM" eventType="editingChanged" id="okW-DE-mue"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rqo-hO-MU1">
+                                        <rect key="frame" x="8" y="58" width="48" height="28"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="tintColor" red="0.7679741382598877" green="0.89096498489379883" blue="0.94017153978347778" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Just Me">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RgC-QL-A89">
+                                        <rect key="frame" x="72" y="58" width="45" height="28"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="tintColor" red="0.96434926652048303" green="1" blue="0.71523847344258917" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Friends">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z3p-LA-O6u">
+                                        <rect key="frame" x="133" y="58" width="39" height="28"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="tintColor" red="0.8900753498296915" green="1" blue="0.76938274896221026" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Family">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Group's Invite Code:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OYc-tF-oKa">
+                                        <rect key="frame" x="8" y="148" width="382" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Press create to generate an invite code!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4l-pA-acX">
+                                        <rect key="frame" x="8" y="172" width="256.5" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="N62-bj-0ce">
+                                        <rect key="frame" x="104" y="102.5" width="30" height="29"/>
+                                        <color key="tintColor" red="0.57802763413623004" green="0.725328079377762" blue="0.28087201205534673" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="BjI-jF-3dQ"/>
+                                            <constraint firstAttribute="width" constant="30" id="Geq-fU-7hy"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NhX-Eh-mI7">
+                                        <rect key="frame" x="8" y="102" width="80" height="30"/>
+                                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="oRn-a4-oF4"/>
+                                            <constraint firstAttribute="height" constant="30" id="szr-e3-gba"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <state key="normal" title="Create!">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="instantiateGroup:" destination="DVJ-kQ-JQM" eventType="touchUpInside" id="gBI-M7-HuX"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="rqo-hO-MU1" firstAttribute="leading" secondItem="UxE-ab-dt2" secondAttribute="leading" id="1Wt-pi-Dhb"/>
+                                    <constraint firstAttribute="trailing" secondItem="OYc-tF-oKa" secondAttribute="trailing" constant="8" id="2Dg-hh-pdu"/>
+                                    <constraint firstItem="Z3p-LA-O6u" firstAttribute="bottom" secondItem="rqo-hO-MU1" secondAttribute="bottom" id="2bd-2D-pZ7"/>
+                                    <constraint firstItem="Z3p-LA-O6u" firstAttribute="leading" secondItem="RgC-QL-A89" secondAttribute="trailing" constant="16" id="2sJ-O2-lNx"/>
+                                    <constraint firstItem="OYc-tF-oKa" firstAttribute="leading" secondItem="NhX-Eh-mI7" secondAttribute="leading" id="CFi-yo-9Xt"/>
+                                    <constraint firstItem="NhX-Eh-mI7" firstAttribute="leading" secondItem="UxE-ab-dt2" secondAttribute="leading" id="HbG-wI-MGH"/>
+                                    <constraint firstItem="RgC-QL-A89" firstAttribute="leading" secondItem="rqo-hO-MU1" secondAttribute="trailing" constant="16" id="Mkv-fq-oxc"/>
+                                    <constraint firstAttribute="trailing" secondItem="UxE-ab-dt2" secondAttribute="trailing" constant="8" id="NUO-AE-7Ta"/>
+                                    <constraint firstItem="UxE-ab-dt2" firstAttribute="top" secondItem="cCz-2y-u3g" secondAttribute="top" constant="8" id="QZ8-UH-qfO"/>
+                                    <constraint firstItem="z4l-pA-acX" firstAttribute="top" secondItem="OYc-tF-oKa" secondAttribute="bottom" constant="8" id="Sj7-bb-Bj3"/>
+                                    <constraint firstItem="N62-bj-0ce" firstAttribute="top" secondItem="NhX-Eh-mI7" secondAttribute="top" id="TcD-Wg-09E"/>
+                                    <constraint firstItem="UxE-ab-dt2" firstAttribute="leading" secondItem="cCz-2y-u3g" secondAttribute="leading" constant="8" id="UyJ-Pf-PrI"/>
+                                    <constraint firstItem="N62-bj-0ce" firstAttribute="bottom" secondItem="NhX-Eh-mI7" secondAttribute="bottom" id="X6m-AZ-SZG"/>
+                                    <constraint firstItem="rqo-hO-MU1" firstAttribute="top" secondItem="UxE-ab-dt2" secondAttribute="bottom" constant="16" id="boT-t2-at8"/>
+                                    <constraint firstItem="RgC-QL-A89" firstAttribute="bottom" secondItem="rqo-hO-MU1" secondAttribute="bottom" id="dlj-mm-mJ5"/>
+                                    <constraint firstItem="RgC-QL-A89" firstAttribute="top" secondItem="rqo-hO-MU1" secondAttribute="top" id="en2-zJ-glE"/>
+                                    <constraint firstItem="N62-bj-0ce" firstAttribute="leading" secondItem="NhX-Eh-mI7" secondAttribute="trailing" constant="16" id="fPr-fu-cHL"/>
+                                    <constraint firstAttribute="height" constant="120" id="kU1-df-PHH"/>
+                                    <constraint firstItem="z4l-pA-acX" firstAttribute="leading" secondItem="OYc-tF-oKa" secondAttribute="leading" id="meX-iU-fhg"/>
+                                    <constraint firstItem="NhX-Eh-mI7" firstAttribute="top" secondItem="rqo-hO-MU1" secondAttribute="bottom" constant="16" id="ojr-LF-4LM"/>
+                                    <constraint firstItem="Z3p-LA-O6u" firstAttribute="top" secondItem="rqo-hO-MU1" secondAttribute="top" id="qSR-1y-QSf"/>
+                                    <constraint firstItem="OYc-tF-oKa" firstAttribute="top" secondItem="NhX-Eh-mI7" secondAttribute="bottom" constant="16" id="xXR-FP-q94"/>
+                                </constraints>
+                            </view>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cok-In-hKO">
+                                <rect key="frame" x="8" y="481" width="398" height="100"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Paste in your invite code here!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DMd-AT-Ek6">
+                                        <rect key="frame" x="8" y="8" width="382" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ugj-38-mjN">
+                                        <rect key="frame" x="8" y="58" width="80" height="30"/>
+                                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Hu1-Ff-PSO"/>
+                                            <constraint firstAttribute="width" constant="80" id="xTy-GW-Ez5"/>
+                                        </constraints>
+                                        <state key="normal" title="Join!">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="joinGroup:" destination="DVJ-kQ-JQM" eventType="touchUpInside" id="0Pl-I6-dCq"/>
+                                        </connections>
+                                    </button>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Hiz-8i-hvq">
+                                        <rect key="frame" x="104" y="58.5" width="30" height="29"/>
+                                        <color key="tintColor" red="0.57802763410000002" green="0.72532807939999999" blue="0.28087201210000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="4XX-cO-ml1"/>
+                                            <constraint firstAttribute="width" constant="30" id="Thw-vJ-RGk"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="Hiz-8i-hvq" firstAttribute="bottom" secondItem="ugj-38-mjN" secondAttribute="bottom" id="527-1a-UFi"/>
+                                    <constraint firstItem="ugj-38-mjN" firstAttribute="top" secondItem="DMd-AT-Ek6" secondAttribute="bottom" constant="16" id="EcF-G5-zoY"/>
+                                    <constraint firstItem="Hiz-8i-hvq" firstAttribute="leading" secondItem="ugj-38-mjN" secondAttribute="trailing" constant="16" id="FQf-LL-Vup"/>
+                                    <constraint firstAttribute="trailing" secondItem="DMd-AT-Ek6" secondAttribute="trailing" constant="8" id="Keb-Q9-y4X"/>
+                                    <constraint firstItem="DMd-AT-Ek6" firstAttribute="leading" secondItem="Cok-In-hKO" secondAttribute="leading" constant="8" id="RmK-nr-lre"/>
+                                    <constraint firstItem="Hiz-8i-hvq" firstAttribute="top" secondItem="ugj-38-mjN" secondAttribute="top" id="dzq-iQ-qbr"/>
+                                    <constraint firstAttribute="height" constant="100" id="fbr-PR-6u2"/>
+                                    <constraint firstItem="DMd-AT-Ek6" firstAttribute="top" secondItem="Cok-In-hKO" secondAttribute="top" constant="8" id="fzm-d7-GNf"/>
+                                    <constraint firstItem="ugj-38-mjN" firstAttribute="leading" secondItem="DMd-AT-Ek6" secondAttribute="leading" id="gYT-He-b20"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ydU-bQ-oKj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="ydU-bQ-oKj" firstAttribute="trailing" secondItem="Cok-In-hKO" secondAttribute="trailing" constant="8" id="85J-dK-S6z"/>
+                            <constraint firstItem="ydU-bQ-oKj" firstAttribute="trailing" secondItem="cCz-2y-u3g" secondAttribute="trailing" constant="8" id="Ivd-HY-fEp"/>
+                            <constraint firstItem="Cok-In-hKO" firstAttribute="leading" secondItem="ydU-bQ-oKj" secondAttribute="leading" constant="8" id="Qts-b0-gaa"/>
+                            <constraint firstItem="auR-Cj-ujW" firstAttribute="centerX" secondItem="OBI-uk-R7n" secondAttribute="centerX" id="dvj-0P-dz8"/>
+                            <constraint firstItem="cCz-2y-u3g" firstAttribute="top" secondItem="gSE-R8-Fhp" secondAttribute="bottom" constant="8" id="nj7-xm-Me0"/>
+                            <constraint firstItem="gSE-R8-Fhp" firstAttribute="centerY" secondItem="OBI-uk-R7n" secondAttribute="centerY" constant="-100" id="q4z-9Y-0ER"/>
+                            <constraint firstItem="gSE-R8-Fhp" firstAttribute="centerX" secondItem="OBI-uk-R7n" secondAttribute="centerX" id="rMT-4o-7w0"/>
+                            <constraint firstItem="auR-Cj-ujW" firstAttribute="top" secondItem="gSE-R8-Fhp" secondAttribute="bottom" constant="80" id="sQq-J6-EjC"/>
+                            <constraint firstItem="Cok-In-hKO" firstAttribute="top" secondItem="auR-Cj-ujW" secondAttribute="bottom" constant="8" id="yIs-3g-Qzo"/>
+                            <constraint firstItem="cCz-2y-u3g" firstAttribute="leading" secondItem="ydU-bQ-oKj" secondAttribute="leading" constant="8" id="ygT-zx-iyS"/>
+                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="y6L-Cc-Tsv" appends="YES" id="J7z-kb-Dto"/>
                         </connections>
