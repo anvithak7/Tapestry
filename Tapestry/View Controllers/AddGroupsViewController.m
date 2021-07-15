@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *doneJoining;
 @property (nonatomic) BOOL createGroupShow;
 @property (nonatomic) BOOL joinGroupShow;
+@property (nonatomic) BOOL joinMoved;
 
 @end
 
@@ -40,6 +41,7 @@
     self.doneJoining.alpha = 0;
     self.createGroupShow = NO;
     self.joinGroupShow = NO;
+    self.joinMoved = NO;
 }
 
 - (IBAction)onTapAnywhere:(id)sender {
@@ -48,22 +50,37 @@
 
 // When a user taps create, the necessary elements to create a group are opened up.
 - (IBAction)onTapCreate:(id)sender {
+    if (![self.groupName hasText]) {
+        self.doneCreating.alpha = 0;
+        self.inviteStringLabel.text = @"Press create to generate an invite code!";
+    }
+    self.joinGroupShow = NO;
     if (!self.createGroupShow) {
         [UIView animateWithDuration:0.2 animations:^{
-        CGRect joinButtonFrame = self.joinGroupButton.frame;
-        joinButtonFrame.origin.y += 400;
-        self.joinGroupButton.frame = joinButtonFrame;
-        self.createNewView.alpha = 1;
-        self.joinGroupView.alpha = 0;
+            CGRect joinButtonFrame = self.joinGroupButton.frame;
+            joinButtonFrame.origin.y += 300;
+            CGRect joinViewFrame = self.joinGroupView.frame;
+            joinViewFrame.origin.y += 300;
+            self.joinGroupButton.frame = joinButtonFrame;
+            self.joinGroupView.frame = joinViewFrame;
+            self.createNewView.alpha = 1;
+            self.joinGroupView.alpha = 0;
+            self.joinMoved = YES;
         }];
         self.createGroupShow = YES;
     } else if (self.createGroupShow) {
         [UIView animateWithDuration:0.2 animations:^{
             CGRect joinButtonFrame = self.joinGroupButton.frame;
-            joinButtonFrame.origin.y -= 400;
+            joinButtonFrame.origin.y -= 300;
+            CGRect joinViewFrame = self.joinGroupView.frame;
+            joinViewFrame.origin.y -= 300;
             self.joinGroupButton.frame = joinButtonFrame;
+            self.joinGroupView.frame = joinViewFrame;
             self.createNewView.alpha = 0;
             self.joinGroupView.alpha = 0;
+            if (self.joinMoved) {
+                self.joinMoved = NO;
+            }
         }];
         self.createGroupShow = NO;
     }
@@ -71,6 +88,18 @@
 
 // When a user taps join, the necessary elements to join a group are opened up.
 - (IBAction)onTapJoin:(id)sender {
+    self.createGroupShow = NO;
+    if (self.joinMoved) {
+        [UIView animateWithDuration:0.2 animations:^{
+            CGRect joinButtonFrame = self.joinGroupButton.frame;
+            joinButtonFrame.origin.y -= 300;
+            CGRect joinViewFrame = self.joinGroupView.frame;
+            joinViewFrame.origin.y -= 300;
+            self.joinGroupButton.frame = joinButtonFrame;
+            self.joinGroupView.frame = joinViewFrame;
+            self.joinMoved = NO;
+        }];
+    }
     if (!self.joinGroupShow) {
         [UIView animateWithDuration:0.2 animations:^{
             self.joinGroupView.alpha = 1;
@@ -84,6 +113,13 @@
         }];
         self.joinGroupShow = NO;
     }
+}
+
+- (IBAction)groupNameEditingChanged:(id)sender {
+    if (![self.groupName hasText]) {
+            self.doneCreating.alpha = 0;
+            self.inviteStringLabel.text = @"Press create to generate an invite code!";
+        }
 }
 
 - (IBAction)instantiateGroup:(id)sender {
