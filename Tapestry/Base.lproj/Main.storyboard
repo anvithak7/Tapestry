@@ -173,7 +173,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="How's it going?" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="V5A-Mf-nlG">
-                                <rect key="frame" x="39" y="271" width="336" height="260"/>
+                                <rect key="frame" x="39" y="121" width="336" height="260"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -185,11 +185,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dcY-0y-fw2">
-                                <rect key="frame" x="138" y="539" width="139" height="65"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Weave!"/>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Y1a-FF-F4k"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -206,14 +201,12 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="person.2.circle.fill" catalog="system" id="wQV-z5-9ee">
                             <connections>
-                                <action selector="onTapAddGroups:" destination="Vc6-90-iJR" id="2ZV-8W-YRZ"/>
                                 <segue destination="p06-BS-M5a" kind="show" id="YMg-SL-g0S"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addGroupsButton" destination="wQV-z5-9ee" id="pvg-kU-7YB"/>
-                        <outlet property="sendStoryButton" destination="dcY-0y-fw2" id="fI3-cU-Oae"/>
                         <outlet property="storyTextView" destination="V5A-Mf-nlG" id="5KV-KA-ggQ"/>
                     </connections>
                 </viewController>
@@ -281,6 +274,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <action selector="groupNameEditingChanged:" destination="DVJ-kQ-JQM" eventType="editingChanged" id="okW-DE-mue"/>
+                                            <action selector="groupNameEditingDidEnd:" destination="DVJ-kQ-JQM" eventType="editingDidEnd" id="Ffn-uh-wWF"/>
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rqo-hO-MU1">

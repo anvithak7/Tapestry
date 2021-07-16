@@ -8,7 +8,7 @@
 #import "AddGroupsViewController.h"
 #import "Group.h"
 
-@interface AddGroupsViewController ()
+@interface AddGroupsViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *createGroupButton;
 @property (weak, nonatomic) IBOutlet UIButton *joinGroupButton;
 @property (weak, nonatomic) IBOutlet UIView *createNewView;
@@ -120,6 +120,20 @@
             self.doneCreating.alpha = 0;
             self.inviteStringLabel.text = @"Press create to generate an invite code!";
         }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    // Prevent crashing undo bug – see note below.
+    if(range.length + range.location > self.groupName.text.length) {
+        return NO;
+    }
+    return self.groupName.text.length + (string.length - range.length) <= 50;
+}
+
+- (IBAction)groupNameEditingDidEnd:(id)sender {
+    if (self.groupName.text.length > 50) {
+        [self createAlert:@"Please choose a shorter tapestry name and try again!" error:@"Tapestry Name Exceeds 50 Characters"];
+    }
 }
 
 - (IBAction)instantiateGroup:(id)sender {
