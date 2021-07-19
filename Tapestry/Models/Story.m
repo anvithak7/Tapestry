@@ -29,7 +29,7 @@
     [newStory saveInBackgroundWithBlock: completion];
 } */
 
-+ (void) createStory:(NSString *)story withGroups:(NSMutableArray *)groups withImage:( UIImage * _Nullable )image withCompletion:(PFBooleanResultBlock)completion {
++ (void) createStory:(NSString *)story withGroups:(NSArray *)groups withImage:( UIImage * _Nullable )image withCompletion:(PFBooleanResultBlock)completion {
     Story *newStory = [Story new];
     newStory.storyText = story;
     newStory.author = [PFUser currentUser];

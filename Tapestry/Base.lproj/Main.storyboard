@@ -231,14 +231,29 @@
                                     <outletCollection property="gestureRecognizers" destination="ilH-jz-hS7" appends="YES" id="8cY-Ma-J84"/>
                                 </connections>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EbH-4k-nzk">
+                                <rect key="frame" x="179" y="612" width="56" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Weave!"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onTapWeave:" destination="Vc6-90-iJR" eventType="touchUpInside" id="m9Q-EM-1sR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Y1a-FF-F4k"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Bse-Il-jGX" firstAttribute="leading" secondItem="V5A-Mf-nlG" secondAttribute="leading" id="0XS-Au-W2a"/>
+                            <constraint firstItem="EbH-4k-nzk" firstAttribute="top" secondItem="Bse-Il-jGX" secondAttribute="bottom" constant="16" id="8fj-9S-dE0"/>
                             <constraint firstItem="V5A-Mf-nlG" firstAttribute="leading" secondItem="Y1a-FF-F4k" secondAttribute="leading" constant="8" id="Gvd-sI-DfJ"/>
                             <constraint firstItem="Bse-Il-jGX" firstAttribute="top" secondItem="V5A-Mf-nlG" secondAttribute="bottom" constant="100" id="TPT-Au-1Kk"/>
+                            <constraint firstItem="EbH-4k-nzk" firstAttribute="centerX" secondItem="9S9-yK-2pB" secondAttribute="centerX" id="X1p-jj-gqH"/>
                             <constraint firstItem="Y1a-FF-F4k" firstAttribute="trailing" secondItem="V5A-Mf-nlG" secondAttribute="trailing" constant="8" id="fhQ-bK-wi3"/>
                             <constraint firstItem="V5A-Mf-nlG" firstAttribute="top" secondItem="Y1a-FF-F4k" secondAttribute="top" constant="40" id="onG-Js-9XD"/>
                         </constraints>
@@ -261,6 +276,7 @@
                     <connections>
                         <outlet property="addGroupsButton" destination="wQV-z5-9ee" id="pvg-kU-7YB"/>
                         <outlet property="addImageLabel" destination="jta-CI-u95" id="fQa-QN-QdY"/>
+                        <outlet property="imageSelectionView" destination="Bse-Il-jGX" id="rDq-Qz-EqZ"/>
                         <outlet property="photoImageView" destination="7Ax-j6-NLn" id="fEL-TJ-pHB"/>
                         <outlet property="storyImageView" destination="FX4-5N-L99" id="sNF-gf-BTd"/>
                         <outlet property="storyTextView" destination="V5A-Mf-nlG" id="5KV-KA-ggQ"/>

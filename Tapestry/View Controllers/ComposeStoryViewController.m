@@ -16,13 +16,16 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *storyTextView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addGroupsButton;
+@property (weak, nonatomic) IBOutlet UIView *imageSelectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *storyImageView;
 @property (weak, nonatomic) IBOutlet UILabel *addImageLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
 @property (weak, nonatomic) IBOutlet UIButton *sendStoryButton; //TODO: does this need to be an IBOutlet???
 @property (nonatomic, strong) NSMutableArray *buttonsCurrentlyOnScreen;
 @property (nonatomic, strong) NSMutableArray *groupsCurrentlyOnScreen;
-@property (nonatomic, strong) NSMutableArray *groupsToSendUpdate;
+@property (nonatomic, strong) NSMutableDictionary *groupsSelected;
+@property (nonatomic, strong) NSMutableArray *groupNamesForUpdate;
+@property (nonatomic, strong) NSArray *groupsForUpdate;
 @property (nonatomic, strong) NSMutableArray *buttonColorsArray;
 @property (nonatomic) int currentXEdge;
 @property (nonatomic) int currentYLine;
@@ -39,10 +42,12 @@
     // The default text is light gray, because it is meant to go away when a user types in their real text.
     self.storyTextView.textColor = UIColor.lightGrayColor;
     //self.storyTextView.textContainer.heightTracksTextView = true;
-    self.groupsToSendUpdate = [NSMutableArray new];
+    self.groupNamesForUpdate = [NSMutableArray new];
+    self.groupsForUpdate = [NSArray new];
     // I have to somehow query the groups array and add My Stories to the list of groups to send the update to
     self.buttonColorsArray = [NSMutableArray new];
     self.buttonsCurrentlyOnScreen = [NSMutableArray new];
+    self.groupsSelected = [NSMutableDictionary new];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -59,8 +64,6 @@
         [button removeFromSuperview];
     }
     [self.buttonsCurrentlyOnScreen removeAllObjects];
-    NSLog(@" Buttons on screen: %@", self.buttonsCurrentlyOnScreen);
-    //[(UIButton*)[self.view viewWithTag:TAG_ID]  removeFromSuperview];
 }
 
 // The below is for style purposes, so that the textview placeholder text disappears when a user starts typing and turns black, so a user knows it is their actual text.
@@ -92,26 +95,47 @@
         // PFUser.current() will now be nil
     }];
 }
-
-- (void) onTapWeave {
-    [Story createStory:self.storyTextView.text withGroups:self.groupsToSendUpdate withImage: self.storyImageView.image withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+- (IBAction)onTapWeave:(id)sender {
+    for (id key in self.groupsSelected) {
+        id value = [self.groupsSelected objectForKey:key];
+        if ([value isEqual:@(1)]) {
+            [self.groupNamesForUpdate addObject:key];
+        }
+    }
+    PFQuery *query = [PFQuery queryWithClassName:@"Group"];
+    [query whereKey:@"groupName" containedIn:self.groupNamesForUpdate];
+    [query whereKey:@"membersArray" containsAllObjectsInArray:@[PFUser.currentUser]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error != nil) {
-            [self createAlert:@"Unable to share story. Please check your internet connection and try again!" error:@"Unable to Share"];
+            NSLog(@"Error: %@", error.localizedDescription);
         } else {
-            NSLog(@"Story shared");
-            self.storyTextView.text = @"How's it going?";
-            self.storyTextView.textColor = UIColor.lightGrayColor;
-            for (UIButton *button in self.buttonsCurrentlyOnScreen) {
-                [button setBackgroundColor:[UIColor lightGrayColor]];
-                [button setSelected:false];
+            for (Group *group in objects) {
+                [group fetchIfNeededInBackground];
             }
-            self.storyImageView.image = nil;
-            self.addImageLabel.alpha = 1;
-            self.photoImageView.alpha = 1;
-            [self.storyImageView setTintColor:[UIColor systemGray6Color]];
-            [self.storyTextView endEditing:true];
+            self.groupsForUpdate = [objects copy];
+            NSLog(@"Groups for update inside completion block: %@", self.groupsForUpdate);
+            [Story createStory:self.storyTextView.text withGroups:self.groupsForUpdate withImage: self.storyImageView.image withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+                if (error != nil) {
+                    [self createAlert:@"Unable to share story. Please check your internet connection and try again!" error:@"Unable to Share"];
+                } else {
+                    NSLog(@"Story shared");
+                    self.storyTextView.text = @"How's it going?";
+                    self.storyTextView.textColor = UIColor.lightGrayColor;
+                    for (UIButton *button in self.buttonsCurrentlyOnScreen) {
+                        [button setBackgroundColor:[UIColor lightGrayColor]];
+                        [button setSelected:false];
+                    }
+                    self.storyImageView.image = nil;
+                    self.addImageLabel.alpha = 1;
+                    self.photoImageView.alpha = 1;
+                    [self.storyImageView setTintColor:[UIColor systemGray6Color]];
+                    [self.storyTextView endEditing:true];
+                }
+            }];
         }
     }];
+    // TODO: why does the above have to be nested - why does this below array reset after we come out of completion block?
+    NSLog(@"Groups for update: %@", self.groupsForUpdate);
 }
 
 - (void) addGroupButtons {
@@ -119,74 +143,61 @@
     int count = 0;
     // TODO: add an all groups button too
     for (Group *group in user[@"groups"]) {
-        if (![self.groupsCurrentlyOnScreen containsObject:group]) { //TODO: this doesn't work - buttons keep getting added anyways.
-            [group fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-                if (error != nil) {
-                    NSLog(@"Error: %@", error.localizedDescription);
-                    [self createAlert:@"Please check your internet connection and try again!" error:@"Unable to load groups"];
-                } else {
-                    if (![object[@"groupName"] isEqual:@"My Stories"]) {
-                        UIButton *groupButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-                        groupButton.tag = count;
-                        groupButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-                        groupButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-                        groupButton.titleLabel.font = [UIFont systemFontOfSize:13];
-                        [groupButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
-                        if ([object[@"groupName"] length] > 50) {
-                            NSString *thisGroupName = object[@"groupName"];
-                            NSString *stringToFindSpaceIn = [thisGroupName substringFromIndex:(NSInteger) 45]; // Change this number based on the longest length of a group name;
-                            NSInteger indexToCut = [stringToFindSpaceIn rangeOfString:@" "].location + 45;
-                            NSString *buttonTitle = [[thisGroupName substringToIndex:indexToCut] stringByAppendingString:@"\n"];
-                            NSString *completeButtonTitle = [buttonTitle stringByAppendingString:[thisGroupName substringFromIndex:indexToCut]];
-                            // The above allows a group name to be multi-line.
-                            [groupButton setTitle:completeButtonTitle forState:UIControlStateNormal];
-                        } else {
-                            [groupButton setTitle:object[@"groupName"] forState:UIControlStateNormal];
-                        }
-                        [groupButton sizeToFit];
-                        if ((self.currentXEdge + groupButton.frame.size.width + 8) > self.view.frame.size.width) {
-                            self.currentYLine += 38;
-                            self.currentXEdge = 8;
-                        }
-                        groupButton.frame = CGRectMake(self.currentXEdge, self.currentYLine, groupButton.frame.size.width + 6, 30.0);
-                        self.currentXEdge += groupButton.frame.size.width + 8;
-                        groupButton.backgroundColor = [UIColor lightGrayColor]; //TODO: CHANGE THIS COLOR
-                        [groupButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                        groupButton.layer.cornerRadius = 10;
-                        groupButton.clipsToBounds = YES;
-                        [self.view addSubview:groupButton];
-                        [self.buttonsCurrentlyOnScreen addObject:groupButton];
-                        [self.groupsCurrentlyOnScreen addObject:group];
+        [group fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            if (error != nil) {
+                NSLog(@"Error: %@", error.localizedDescription);
+                [self createAlert:@"Please check your internet connection and try again!" error:@"Unable to load groups"];
+            } else {
+                if (![object[@"groupName"] isEqual:@"My Stories"]) {
+                    UIButton *groupButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                    groupButton.tag = count;
+                    groupButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+                    groupButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+                    groupButton.titleLabel.font = [UIFont systemFontOfSize:13];
+                    [groupButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                    if ([object[@"groupName"] length] > 50) {
+                        NSString *thisGroupName = object[@"groupName"];
+                        NSString *stringToFindSpaceIn = [thisGroupName substringFromIndex:(NSInteger) 45]; // Change this number based on the longest length of a group name;
+                        NSInteger indexToCut = [stringToFindSpaceIn rangeOfString:@" "].location + 45;
+                        NSString *buttonTitle = [[thisGroupName substringToIndex:indexToCut] stringByAppendingString:@"\n"];
+                        NSString *completeButtonTitle = [buttonTitle stringByAppendingString:[thisGroupName substringFromIndex:indexToCut]];
+                        // The above allows a group name to be multi-line.
+                        [groupButton setTitle:completeButtonTitle forState:UIControlStateNormal];
+                    } else {
+                        [groupButton setTitle:object[@"groupName"] forState:UIControlStateNormal];
                     }
+                    [groupButton sizeToFit];
+                    if ((self.currentXEdge + groupButton.frame.size.width + 8) > self.view.frame.size.width) {
+                        self.currentYLine += 38;
+                        self.currentXEdge = 8;
+                    }
+                    groupButton.frame = CGRectMake(self.currentXEdge, self.currentYLine, groupButton.frame.size.width + 6, 30.0);
+                    self.currentXEdge += groupButton.frame.size.width + 8;
+                    groupButton.backgroundColor = [UIColor lightGrayColor]; //TODO: CHANGE THIS COLOR
+                    [groupButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                    groupButton.layer.cornerRadius = 10;
+                    groupButton.clipsToBounds = YES;
+                    self.groupsSelected[object[@"groupName"]] = @0;
+                    [self.view addSubview:groupButton];
+                    [self.buttonsCurrentlyOnScreen addObject:groupButton];
+                    [self.groupsCurrentlyOnScreen addObject:group];
                 }
-            }];
-        }
+            }
+        }];
         count ++;
     }
     self.storyImageView.frame = CGRectMake(8.0, self.currentYLine + 46, 50.0, 50.0); // TODO: why am I unable to place this where I want it to go???
     //TODO: can I add some constraints programmatically and others through autolayout??
-    if (self.sendStoryButton == nil) {
-        UIButton *weaveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.sendStoryButton = weaveButton;
-        self.sendStoryButton.frame = CGRectMake((self.view.frame.size.width - 150) / 2, self.currentYLine + 96.0, 150.0, 30.0);
-        self.sendStoryButton.titleLabel.font = [UIFont systemFontOfSize:15];
-        self.sendStoryButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [self.sendStoryButton setTitle:@"Weave!" forState:UIControlStateNormal];
-        [self.sendStoryButton addTarget:self action:@selector(onTapWeave) forControlEvents:UIControlEventTouchUpInside];
-        self.sendStoryButton.layer.cornerRadius = 10;
-        self.sendStoryButton.clipsToBounds = YES;
-        [self.view addSubview:self.sendStoryButton];
-    } else {
-        self.sendStoryButton.frame = CGRectMake((self.view.frame.size.width - 150) / 2, self.currentYLine + 96.0, 150.0, 30.0);
-    }
+
+        //self.sendStoryButton.frame = CGRectMake((self.view.frame.size.width - 150) / 2, self.currentYLine + 96.0, 150.0, 30.0);
 }
 
 -(void)buttonClicked:(UIButton*)sender {
     // A way to set the selected vs unselected state of a button
     int tag = (int) sender.tag;
-    BOOL firstTap = sender.backgroundColor == [UIColor lightGrayColor];
-    if (firstTap) {
-        // TODO: how to change all of their colors and make them look nice?
+    if (!sender.isSelected) {
+        [sender setSelected:TRUE];
+        [self.groupsSelected setValue:@1 forKey:sender.titleLabel.text];
         if (tag == 0) {
             [sender setBackgroundColor:[UIColor redColor]];
         } else if (tag == 1) {
@@ -194,43 +205,47 @@
         } else if (tag == 2) {
             [sender setBackgroundColor:[UIColor greenColor]];
         }
+        NSLog(@"Dictionary of all groups after selected: %@", self.groupsSelected);
     } else {
+        [sender setSelected:FALSE];
+        [self.groupsSelected setValue:@0 forKey:sender.titleLabel.text];
         [sender setBackgroundColor:[UIColor lightGrayColor]];
+        NSLog(@"Dictionary of all groups after unselected: %@", self.groupsSelected);
     }
-    //Move this to message completion
-    // Make dictionary of
-    PFQuery *query = [PFQuery queryWithClassName:@"Group"];
-    [query whereKey:@"groupName" equalTo:sender.titleLabel.text];
-    [query whereKey:@"membersArray" containsAllObjectsInArray:@[PFUser.currentUser]];
-    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        if (error != nil) {
-            [self createAlert:@"Please check your internet connection and try again!" error:@"Unable to Add to Tapestry"];
-            NSLog(@"Error: %@", error.localizedDescription);
-        } else {
-            NSLog(@"Objects: %@", objects);
-            for (Group *group in objects) {
-                NSLog(@"Group: %@", group);
-                [group fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-                    if (error) {
-                        NSLog(@"Error: %@", error.localizedDescription);
-                    } else {
-                        if (firstTap) {
-                            if (![self.groupsToSendUpdate containsObject:object]) {
-                                [self.groupsToSendUpdate addObject:object];
-                                NSLog(@"Added group to story: %@", self.groupsToSendUpdate);
-                            }
-                        } else if (!firstTap) {
-                            if ([self.groupsToSendUpdate containsObject:object]) {
-                                [self.groupsToSendUpdate removeObject:object];
-                                NSLog(@"Removed group from story: %@", self.groupsToSendUpdate);
-                                // TODO: remove or contains don't currently work
-                            }
-                        }
-                }
-                }];
-            }
-        }
-    }];
+//    //Move this to message completion
+//    // Make dictionary of
+//    PFQuery *query = [PFQuery queryWithClassName:@"Group"];
+//    [query whereKey:@"groupName" equalTo:sender.titleLabel.text];
+//    [query whereKey:@"membersArray" containsAllObjectsInArray:@[PFUser.currentUser]];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+//        if (error != nil) {
+//            [self createAlert:@"Please check your internet connection and try again!" error:@"Unable to Add to Tapestry"];
+//            NSLog(@"Error: %@", error.localizedDescription);
+//        } else {
+//            NSLog(@"Objects: %@", objects);
+//            for (Group *group in objects) {
+//                NSLog(@"Group: %@", group);
+//                [group fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+//                    if (error) {
+//                        NSLog(@"Error: %@", error.localizedDescription);
+//                    } else {
+//                        if (firstTap) {
+//                            if (![self.groupsToSendUpdate containsObject:object]) {
+//                                [self.groupsToSendUpdate addObject:object];
+//                                NSLog(@"Added group to story: %@", self.groupsToSendUpdate);
+//                            }
+//                        } else if (!firstTap) {
+//                            if ([self.groupsToSendUpdate containsObject:object]) {
+//                                [self.groupsToSendUpdate removeObject:object];
+//                                NSLog(@"Removed group from story: %@", self.groupsToSendUpdate);
+//                                // TODO: remove or contains don't currently work
+//                            }
+//                        }
+//                    }
+//                }];
+//            }
+//        }
+//    }];
 }
 
 - (IBAction)onTapImageView:(id)sender {
