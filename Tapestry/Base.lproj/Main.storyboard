@@ -175,6 +175,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" text="How's it going?" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="V5A-Mf-nlG">
                                 <rect key="frame" x="8" y="96" width="398" height="250"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="HzV-0Z-9oD"/>
                                 </constraints>
@@ -187,11 +188,11 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LUC-SR-WIl">
-                                <rect key="frame" x="8" y="406" width="50" height="20"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bse-Il-jGX">
+                                <rect key="frame" x="8" y="446" width="150" height="150"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FX4-5N-L99">
-                                        <rect key="frame" x="-8" y="-8" width="150" height="150"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -199,14 +200,14 @@
                                             <constraint firstAttribute="height" constant="150" id="WQs-5O-keZ"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="      Add Image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jta-CI-u95">
-                                        <rect key="frame" x="0.0" y="0.0" width="134" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jta-CI-u95">
+                                        <rect key="frame" x="44" y="65" width="82" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="7Ax-j6-NLn">
-                                        <rect key="frame" x="0.0" y="1" width="50" height="17.5"/>
+                                        <rect key="frame" x="4" y="66" width="50" height="17.5"/>
                                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="N3z-Ng-D2i"/>
@@ -215,20 +216,19 @@
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstItem="jta-CI-u95" firstAttribute="top" secondItem="FX4-5N-L99" secondAttribute="top" constant="8" id="3rT-cP-f0s"/>
-                                    <constraint firstAttribute="bottom" secondItem="7Ax-j6-NLn" secondAttribute="bottom" id="6KQ-yI-Vv2"/>
-                                    <constraint firstItem="7Ax-j6-NLn" firstAttribute="leading" secondItem="LUC-SR-WIl" secondAttribute="leading" id="EtS-IM-eyw"/>
-                                    <constraint firstItem="FX4-5N-L99" firstAttribute="trailing" secondItem="jta-CI-u95" secondAttribute="trailing" constant="8" id="P6H-rB-qcZ"/>
-                                    <constraint firstItem="7Ax-j6-NLn" firstAttribute="top" secondItem="FX4-5N-L99" secondAttribute="top" constant="8" id="Y67-wF-ONM"/>
-                                    <constraint firstItem="jta-CI-u95" firstAttribute="leading" secondItem="7Ax-j6-NLn" secondAttribute="leading" id="bXZ-bH-OCt"/>
-                                    <constraint firstAttribute="trailing" secondItem="7Ax-j6-NLn" secondAttribute="trailing" id="cjn-CG-0Ci"/>
-                                    <constraint firstItem="jta-CI-u95" firstAttribute="leading" secondItem="FX4-5N-L99" secondAttribute="leading" constant="8" id="fw9-VW-PBA"/>
-                                    <constraint firstItem="7Ax-j6-NLn" firstAttribute="top" secondItem="LUC-SR-WIl" secondAttribute="top" id="gOo-wX-v2S"/>
+                                    <constraint firstItem="FX4-5N-L99" firstAttribute="top" secondItem="Bse-Il-jGX" secondAttribute="top" id="2NY-U9-kmR"/>
+                                    <constraint firstItem="jta-CI-u95" firstAttribute="centerX" secondItem="Bse-Il-jGX" secondAttribute="centerX" constant="10" id="2e4-XI-Uqg"/>
+                                    <constraint firstItem="jta-CI-u95" firstAttribute="centerY" secondItem="Bse-Il-jGX" secondAttribute="centerY" id="5W2-2y-lCC"/>
+                                    <constraint firstAttribute="trailing" secondItem="FX4-5N-L99" secondAttribute="trailing" id="60d-sg-YTh"/>
+                                    <constraint firstAttribute="bottom" secondItem="FX4-5N-L99" secondAttribute="bottom" id="BkI-wB-eEU"/>
+                                    <constraint firstItem="jta-CI-u95" firstAttribute="top" secondItem="7Ax-j6-NLn" secondAttribute="top" id="GCe-R5-d9m"/>
+                                    <constraint firstItem="FX4-5N-L99" firstAttribute="leading" secondItem="Bse-Il-jGX" secondAttribute="leading" id="Hmi-w5-oLn"/>
+                                    <constraint firstItem="jta-CI-u95" firstAttribute="leading" secondItem="7Ax-j6-NLn" secondAttribute="trailing" constant="-10" id="P7C-Di-g3a"/>
+                                    <constraint firstItem="jta-CI-u95" firstAttribute="bottom" secondItem="7Ax-j6-NLn" secondAttribute="bottom" id="fnJ-mY-UXm"/>
                                 </constraints>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="SB7-QX-4AF" appends="YES" id="mha-xl-Fw8"/>
+                                    <outletCollection property="gestureRecognizers" destination="ilH-jz-hS7" appends="YES" id="8cY-Ma-J84"/>
                                 </connections>
                             </view>
                         </subviews>
@@ -236,14 +236,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="LUC-SR-WIl" firstAttribute="leading" secondItem="V5A-Mf-nlG" secondAttribute="leading" id="E1j-NK-auc"/>
-                            <constraint firstItem="V5A-Mf-nlG" firstAttribute="top" secondItem="Y1a-FF-F4k" secondAttribute="top" constant="40" id="SDB-G8-uha"/>
-                            <constraint firstItem="Y1a-FF-F4k" firstAttribute="trailing" secondItem="V5A-Mf-nlG" secondAttribute="trailing" constant="8" id="VEn-3A-JLB"/>
-                            <constraint firstItem="V5A-Mf-nlG" firstAttribute="leading" secondItem="Y1a-FF-F4k" secondAttribute="leading" constant="8" id="bLP-Rm-gd3"/>
-                            <constraint firstItem="LUC-SR-WIl" firstAttribute="top" secondItem="V5A-Mf-nlG" secondAttribute="bottom" constant="60" id="hKA-MA-xb7"/>
+                            <constraint firstItem="Bse-Il-jGX" firstAttribute="leading" secondItem="V5A-Mf-nlG" secondAttribute="leading" id="0XS-Au-W2a"/>
+                            <constraint firstItem="V5A-Mf-nlG" firstAttribute="leading" secondItem="Y1a-FF-F4k" secondAttribute="leading" constant="8" id="Gvd-sI-DfJ"/>
+                            <constraint firstItem="Bse-Il-jGX" firstAttribute="top" secondItem="V5A-Mf-nlG" secondAttribute="bottom" constant="100" id="TPT-Au-1Kk"/>
+                            <constraint firstItem="Y1a-FF-F4k" firstAttribute="trailing" secondItem="V5A-Mf-nlG" secondAttribute="trailing" constant="8" id="fhQ-bK-wi3"/>
+                            <constraint firstItem="V5A-Mf-nlG" firstAttribute="top" secondItem="Y1a-FF-F4k" secondAttribute="top" constant="40" id="onG-Js-9XD"/>
                         </constraints>
                         <connections>
-                            <outletCollection property="gestureRecognizers" destination="mZi-Hd-d4w" appends="YES" id="KYZ-dO-fcM"/>
+                            <outletCollection property="gestureRecognizers" destination="8b4-Fe-IbP" appends="YES" id="6eP-vf-X6o"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Lqi-Mo-pMo">
@@ -267,14 +267,14 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4OG-JK-hmd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="mZi-Hd-d4w">
+                <tapGestureRecognizer id="ilH-jz-hS7">
                     <connections>
-                        <action selector="onTapAnywhere:" destination="Vc6-90-iJR" id="le8-Qm-ay2"/>
+                        <action selector="onTapImageView:" destination="Vc6-90-iJR" id="uUj-vZ-Ppd"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="SB7-QX-4AF">
+                <tapGestureRecognizer id="8b4-Fe-IbP">
                     <connections>
-                        <action selector="onTapImageView:" destination="Vc6-90-iJR" id="tuX-iK-aM0"/>
+                        <action selector="onTapAnywhere:" destination="Vc6-90-iJR" id="JuA-AW-oxi"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
