@@ -271,6 +271,8 @@
     imagePickerVC.allowsEditing = YES;
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+        self.addImageLabel.alpha = 0;
+        self.photoImageView.alpha = 0;
         [self presentViewController:imagePickerVC animated:YES completion:nil];
     }
     else {
@@ -284,6 +286,8 @@
     imagePickerVC.allowsEditing = YES;
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        self.addImageLabel.alpha = 0;
+        self.photoImageView.alpha = 0;
         [self presentViewController:imagePickerVC animated:YES completion:nil];
     }
     else {
