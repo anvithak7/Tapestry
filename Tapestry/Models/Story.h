@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *groupsArray;
 
 //+ (void) createStory: ( NSString * _Nullable )story withImage:( UIImage * _Nullable )image withGroups:(NSMutableArray *)groups withCompletion: (PFBooleanResultBlock  _Nullable)completion;
-+ (void) createStory: ( NSString * _Nullable )story withCompletion: (PFBooleanResultBlock  _Nullable)completion;
++ (void) createStory: ( NSString * _Nullable )story withGroups:(NSMutableArray*) groups withImage:( UIImage * _Nullable )image withCompletion: (PFBooleanResultBlock  _Nullable)completion;
 
 @end
 

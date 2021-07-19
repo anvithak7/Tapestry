@@ -6,6 +6,7 @@
 //
 
 #import "NewUserViewController.h"
+#import "Group.h"
 #import "Parse/Parse.h"
 
 // This view controller registers a new user to Tapestry.
@@ -39,6 +40,11 @@
         newUser.username = self.usernameField.text;
         newUser.password = self.passwordField.text;
         newUser[@"groups"] = [NSMutableArray new];
+        [Group createGroup:@"My Stories" withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+            if (error != nil) {
+                [self createAlert:@"Unable to create tapestry. Please check your internet connection and try again!" error:@"Unable to Create Tapestry"];
+            }
+        }];
         // call sign up function on the object
         [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
             if (error != nil) {

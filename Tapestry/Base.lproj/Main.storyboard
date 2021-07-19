@@ -172,10 +172,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="How's it going?" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="V5A-Mf-nlG">
-                                <rect key="frame" x="39" y="121" width="336" height="260"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" text="How's it going?" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="V5A-Mf-nlG">
+                                <rect key="frame" x="8" y="96" width="398" height="250"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="HzV-0Z-9oD"/>
+                                </constraints>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -185,10 +187,61 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LUC-SR-WIl">
+                                <rect key="frame" x="8" y="406" width="50" height="20"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FX4-5N-L99">
+                                        <rect key="frame" x="-8" y="-8" width="150" height="150"/>
+                                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="D1J-3X-HLn"/>
+                                            <constraint firstAttribute="height" constant="150" id="WQs-5O-keZ"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="      Add Image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jta-CI-u95">
+                                        <rect key="frame" x="0.0" y="0.0" width="134" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="7Ax-j6-NLn">
+                                        <rect key="frame" x="0.0" y="1" width="50" height="17.5"/>
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="N3z-Ng-D2i"/>
+                                            <constraint firstAttribute="height" constant="20" id="T06-hL-YgZ"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="jta-CI-u95" firstAttribute="top" secondItem="FX4-5N-L99" secondAttribute="top" constant="8" id="3rT-cP-f0s"/>
+                                    <constraint firstAttribute="bottom" secondItem="7Ax-j6-NLn" secondAttribute="bottom" id="6KQ-yI-Vv2"/>
+                                    <constraint firstItem="7Ax-j6-NLn" firstAttribute="leading" secondItem="LUC-SR-WIl" secondAttribute="leading" id="EtS-IM-eyw"/>
+                                    <constraint firstItem="FX4-5N-L99" firstAttribute="trailing" secondItem="jta-CI-u95" secondAttribute="trailing" constant="8" id="P6H-rB-qcZ"/>
+                                    <constraint firstItem="7Ax-j6-NLn" firstAttribute="top" secondItem="FX4-5N-L99" secondAttribute="top" constant="8" id="Y67-wF-ONM"/>
+                                    <constraint firstItem="jta-CI-u95" firstAttribute="leading" secondItem="7Ax-j6-NLn" secondAttribute="leading" id="bXZ-bH-OCt"/>
+                                    <constraint firstAttribute="trailing" secondItem="7Ax-j6-NLn" secondAttribute="trailing" id="cjn-CG-0Ci"/>
+                                    <constraint firstItem="jta-CI-u95" firstAttribute="leading" secondItem="FX4-5N-L99" secondAttribute="leading" constant="8" id="fw9-VW-PBA"/>
+                                    <constraint firstItem="7Ax-j6-NLn" firstAttribute="top" secondItem="LUC-SR-WIl" secondAttribute="top" id="gOo-wX-v2S"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="SB7-QX-4AF" appends="YES" id="mha-xl-Fw8"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Y1a-FF-F4k"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="LUC-SR-WIl" firstAttribute="leading" secondItem="V5A-Mf-nlG" secondAttribute="leading" id="E1j-NK-auc"/>
+                            <constraint firstItem="V5A-Mf-nlG" firstAttribute="top" secondItem="Y1a-FF-F4k" secondAttribute="top" constant="40" id="SDB-G8-uha"/>
+                            <constraint firstItem="Y1a-FF-F4k" firstAttribute="trailing" secondItem="V5A-Mf-nlG" secondAttribute="trailing" constant="8" id="VEn-3A-JLB"/>
+                            <constraint firstItem="V5A-Mf-nlG" firstAttribute="leading" secondItem="Y1a-FF-F4k" secondAttribute="leading" constant="8" id="bLP-Rm-gd3"/>
+                            <constraint firstItem="LUC-SR-WIl" firstAttribute="top" secondItem="V5A-Mf-nlG" secondAttribute="bottom" constant="60" id="hKA-MA-xb7"/>
+                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="mZi-Hd-d4w" appends="YES" id="KYZ-dO-fcM"/>
                         </connections>
@@ -207,6 +260,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addGroupsButton" destination="wQV-z5-9ee" id="pvg-kU-7YB"/>
+                        <outlet property="addImageLabel" destination="jta-CI-u95" id="fQa-QN-QdY"/>
+                        <outlet property="photoImageView" destination="7Ax-j6-NLn" id="fEL-TJ-pHB"/>
+                        <outlet property="storyImageView" destination="FX4-5N-L99" id="sNF-gf-BTd"/>
                         <outlet property="storyTextView" destination="V5A-Mf-nlG" id="5KV-KA-ggQ"/>
                     </connections>
                 </viewController>
@@ -216,8 +272,13 @@
                         <action selector="onTapAnywhere:" destination="Vc6-90-iJR" id="le8-Qm-ay2"/>
                     </connections>
                 </tapGestureRecognizer>
+                <tapGestureRecognizer id="SB7-QX-4AF">
+                    <connections>
+                        <action selector="onTapImageView:" destination="Vc6-90-iJR" id="tuX-iK-aM0"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1413" y="2350"/>
+            <point key="canvasLocation" x="-1413.0434782608697" y="2349.7767857142858"/>
         </scene>
         <!--Add Groups View Controller-->
         <scene sceneID="Leb-9X-rLM">
@@ -549,6 +610,7 @@
     <resources>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
         <image name="person.2.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="photo" catalog="system" width="128" height="93"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
