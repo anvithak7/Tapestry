@@ -7,6 +7,7 @@ target 'Tapestry' do
 
   # Pods for Tapestry
 pod 'Parse'
+pod 'Parse/UI'
 
   target 'TapestryTests' do
     inherit! :search_paths

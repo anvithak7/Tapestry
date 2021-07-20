@@ -26,6 +26,7 @@
 		9E430D6B26A0D09100C0B571 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D6A26A0D09100C0B571 /* Story.m */; };
 		9E430D6E26A6195A00C0B571 /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D6D26A6195A00C0B571 /* GroupsViewController.m */; };
 		9E430D7026A6268100C0B571 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E430D6F26A6268100C0B571 /* AVFoundation.framework */; };
+		9E430D7526A7426800C0B571 /* TapestryGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D7426A7426800C0B571 /* TapestryGridCell.m */; };
 		BAC26881E50874E261006A77 /* Pods_Tapestry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CED42AE8DCC4FEDB9E95E72 /* Pods_Tapestry.framework */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +87,8 @@
 		9E430D6C26A6195A00C0B571 /* GroupsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupsViewController.h; sourceTree = "<group>"; };
 		9E430D6D26A6195A00C0B571 /* GroupsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupsViewController.m; sourceTree = "<group>"; };
 		9E430D6F26A6268100C0B571 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		9E430D7326A7426800C0B571 /* TapestryGridCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TapestryGridCell.h; sourceTree = "<group>"; };
+		9E430D7426A7426800C0B571 /* TapestryGridCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TapestryGridCell.m; sourceTree = "<group>"; };
 		A3EA13843EC42B98569A41AE /* Pods_TapestryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TapestryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D85BF7482663768E2DA14120 /* Pods-Tapestry-TapestryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tapestry-TapestryUITests.release.xcconfig"; path = "Target Support Files/Pods-Tapestry-TapestryUITests/Pods-Tapestry-TapestryUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,6 +160,7 @@
 		9E430D20269C9C2A00C0B571 /* Tapestry */ = {
 			isa = PBXGroup;
 			children = (
+				9E430D7226A7424500C0B571 /* Views */,
 				9E430D57269E11C900C0B571 /* Models */,
 				9E430D56269E11C000C0B571 /* View Controllers */,
 				9E430D21269C9C2A00C0B571 /* AppDelegate.h */,
@@ -217,6 +221,15 @@
 				9E430D6A26A0D09100C0B571 /* Story.m */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		9E430D7226A7424500C0B571 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9E430D7326A7426800C0B571 /* TapestryGridCell.h */,
+				9E430D7426A7426800C0B571 /* TapestryGridCell.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		CB77295F0664A1E345E8699E /* Frameworks */ = {
@@ -473,6 +486,7 @@
 				9E430D23269C9C2A00C0B571 /* AppDelegate.m in Sources */,
 				9E430D6B26A0D09100C0B571 /* Story.m in Sources */,
 				9E430D34269C9C2A00C0B571 /* main.m in Sources */,
+				9E430D7526A7426800C0B571 /* TapestryGridCell.m in Sources */,
 				9E430D26269C9C2A00C0B571 /* SceneDelegate.m in Sources */,
 				9E430D6E26A6195A00C0B571 /* GroupsViewController.m in Sources */,
 				9E430D5F269E3A3F00C0B571 /* ComposeStoryViewController.m in Sources */,

@@ -603,10 +603,10 @@
             </objects>
             <point key="canvasLocation" x="-1991" y="1621"/>
         </scene>
-        <!--View Controller-->
+        <!--Groups View Controller-->
         <scene sceneID="R1z-rF-mkA">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="eRZ-fG-5eP" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="eRZ-fG-5eP" customClass="GroupsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wol-mh-ysf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -614,26 +614,50 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3cl-oM-Eer">
                                 <rect key="frame" x="0.0" y="56" width="414" height="703"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="syC-R3-2Tw">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="syC-R3-2Tw">
                                     <size key="itemSize" width="145" height="144"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="hTZ-OO-BAy">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TapestryGridCell" id="hTZ-OO-BAy" customClass="TapestryGridCell">
                                         <rect key="frame" x="0.0" y="0.0" width="145" height="144"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="aHN-NQ-TPs">
                                             <rect key="frame" x="0.0" y="0.0" width="145" height="144"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3yn-f3-3o7" customClass="PFImageView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="145" height="144"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arR-g5-eUG">
+                                                    <rect key="frame" x="104" y="120" width="33" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="3yn-f3-3o7" secondAttribute="bottom" id="SHp-Ls-syg"/>
+                                                <constraint firstItem="3yn-f3-3o7" firstAttribute="leading" secondItem="aHN-NQ-TPs" secondAttribute="leading" id="VTh-MY-Tdu"/>
+                                                <constraint firstAttribute="trailing" secondItem="3yn-f3-3o7" secondAttribute="trailing" id="c8W-cs-3Ic"/>
+                                                <constraint firstAttribute="bottom" secondItem="arR-g5-eUG" secondAttribute="bottom" constant="8" id="iM3-w2-TeQ"/>
+                                                <constraint firstItem="3yn-f3-3o7" firstAttribute="top" secondItem="aHN-NQ-TPs" secondAttribute="top" id="tRI-Ch-zpp"/>
+                                                <constraint firstAttribute="trailing" secondItem="arR-g5-eUG" secondAttribute="trailing" constant="8" id="yBj-WT-r4e"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
+                                        <color key="backgroundColor" red="0.71312411710000001" green="0.90225320549999999" blue="0.96130555870000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <size key="customSize" width="145" height="144"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="10"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="tapestryImageView" destination="3yn-f3-3o7" id="I5J-nl-8fb"/>
+                                            <outlet property="tapestryNameLabel" destination="arR-g5-eUG" id="uTy-Nm-ifj"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -648,6 +672,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vMS-Cx-4Zv"/>
+                    <connections>
+                        <outlet property="collectionView" destination="3cl-oM-Eer" id="5o1-en-gEi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xPV-dM-8MW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
