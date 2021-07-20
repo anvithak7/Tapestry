@@ -11,8 +11,9 @@
 #import "Story.h"
 #import "Group.h"
 #import "Parse/Parse.h"
+#import <AVFoundation/AVFoundation.h>
 
-@interface ComposeStoryViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ComposeStoryViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *storyTextView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addGroupsButton;
@@ -128,6 +129,7 @@
                     self.storyImageView.image = nil;
                     self.addImageLabel.alpha = 1;
                     self.photoImageView.alpha = 1;
+                    self.storyImageView.image = nil;
                     [self.storyImageView setTintColor:[UIColor systemGray6Color]];
                     [self.storyTextView endEditing:true];
                 }
@@ -187,6 +189,7 @@
         count ++;
     }
     self.storyImageView.frame = CGRectMake(8.0, self.currentYLine + 46, 50.0, 50.0); // TODO: why am I unable to place this where I want it to go???
+    //TODO: redo autolayout constraints in program
     //TODO: can I add some constraints programmatically and others through autolayout??
 
         //self.sendStoryButton.frame = CGRectMake((self.view.frame.size.width - 150) / 2, self.currentYLine + 96.0, 150.0, 30.0);
@@ -212,40 +215,6 @@
         [sender setBackgroundColor:[UIColor lightGrayColor]];
         NSLog(@"Dictionary of all groups after unselected: %@", self.groupsSelected);
     }
-//    //Move this to message completion
-//    // Make dictionary of
-//    PFQuery *query = [PFQuery queryWithClassName:@"Group"];
-//    [query whereKey:@"groupName" equalTo:sender.titleLabel.text];
-//    [query whereKey:@"membersArray" containsAllObjectsInArray:@[PFUser.currentUser]];
-//    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-//        if (error != nil) {
-//            [self createAlert:@"Please check your internet connection and try again!" error:@"Unable to Add to Tapestry"];
-//            NSLog(@"Error: %@", error.localizedDescription);
-//        } else {
-//            NSLog(@"Objects: %@", objects);
-//            for (Group *group in objects) {
-//                NSLog(@"Group: %@", group);
-//                [group fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-//                    if (error) {
-//                        NSLog(@"Error: %@", error.localizedDescription);
-//                    } else {
-//                        if (firstTap) {
-//                            if (![self.groupsToSendUpdate containsObject:object]) {
-//                                [self.groupsToSendUpdate addObject:object];
-//                                NSLog(@"Added group to story: %@", self.groupsToSendUpdate);
-//                            }
-//                        } else if (!firstTap) {
-//                            if ([self.groupsToSendUpdate containsObject:object]) {
-//                                [self.groupsToSendUpdate removeObject:object];
-//                                NSLog(@"Removed group from story: %@", self.groupsToSendUpdate);
-//                                // TODO: remove or contains don't currently work
-//                            }
-//                        }
-//                    }
-//                }];
-//            }
-//        }
-//    }];
 }
 
 - (IBAction)onTapImageView:(id)sender {

@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -294,7 +295,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1413.0434782608697" y="2349.7767857142858"/>
+            <point key="canvasLocation" x="-1990" y="2369"/>
         </scene>
         <!--Add Groups View Controller-->
         <scene sceneID="Leb-9X-rLM">
@@ -399,7 +400,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Press create to generate an invite code!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4l-pA-acX">
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Press create to generate an invite code!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4l-pA-acX">
                                         <rect key="frame" x="8" y="172" width="256.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
@@ -552,6 +553,7 @@
                         <outlet property="joinGroupButton" destination="auR-Cj-ujW" id="ecD-ro-Yfk"/>
                         <outlet property="joinGroupView" destination="Cok-In-hKO" id="rpv-L0-u8z"/>
                         <outlet property="justMeButton" destination="rqo-hO-MU1" id="ped-br-ytG"/>
+                        <outlet property="spaceBetweenCreateAndJoinButtons" destination="sQq-J6-EjC" id="qqR-qe-dcA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zCi-ed-6tJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -561,7 +563,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="343.47826086956525" y="2349.7767857142858"/>
+            <point key="canvasLocation" x="-1991" y="3797"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="9tx-iA-KQF">
@@ -575,6 +577,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="vho-NO-cYP" kind="relationship" relationship="viewControllers" id="LGw-XB-axd"/>
+                        <segue destination="rng-qz-EZb" kind="relationship" relationship="viewControllers" id="Jua-5p-Vkw"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I5Y-rc-W2f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -598,7 +601,57 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sI9-9l-Sgg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1413" y="1610"/>
+            <point key="canvasLocation" x="-1991" y="1621"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="R1z-rF-mkA">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="eRZ-fG-5eP" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wol-mh-ysf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3cl-oM-Eer">
+                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="syC-R3-2Tw">
+                                    <size key="itemSize" width="145" height="144"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="hTZ-OO-BAy">
+                                        <rect key="frame" x="0.0" y="0.0" width="145" height="144"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="aHN-NQ-TPs">
+                                            <rect key="frame" x="0.0" y="0.0" width="145" height="144"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="145" height="144"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="3By-UB-lKg"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="3cl-oM-Eer" firstAttribute="leading" secondItem="3By-UB-lKg" secondAttribute="leading" id="0QH-bn-wTR"/>
+                            <constraint firstItem="3By-UB-lKg" firstAttribute="trailing" secondItem="3cl-oM-Eer" secondAttribute="trailing" id="VKb-b6-0oS"/>
+                            <constraint firstItem="3By-UB-lKg" firstAttribute="bottom" secondItem="3cl-oM-Eer" secondAttribute="bottom" id="Xny-xa-fO4"/>
+                            <constraint firstItem="3cl-oM-Eer" firstAttribute="top" secondItem="3By-UB-lKg" secondAttribute="top" id="tCt-TG-Gyy"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="vMS-Cx-4Zv"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xPV-dM-8MW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-571.01449275362324" y="2359.8214285714284"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ivh-xT-gx1">
@@ -617,7 +670,26 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zRN-c0-MaC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-565.21739130434787" y="2349.7767857142858"/>
+            <point key="canvasLocation" x="-1991" y="3086"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="7Ox-Iw-flc">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="rng-qz-EZb" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="1LL-Ep-hsr"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gIp-lh-ZVR">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="eRZ-fG-5eP" kind="relationship" relationship="rootViewController" id="eOS-rc-0Vu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xb1-Oa-JUq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-570" y="1621"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

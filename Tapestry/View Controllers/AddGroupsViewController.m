@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *joinButton;
 @property (weak, nonatomic) IBOutlet UIImageView *doneCreating;
 @property (weak, nonatomic) IBOutlet UIImageView *doneJoining;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *spaceBetweenCreateAndJoinButtons;
 @property (nonatomic) BOOL createGroupShow;
 @property (nonatomic) BOOL joinGroupShow;
 @property (nonatomic) BOOL joinMoved;
@@ -56,26 +57,28 @@
     }
     self.joinGroupShow = NO;
     if (!self.createGroupShow) {
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:0.1 animations:^{
             CGRect joinButtonFrame = self.joinGroupButton.frame;
-            joinButtonFrame.origin.y += 136;
+            joinButtonFrame.origin.y += 216;
             CGRect joinViewFrame = self.joinGroupView.frame;
-            joinViewFrame.origin.y += 136;
+            joinViewFrame.origin.y += 216;
             self.joinGroupButton.frame = joinButtonFrame;
             self.joinGroupView.frame = joinViewFrame;
+            self.spaceBetweenCreateAndJoinButtons.constant = 216;
             self.createNewView.alpha = 1;
             self.joinGroupView.alpha = 0;
             self.joinMoved = YES;
         }];
         self.createGroupShow = YES;
     } else if (self.createGroupShow) {
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:0.1 animations:^{
             CGRect joinButtonFrame = self.joinGroupButton.frame;
-            joinButtonFrame.origin.y -= 136;
+            joinButtonFrame.origin.y -= 216;
             CGRect joinViewFrame = self.joinGroupView.frame;
-            joinViewFrame.origin.y -= 136;
+            joinViewFrame.origin.y -= 216;
             self.joinGroupButton.frame = joinButtonFrame;
             self.joinGroupView.frame = joinViewFrame;
+            self.spaceBetweenCreateAndJoinButtons.constant = 80;
             self.createNewView.alpha = 0;
             self.joinGroupView.alpha = 0;
             if (self.joinMoved) {
@@ -90,24 +93,25 @@
 - (IBAction)onTapJoin:(id)sender {
     self.createGroupShow = NO;
     if (self.joinMoved) {
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:0.1 animations:^{
             CGRect joinButtonFrame = self.joinGroupButton.frame;
-            joinButtonFrame.origin.y -= 136;
+            joinButtonFrame.origin.y -= 216;
             CGRect joinViewFrame = self.joinGroupView.frame;
-            joinViewFrame.origin.y -= 136;
+            joinViewFrame.origin.y -= 216;
             self.joinGroupButton.frame = joinButtonFrame;
             self.joinGroupView.frame = joinViewFrame;
+            self.spaceBetweenCreateAndJoinButtons.constant = 80;
             self.joinMoved = NO;
         }];
     }
     if (!self.joinGroupShow) {
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:0.1 animations:^{
             self.joinGroupView.alpha = 1;
             self.createNewView.alpha = 0;
         }];
         self.joinGroupShow = YES;
     } else if (self.joinGroupShow) {
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:0.1 animations:^{
             self.joinGroupView.alpha = 0;
             self.createNewView.alpha = 0;
         }];

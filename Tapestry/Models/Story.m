@@ -19,16 +19,6 @@
     return @"Story";
 }
 
-/*
-+ (void) createStory:(NSString *)story withImage:(UIImage *)image withGroups:(NSMutableArray *)groups withCompletion:(PFBooleanResultBlock)completion {
-    Story *newStory = [Story new];
-    newStory.storyText = story;
-    newStory.author = [PFUser currentUser];
-    newStory.image = [self getPFFileFromImage:image];
-    newStory.groupsArray = [NSMutableArray new];
-    [newStory saveInBackgroundWithBlock: completion];
-} */
-
 + (void) createStory:(NSString *)story withGroups:(NSArray *)groups withImage:( UIImage * _Nullable )image withCompletion:(PFBooleanResultBlock)completion {
     Story *newStory = [Story new];
     newStory.storyText = story;
