@@ -6,6 +6,7 @@
 //
 
 #import "GroupsViewController.h"
+#import "TapestryViewController.h"
 #import "TapestryGridCell.h"
 #import "TapestriesHeaderReusableView.h"
 #import "Group.h"
@@ -111,12 +112,11 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    /*UICollectionViewCell *tappedCell = sender;
+    UICollectionViewCell *tappedCell = sender;
     NSIndexPath *indexPath = [self.collectionView indexPathForCell:tappedCell];
-    //Group *group = self.filteredData[indexPath.row];
-    //DetailsViewController *detailViewController = [segue destinationViewController];
-    //detailViewController.movie = movie; // Passing over movie to next view controller.
-    //NSLog(@"Tapping on a movie!"); */
+    Group *group = self.userTapestries[indexPath.row];
+    TapestryViewController *tapestryViewController = [segue destinationViewController];
+    tapestryViewController.group = group; // Passing over group to next view controller.
 }
 
 
