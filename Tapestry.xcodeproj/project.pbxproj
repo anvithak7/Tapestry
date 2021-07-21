@@ -30,6 +30,7 @@
 		9E430D7926A776E400C0B571 /* TapestriesHeaderReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D7826A776E400C0B571 /* TapestriesHeaderReusableView.m */; };
 		9E430D7C26A7E0E400C0B571 /* TapestryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D7B26A7E0E400C0B571 /* TapestryViewController.m */; };
 		9E430D7F26A7EB2000C0B571 /* StoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D7E26A7EB2000C0B571 /* StoryCell.m */; };
+		9E430D8326A87F5F00C0B571 /* StoriesLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8226A87F5F00C0B571 /* StoriesLayout.m */; };
 		BAC26881E50874E261006A77 /* Pods_Tapestry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CED42AE8DCC4FEDB9E95E72 /* Pods_Tapestry.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +99,8 @@
 		9E430D7B26A7E0E400C0B571 /* TapestryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TapestryViewController.m; sourceTree = "<group>"; };
 		9E430D7D26A7EB2000C0B571 /* StoryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoryCell.h; sourceTree = "<group>"; };
 		9E430D7E26A7EB2000C0B571 /* StoryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoryCell.m; sourceTree = "<group>"; };
+		9E430D8126A87F5F00C0B571 /* StoriesLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoriesLayout.h; sourceTree = "<group>"; };
+		9E430D8226A87F5F00C0B571 /* StoriesLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoriesLayout.m; sourceTree = "<group>"; };
 		A3EA13843EC42B98569A41AE /* Pods_TapestryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TapestryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D85BF7482663768E2DA14120 /* Pods-Tapestry-TapestryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tapestry-TapestryUITests.release.xcconfig"; path = "Target Support Files/Pods-Tapestry-TapestryUITests/Pods-Tapestry-TapestryUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -169,6 +172,7 @@
 		9E430D20269C9C2A00C0B571 /* Tapestry */ = {
 			isa = PBXGroup;
 			children = (
+				9E430D8026A87F2000C0B571 /* Layouts */,
 				9E430D7226A7424500C0B571 /* Views */,
 				9E430D57269E11C900C0B571 /* Models */,
 				9E430D56269E11C000C0B571 /* View Controllers */,
@@ -253,6 +257,15 @@
 				9E430D7826A776E400C0B571 /* TapestriesHeaderReusableView.m */,
 			);
 			path = Headers;
+			sourceTree = "<group>";
+		};
+		9E430D8026A87F2000C0B571 /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				9E430D8126A87F5F00C0B571 /* StoriesLayout.h */,
+				9E430D8226A87F5F00C0B571 /* StoriesLayout.m */,
+			);
+			path = Layouts;
 			sourceTree = "<group>";
 		};
 		CB77295F0664A1E345E8699E /* Frameworks */ = {
@@ -518,6 +531,7 @@
 				9E430D5F269E3A3F00C0B571 /* ComposeStoryViewController.m in Sources */,
 				9E430D65269F3D0100C0B571 /* NewUserViewController.m in Sources */,
 				9E430D68269F512700C0B571 /* Group.m in Sources */,
+				9E430D8326A87F5F00C0B571 /* StoriesLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

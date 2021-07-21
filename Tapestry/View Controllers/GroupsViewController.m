@@ -91,6 +91,8 @@
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     TapestryGridCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TapestryGridCell" forIndexPath:indexPath];
     Group *group = self.userTapestries[indexPath.item];
+    [group fetchIfNeededInBackground];
+    NSLog(@"Group Name: %@", group);
     cell.tapestryImageView.image = nil; // Clear out the previous one before presenting the new one.
     cell.tapestryNameLabel.text = group[@"groupName"];
     if (group[@"groupImage"]) {
