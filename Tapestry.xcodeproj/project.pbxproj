@@ -31,6 +31,7 @@
 		9E430D7C26A7E0E400C0B571 /* TapestryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D7B26A7E0E400C0B571 /* TapestryViewController.m */; };
 		9E430D7F26A7EB2000C0B571 /* StoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D7E26A7EB2000C0B571 /* StoryCell.m */; };
 		9E430D8326A87F5F00C0B571 /* StoriesLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8226A87F5F00C0B571 /* StoriesLayout.m */; };
+		9E430D8626A8F1EE00C0B571 /* TapestryHeaderforDates.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8526A8F1EE00C0B571 /* TapestryHeaderforDates.m */; };
 		BAC26881E50874E261006A77 /* Pods_Tapestry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CED42AE8DCC4FEDB9E95E72 /* Pods_Tapestry.framework */; };
 /* End PBXBuildFile section */
 
@@ -101,6 +102,8 @@
 		9E430D7E26A7EB2000C0B571 /* StoryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoryCell.m; sourceTree = "<group>"; };
 		9E430D8126A87F5F00C0B571 /* StoriesLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoriesLayout.h; sourceTree = "<group>"; };
 		9E430D8226A87F5F00C0B571 /* StoriesLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoriesLayout.m; sourceTree = "<group>"; };
+		9E430D8426A8F1EE00C0B571 /* TapestryHeaderforDates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TapestryHeaderforDates.h; sourceTree = "<group>"; };
+		9E430D8526A8F1EE00C0B571 /* TapestryHeaderforDates.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TapestryHeaderforDates.m; sourceTree = "<group>"; };
 		A3EA13843EC42B98569A41AE /* Pods_TapestryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TapestryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D85BF7482663768E2DA14120 /* Pods-Tapestry-TapestryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tapestry-TapestryUITests.release.xcconfig"; path = "Target Support Files/Pods-Tapestry-TapestryUITests/Pods-Tapestry-TapestryUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -255,6 +258,8 @@
 			children = (
 				9E430D7726A776E400C0B571 /* TapestriesHeaderReusableView.h */,
 				9E430D7826A776E400C0B571 /* TapestriesHeaderReusableView.m */,
+				9E430D8426A8F1EE00C0B571 /* TapestryHeaderforDates.h */,
+				9E430D8526A8F1EE00C0B571 /* TapestryHeaderforDates.m */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -517,6 +522,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E430D8626A8F1EE00C0B571 /* TapestryHeaderforDates.m in Sources */,
 				9E430D62269E3CC100C0B571 /* AddGroupsViewController.m in Sources */,
 				9E430D5C269E164D00C0B571 /* LoginViewController.m in Sources */,
 				9E430D23269C9C2A00C0B571 /* AppDelegate.m in Sources */,

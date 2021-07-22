@@ -728,7 +728,7 @@
                                 <rect key="frame" x="0.0" y="56" width="414" height="703"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <inset key="scrollIndicatorInsets" minX="2" minY="2" maxX="2" maxY="2"/>
-                                <collectionViewLayout key="collectionViewLayout" id="ZZt-Je-bBR" customClass="StoriesLayout"/>
+                                <collectionViewLayout key="collectionViewLayout" id="MFQ-RH-0Vm" customClass="StoriesLayout"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StoryCell" id="GCi-vF-eFN" customClass="StoryCell">
                                         <rect key="frame" x="0.0" y="0.0" width="195" height="209"/>
@@ -743,7 +743,7 @@
                                                         <constraint firstAttribute="height" constant="130" id="bbi-3v-eVR"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Sentence" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jp6-ux-k3l">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Sentence" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jp6-ux-k3l">
                                                     <rect key="frame" x="8" y="138" width="179" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                                     <nil key="textColor"/>
@@ -756,16 +756,16 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="bcX-EI-URH">
-                                                    <rect key="frame" x="67.5" y="162" width="60.5" height="20"/>
+                                                    <rect key="frame" x="8" y="162" width="179" height="20"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KcD-KR-7gH">
-                                                            <rect key="frame" x="28" y="0.0" width="32.5" height="20"/>
+                                                            <rect key="frame" x="73.5" y="0.0" width="32.5" height="20"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FMR-mg-TXE" customClass="PFImageView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                            <rect key="frame" x="45.5" y="0.0" width="20" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="20" id="SeO-Xd-stZ"/>
                                                                 <constraint firstAttribute="height" constant="20" id="T92-Pu-nVo"/>
@@ -776,13 +776,12 @@
                                                     <constraints>
                                                         <constraint firstItem="KcD-KR-7gH" firstAttribute="bottom" secondItem="FMR-mg-TXE" secondAttribute="bottom" id="Mt7-El-Va9"/>
                                                         <constraint firstItem="FMR-mg-TXE" firstAttribute="top" secondItem="bcX-EI-URH" secondAttribute="top" id="RPj-dy-BTP"/>
-                                                        <constraint firstItem="FMR-mg-TXE" firstAttribute="leading" secondItem="bcX-EI-URH" secondAttribute="leading" id="Tvb-Ry-O81"/>
                                                         <constraint firstAttribute="bottom" secondItem="KcD-KR-7gH" secondAttribute="bottom" id="V9i-Hz-HuA"/>
                                                         <constraint firstItem="KcD-KR-7gH" firstAttribute="top" secondItem="FMR-mg-TXE" secondAttribute="top" id="VIh-ig-4gI"/>
+                                                        <constraint firstItem="KcD-KR-7gH" firstAttribute="centerX" secondItem="bcX-EI-URH" secondAttribute="centerX" id="Xge-KX-sYC"/>
                                                         <constraint firstItem="KcD-KR-7gH" firstAttribute="top" secondItem="bcX-EI-URH" secondAttribute="top" id="Ycg-Mx-tTQ"/>
                                                         <constraint firstItem="KcD-KR-7gH" firstAttribute="leading" secondItem="FMR-mg-TXE" secondAttribute="trailing" constant="8" id="fC8-Jm-Zj1"/>
                                                         <constraint firstAttribute="bottom" secondItem="FMR-mg-TXE" secondAttribute="bottom" id="l5N-x8-afp"/>
-                                                        <constraint firstAttribute="trailing" secondItem="KcD-KR-7gH" secondAttribute="trailing" id="qe6-M0-UNj"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -795,6 +794,8 @@
                                                 <constraint firstItem="jp6-ux-k3l" firstAttribute="leading" secondItem="ZY6-qs-7ry" secondAttribute="leading" constant="8" id="IUZ-Xx-x6f"/>
                                                 <constraint firstItem="bcX-EI-URH" firstAttribute="top" secondItem="jp6-ux-k3l" secondAttribute="bottom" constant="8" id="OD4-id-C4f"/>
                                                 <constraint firstItem="jp6-ux-k3l" firstAttribute="top" secondItem="OSL-pm-iaf" secondAttribute="top" constant="138" id="ioH-Cm-BCt"/>
+                                                <constraint firstAttribute="trailing" secondItem="bcX-EI-URH" secondAttribute="trailing" constant="8" id="lmt-eQ-4p8"/>
+                                                <constraint firstItem="bcX-EI-URH" firstAttribute="leading" secondItem="ZY6-qs-7ry" secondAttribute="leading" constant="8" id="mlV-qy-lr6"/>
                                                 <constraint firstItem="bcX-EI-URH" firstAttribute="centerX" secondItem="ZY6-qs-7ry" secondAttribute="centerX" id="pcT-eH-qOy"/>
                                                 <constraint firstAttribute="trailing" secondItem="4Ef-gX-V3K" secondAttribute="trailing" constant="8" id="pgx-eU-BK1"/>
                                                 <constraint firstItem="OSL-pm-iaf" firstAttribute="top" secondItem="ZY6-qs-7ry" secondAttribute="top" id="sIM-9g-RWp"/>

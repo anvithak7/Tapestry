@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *groupMembers;
 @property (nonatomic, strong) NSMutableArray *storiesToShow;
 @property (nonatomic, strong) NSMutableArray *stringsToGetSizeFrom;
+@property (nonatomic, strong) NSMutableArray *extraMediaExists;
 
 @end
 

@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CGFloat columnWidth;
 @property (nonatomic) CGFloat textHeight;
 @property (nonatomic) CGFloat itemHeight;
+@property (nonatomic) CGFloat extraHeightInCell;
 @property (nonatomic) CGRect itemFrame;
 @property (nonatomic) CGRect insetFrame;
 @property (nonatomic) CGSize contentSize;

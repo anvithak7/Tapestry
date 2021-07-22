@@ -6,6 +6,7 @@
 //
 
 #import "TapestryViewController.h"
+#import "TapestryHeaderforDates.h"
 #import "StoriesLayout.h"
 #import "StoryCell.h"
 
@@ -23,10 +24,12 @@
     // Do any additional setup after loading the view.
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
+    [self.collectionView registerClass:TapestryHeaderforDates.self forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"TapestryHeaderforDates"];
     self.layout = [StoriesLayout new];
     self.collectionView.collectionViewLayout = self.layout;
     self.layout.delegate = self;
     self.stringsToGetSizeFrom = [NSMutableArray new];
+    self.extraMediaExists = [NSMutableArray new];
     [self getStories];
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(getStories) forControlEvents:UIControlEventValueChanged];
@@ -49,7 +52,13 @@
             for (Story *story in objects) {
                 NSString *textString = [story objectForKey:@"storyText"];
                 [self.stringsToGetSizeFrom addObject:textString];
+                if (story[@"image"]) {
+                    [self.extraMediaExists addObject:@"Yes"];
+                } else {
+                    [self.extraMediaExists addObject:@""];
+                }
             }
+            NSLog(@"List of image files %@", self.extraMediaExists);
             [self.collectionView reloadData];
             [self.refreshControl endRefreshing];
         }
@@ -60,30 +69,21 @@
     return 1; //TODO: change this later!!!
 }
 
-/*
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    UICollectionReusableView *reusableview = nil;
-    if (kind == UICollectionElementKindSectionHeader) {
-        TapestriesHeaderReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"TapestriesHeader" forIndexPath:indexPath];
+    TapestryHeaderforDates *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"TapestryHeaderforDates" forIndexPath:indexPath];
         //NSString *title = [[NSString alloc]initWithFormat:@"Recipe Group #%i", indexPath.section + 1];
         //headerView.title.text = title;
         //UIImage *headerImage = [UIImage imageNamed:@"header_banner.png"];
         //headerView.backgroundImage.image = headerImage;
-        reusableview = headerView;
-    }
- 
-    if (kind == UICollectionElementKindSectionFooter) {
-        UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
-        reusableview = footerview;
-    }
-        
-    return reusableview;
-} */
+    return headerView;
+}
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     StoryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"StoryCell" forIndexPath:indexPath];
     Story *story = self.storiesToShow[indexPath.item];
     cell.story = story;
+    cell.layer.masksToBounds = YES;
+    cell.layer.cornerRadius = 10;
     return cell;
 }
 
@@ -92,9 +92,20 @@
 }
 
 - (CGFloat)heightForText:(nonnull UICollectionView *)collectionView atIndexPath:(nonnull NSIndexPath *)indexPath {
+    UILabel *stringLabel = [UILabel new];
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:13.0 weight:UIFontWeightLight]};
+    stringLabel.frame = CGRectMake(20,20,self.layout.columnWidth,[self.stringsToGetSizeFrom[indexPath.item] sizeWithAttributes:attributes].height);
+    [stringLabel setFont:[UIFont systemFontOfSize:13.0 weight:UIFontWeightLight]];
+    stringLabel.numberOfLines = 0;
+    stringLabel.text = self.stringsToGetSizeFrom[indexPath.item];
+    [stringLabel sizeToFit];
     NSLog(@"String to get size of: %@", self.stringsToGetSizeFrom[indexPath.item]);
-    return [self.stringsToGetSizeFrom[indexPath.item] sizeWithAttributes:attributes].height;
+    if ([self.extraMediaExists[indexPath.item] isEqual:@"Yes"]) {
+        return stringLabel.frame.size.height + 130;
+    } else {
+        return stringLabel.frame.size.height;
+    }
+    //return [self.stringsToGetSizeFrom[indexPath.item] sizeWithAttributes:attributes].height;
 }
 
 /*

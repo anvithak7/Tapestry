@@ -13,6 +13,7 @@
 - (void) prepareLayout {
     self.numberOfColumns = 2;
     self.cellPadding = 2;
+    self.extraHeightInCell = 65;
     self.cache = [NSMutableArray new];
     self.xOffsets = [NSMutableArray new];
     self.yOffsets = [NSMutableArray new];
@@ -26,15 +27,15 @@
     for (int i = 0; i < (int) roundf(self.numberOfColumns); i++) {
         [self.xOffsets addObject: [NSNumber numberWithFloat:(CGFloat) i * self.columnWidth]];
         NSLog(@"Added x offset: %@", [NSNumber numberWithFloat:(CGFloat) i * self.columnWidth]);
-        [self.yOffsets addObject:[NSNumber numberWithInt:0]];
-        NSLog(@"Added y offset: %@", [NSNumber numberWithInt:0]);
+        [self.yOffsets addObject:[NSNumber numberWithFloat:self.collectionView.contentInset.top]];
+        NSLog(@"Added y offset: %@", [NSNumber numberWithFloat:self.collectionView.contentInset.top]);
     }
     NSLog(@"Added all offsets");
     int column = 0;
     for (int i = 0; i < [self.collectionView numberOfItemsInSection:0]; i++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
         NSLog(@"Returned by delegate function: %f", [self.delegate heightForText:self.collectionView atIndexPath:indexPath]);
-        self.textHeight = [self.delegate heightForText:self.collectionView atIndexPath:indexPath] + 250;
+        self.textHeight = [self.delegate heightForText:self.collectionView atIndexPath:indexPath] + self.extraHeightInCell;
         CGFloat cellHeight = self.textHeight + 2 * self.cellPadding;
         self.itemFrame = CGRectMake([self.xOffsets[column] floatValue], [self.yOffsets[column] floatValue], self.columnWidth, cellHeight);
         self.insetFrame = CGRectInset(self.itemFrame, self.cellPadding, self.cellPadding);
@@ -57,6 +58,7 @@
 
 - (NSArray<__kindof UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSMutableArray *attributes = [NSMutableArray new];
+    [attributes addObject:[self layoutAttributesForSupplementaryViewOfKind:@"TapestryHeaderforDates" atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]];
     for (UICollectionViewLayoutAttributes *attribute in self.cache) {
         if (CGRectIntersectsRect(attribute.frame, rect)) {
             [attributes addObject:attribute];
@@ -67,6 +69,12 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
     return self.cache[indexPath.item];
+}
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewLayoutAttributes *attribute = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:@"TapestryHeaderforDates" withIndexPath:indexPath];
+    attribute.frame = CGRectMake(0, 0, self.collectionView.frame.size.width, 50);
+    return attribute;
 }
 
 @end
