@@ -6,6 +6,7 @@
 //
 
 #import "ComposeStoryViewController.h"
+#import "TapestryAPIManager.h"
 #import "LoginViewController.h"
 #import "SceneDelegate.h"
 #import "Story.h"
@@ -30,7 +31,7 @@
 @property (nonatomic, strong) NSMutableArray *buttonColorsArray;
 @property (nonatomic) int currentXEdge;
 @property (nonatomic) int currentYLine;
-
+@property (nonatomic, strong) TapestryAPIManager *manager;
 @end
 
 @implementation ComposeStoryViewController
@@ -40,6 +41,7 @@
     // Do any additional setup after loading the view.
     // To use text view methods, we set the view controller as a delegate for the text view.
     self.storyTextView.delegate = self;
+    self.manager = [TapestryAPIManager new];
     // The default text is light gray, because it is meant to go away when a user types in their real text.
     self.storyTextView.textColor = UIColor.lightGrayColor;
     //self.storyTextView.textContainer.heightTracksTextView = true;
@@ -96,6 +98,7 @@
         // PFUser.current() will now be nil
     }];
 }
+
 - (IBAction)onTapWeave:(id)sender {
     for (id key in self.groupsSelected) {
         id value = [self.groupsSelected objectForKey:key];
@@ -103,19 +106,12 @@
             [self.groupNamesForUpdate addObject:key];
         }
     }
-    PFQuery *query = [PFQuery queryWithClassName:@"Group"];
-    [query whereKey:@"groupName" containedIn:self.groupNamesForUpdate];
-    [query whereKey:@"membersArray" containsAllObjectsInArray:@[PFUser.currentUser]];
-    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        if (error != nil) {
+    [self.groupNamesForUpdate addObject:@"My Stories"];
+    [self.manager postStoryToTapestries:self.groupNamesForUpdate :^(NSMutableArray * _Nonnull groups, NSError * _Nonnull error) {
+        if (error) {
             NSLog(@"Error: %@", error.localizedDescription);
         } else {
-            for (Group *group in objects) {
-                [group fetchIfNeededInBackground];
-            }
-            self.groupsForUpdate = [objects copy];
-            NSLog(@"Groups for update inside completion block: %@", self.groupsForUpdate);
-            [Story createStory:self.storyTextView.text withGroups:self.groupsForUpdate withImage: self.storyImageView.image withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+            [Story createStory:self.storyTextView.text withGroups:groups withImage: self.storyImageView.image withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
                 if (error != nil) {
                     [self createAlert:@"Unable to share story. Please check your internet connection and try again!" error:@"Unable to Share"];
                 } else {
@@ -136,8 +132,6 @@
             }];
         }
     }];
-    // TODO: why does the above have to be nested - why does this below array reset after we come out of completion block?
-    NSLog(@"Groups for update: %@", self.groupsForUpdate);
 }
 
 - (void) addGroupButtons {
@@ -145,44 +139,13 @@
     int count = 0;
     // TODO: add an all groups button too
     for (Group *group in user[@"groups"]) {
-        [group fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-            if (error != nil) {
+        [self.manager fetchGroup:group :^(PFObject * _Nonnull group, NSError * _Nonnull error) {
+            if (error) {
                 NSLog(@"Error: %@", error.localizedDescription);
                 [self createAlert:@"Please check your internet connection and try again!" error:@"Unable to load groups"];
             } else {
-                if (![object[@"groupName"] isEqual:@"My Stories"]) {
-                    UIButton *groupButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-                    groupButton.tag = count;
-                    groupButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-                    groupButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-                    groupButton.titleLabel.font = [UIFont systemFontOfSize:13];
-                    [groupButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
-                    if ([object[@"groupName"] length] > 50) {
-                        NSString *thisGroupName = object[@"groupName"];
-                        NSString *stringToFindSpaceIn = [thisGroupName substringFromIndex:(NSInteger) 45]; // Change this number based on the longest length of a group name;
-                        NSInteger indexToCut = [stringToFindSpaceIn rangeOfString:@" "].location + 45;
-                        NSString *buttonTitle = [[thisGroupName substringToIndex:indexToCut] stringByAppendingString:@"\n"];
-                        NSString *completeButtonTitle = [buttonTitle stringByAppendingString:[thisGroupName substringFromIndex:indexToCut]];
-                        // The above allows a group name to be multi-line.
-                        [groupButton setTitle:completeButtonTitle forState:UIControlStateNormal];
-                    } else {
-                        [groupButton setTitle:object[@"groupName"] forState:UIControlStateNormal];
-                    }
-                    [groupButton sizeToFit];
-                    if ((self.currentXEdge + groupButton.frame.size.width + 8) > self.view.frame.size.width) {
-                        self.currentYLine += 38;
-                        self.currentXEdge = 8;
-                    }
-                    groupButton.frame = CGRectMake(self.currentXEdge, self.currentYLine, groupButton.frame.size.width + 6, 30.0);
-                    self.currentXEdge += groupButton.frame.size.width + 8;
-                    groupButton.backgroundColor = [UIColor lightGrayColor]; //TODO: CHANGE THIS COLOR
-                    [groupButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                    groupButton.layer.cornerRadius = 10;
-                    groupButton.clipsToBounds = YES;
-                    self.groupsSelected[object[@"groupName"]] = @0;
-                    [self.view addSubview:groupButton];
-                    [self.buttonsCurrentlyOnScreen addObject:groupButton];
-                    [self.groupsCurrentlyOnScreen addObject:group];
+                if (![group[@"groupName"] isEqual:@"My Stories"]) {
+                    [self createButtonforObject:group withTag:count];
                 }
             }
         }];
@@ -190,9 +153,43 @@
     }
     self.storyImageView.frame = CGRectMake(8.0, self.currentYLine + 46, 50.0, 50.0); // TODO: why am I unable to place this where I want it to go???
     //TODO: redo autolayout constraints in program
-    //TODO: can I add some constraints programmatically and others through autolayout??
+    //TODO: can I add some constraints programmatically and others through autolayout?
+    //self.sendStoryButton.frame = CGRectMake((self.view.frame.size.width - 150) / 2, self.currentYLine + 96.0, 150.0, 30.0);
+}
 
-        //self.sendStoryButton.frame = CGRectMake((self.view.frame.size.width - 150) / 2, self.currentYLine + 96.0, 150.0, 30.0);
+- (void) createButtonforObject: (PFObject*) group withTag: (int) tag{
+    UIButton *groupButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    groupButton.tag = tag;
+    groupButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    groupButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    groupButton.titleLabel.font = [UIFont systemFontOfSize:13];
+    [groupButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    if ([group[@"groupName"] length] > 50) {
+        NSString *thisGroupName = group[@"groupName"];
+        NSString *stringToFindSpaceIn = [thisGroupName substringFromIndex:(NSInteger) 45]; // Change this number based on the longest length of a group name;
+        NSInteger indexToCut = [stringToFindSpaceIn rangeOfString:@" "].location + 45;
+        NSString *buttonTitle = [[thisGroupName substringToIndex:indexToCut] stringByAppendingString:@"\n"];
+        NSString *completeButtonTitle = [buttonTitle stringByAppendingString:[thisGroupName substringFromIndex:indexToCut]];
+        // The above allows a group name to be multi-line.
+        [groupButton setTitle:completeButtonTitle forState:UIControlStateNormal];
+    } else {
+        [groupButton setTitle:group[@"groupName"] forState:UIControlStateNormal];
+    }
+    [groupButton sizeToFit];
+    if ((self.currentXEdge + groupButton.frame.size.width + 8) > self.view.frame.size.width) {
+        self.currentYLine += 38;
+        self.currentXEdge = 8;
+    }
+    groupButton.frame = CGRectMake(self.currentXEdge, self.currentYLine, groupButton.frame.size.width + 6, 30.0);
+    self.currentXEdge += groupButton.frame.size.width + 8;
+    groupButton.backgroundColor = [UIColor lightGrayColor]; //TODO: CHANGE THIS COLOR
+    [groupButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    groupButton.layer.cornerRadius = 10;
+    groupButton.clipsToBounds = YES;
+    self.groupsSelected[group[@"groupName"]] = @0;
+    [self.view addSubview:groupButton];
+    [self.buttonsCurrentlyOnScreen addObject:groupButton];
+    [self.groupsCurrentlyOnScreen addObject:group];
 }
 
 -(void)buttonClicked:(UIButton*)sender {
@@ -227,7 +224,6 @@
     }];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
     }];
-
     [addPhotoAction addAction:fromCameraAction];
     [addPhotoAction addAction:fromPhotosAction];
     [addPhotoAction addAction:cancelAction];

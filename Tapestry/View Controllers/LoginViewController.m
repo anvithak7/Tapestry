@@ -30,7 +30,7 @@
     BOOL validated = [self validateFields];
     if (validated) {
         [PFUser logInWithUsernameInBackground:self.usernameField.text password:self.passwordField.text block:^(PFUser * user, NSError * error) {
-            ;            if (error != nil) {
+            if (error != nil) {
                 NSLog(@"Error: %@", error.localizedDescription);
                 [self createAlert:@"Unable to login. Please check your credentials or your internet connection and try again!" error:@"Login Failed"];
             } else {
