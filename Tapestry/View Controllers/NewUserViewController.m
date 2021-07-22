@@ -26,6 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.alertManager = [AlertManager new];
 }
 
 - (IBAction)onTapSignUp:(id)sender {
@@ -44,12 +45,12 @@
         [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
             if (error != nil) {
                 NSLog(@"Error: %@", error.localizedDescription);
-                [self createAlert:error.localizedDescription error:@"Unable to Register User"];
+                [self.alertManager createAlert:self withMessage:error.localizedDescription error:@"Unable to Register User"];
             } else {
                 NSLog(@"User registered successfully");
                 [Group createGroup:@"My Stories" withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
                     if (error != nil) {
-                        [self createAlert:@"Unable to create tapestry. Please check your internet connection and try again!" error:@"Unable to Create Tapestry"];
+                        [self.alertManager createAlert:self withMessage:@"Unable to create tapestry. Please check your internet connection and try again!" error:@"Unable to Create Tapestry"];
                     }
                 }];
                 [self performSegueWithIdentifier:@"SignUpToHome" sender:nil];
@@ -68,34 +69,19 @@
     [self.view endEditing:true];
 }
 
-// A function to create alerts, so I don't have to reuse all this code again within functions.
-- (void) createAlert: (NSString *)message error:(NSString*)error {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:error message:message preferredStyle:(UIAlertControllerStyleAlert)];
-    // create an OK action
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    // handle response here.
-    }];
-    // add the OK action to the alert controller
-    [alert addAction:okAction];
-    // show alert
-    [self presentViewController:alert animated:YES completion:^{
-        // optional code for what happens after the alert controller has finished presenting
-    }];
-}
-
 // The below method checks all of the fields and calls out errors in case any of the fields are blank. Parse seems to validate emails and valid strings, so I didn't have to do that here.
 - (BOOL) validateFields {
     if ([self.nameField.text isEqual:@""]) {
-        [self createAlert:@"Please enter your full name and try again!" error:@"Unable to Register User"];
+        [self.alertManager createAlert:self withMessage:@"Please enter your full name and try again!" error:@"Unable to Register User"];
         return NO;
     } else if ([self.emailField.text isEqual:@""]) {
-        [self createAlert:@"Please enter a valid email and try again!" error:@"Unable to Register User"];
+        [self.alertManager createAlert:self withMessage:@"Please enter a valid email and try again!" error:@"Unable to Register User"];
         return NO;
     } else if ([self.usernameField.text isEqual:@""]) {
-        [self createAlert:@"Please choose a username and try again!" error:@"Unable to Register User"];
+        [self.alertManager createAlert:self withMessage:@"Please choose a username and try again!" error:@"Unable to Register User"];
         return NO;
     } else if ([self.passwordField.text isEqual:@""]) {
-        [self createAlert:@"Please enter a password and try again!" error:@"Unable to Register User"];
+        [self.alertManager createAlert:self withMessage:@"Please enter a password and try again!" error:@"Unable to Register User"];
         return NO;
     }
     return YES;

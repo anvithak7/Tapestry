@@ -33,6 +33,8 @@
 		9E430D8326A87F5F00C0B571 /* StoriesLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8226A87F5F00C0B571 /* StoriesLayout.m */; };
 		9E430D8626A8F1EE00C0B571 /* TapestryHeaderforDates.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8526A8F1EE00C0B571 /* TapestryHeaderforDates.m */; };
 		9E430D8A26A93C5D00C0B571 /* TapestryAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8926A93C5D00C0B571 /* TapestryAPIManager.m */; };
+		9E430D8E26A94B4800C0B571 /* AlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8D26A94B4800C0B571 /* AlertManager.m */; };
+		9E430D9126A94B5200C0B571 /* PhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D9026A94B5200C0B571 /* PhotoManager.m */; };
 		BAC26881E50874E261006A77 /* Pods_Tapestry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CED42AE8DCC4FEDB9E95E72 /* Pods_Tapestry.framework */; };
 /* End PBXBuildFile section */
 
@@ -107,6 +109,10 @@
 		9E430D8526A8F1EE00C0B571 /* TapestryHeaderforDates.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TapestryHeaderforDates.m; sourceTree = "<group>"; };
 		9E430D8826A93C5D00C0B571 /* TapestryAPIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TapestryAPIManager.h; sourceTree = "<group>"; };
 		9E430D8926A93C5D00C0B571 /* TapestryAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TapestryAPIManager.m; sourceTree = "<group>"; };
+		9E430D8C26A94B4800C0B571 /* AlertManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertManager.h; sourceTree = "<group>"; };
+		9E430D8D26A94B4800C0B571 /* AlertManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertManager.m; sourceTree = "<group>"; };
+		9E430D8F26A94B5200C0B571 /* PhotoManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoManager.h; sourceTree = "<group>"; };
+		9E430D9026A94B5200C0B571 /* PhotoManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoManager.m; sourceTree = "<group>"; };
 		A3EA13843EC42B98569A41AE /* Pods_TapestryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TapestryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D85BF7482663768E2DA14120 /* Pods-Tapestry-TapestryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tapestry-TapestryUITests.release.xcconfig"; path = "Target Support Files/Pods-Tapestry-TapestryUITests/Pods-Tapestry-TapestryUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -178,6 +184,7 @@
 		9E430D20269C9C2A00C0B571 /* Tapestry */ = {
 			isa = PBXGroup;
 			children = (
+				9E430D8B26A94B3400C0B571 /* Managers */,
 				9E430D8726A93C2F00C0B571 /* APIManager */,
 				9E430D8026A87F2000C0B571 /* Layouts */,
 				9E430D7226A7424500C0B571 /* Views */,
@@ -284,6 +291,17 @@
 				9E430D8926A93C5D00C0B571 /* TapestryAPIManager.m */,
 			);
 			path = APIManager;
+			sourceTree = "<group>";
+		};
+		9E430D8B26A94B3400C0B571 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				9E430D8C26A94B4800C0B571 /* AlertManager.h */,
+				9E430D8D26A94B4800C0B571 /* AlertManager.m */,
+				9E430D8F26A94B5200C0B571 /* PhotoManager.h */,
+				9E430D9026A94B5200C0B571 /* PhotoManager.m */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		CB77295F0664A1E345E8699E /* Frameworks */ = {
@@ -547,6 +565,8 @@
 				9E430D6E26A6195A00C0B571 /* GroupsViewController.m in Sources */,
 				9E430D7C26A7E0E400C0B571 /* TapestryViewController.m in Sources */,
 				9E430D7926A776E400C0B571 /* TapestriesHeaderReusableView.m in Sources */,
+				9E430D9126A94B5200C0B571 /* PhotoManager.m in Sources */,
+				9E430D8E26A94B4800C0B571 /* AlertManager.m in Sources */,
 				9E430D5F269E3A3F00C0B571 /* ComposeStoryViewController.m in Sources */,
 				9E430D8A26A93C5D00C0B571 /* TapestryAPIManager.m in Sources */,
 				9E430D65269F3D0100C0B571 /* NewUserViewController.m in Sources */,

@@ -36,6 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.alertManager = [AlertManager new];
     self.createNewView.alpha = 0;
     self.joinGroupView.alpha = 0;
     self.doneCreating.alpha = 0;
@@ -144,14 +145,14 @@
 
 - (IBAction)groupNameEditingDidEnd:(id)sender {
     if (self.groupName.text.length > 50) {
-        [self createAlert:@"Please choose a shorter tapestry name and try again!" error:@"Tapestry Name Exceeds 50 Characters"];
+        [self.alertManager createAlert:self withMessage:@"Please choose a shorter tapestry name and try again!" error:@"Tapestry Name Exceeds 50 Characters"];
     }
 }
 
 - (IBAction)instantiateGroup:(id)sender {
     NSString *inviteCode = [Group createGroup:self.groupName.text withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
         if (error != nil) {
-            [self createAlert:@"Unable to create tapestry. Please check your internet connection and try again!" error:@"Unable to Create Tapestry"];
+            [self.alertManager createAlert:self withMessage:@"Unable to create tapestry. Please check your internet connection and try again!" error:@"Unable to Create Tapestry"];
         }
     }];
     self.doneCreating.alpha = 1;
@@ -164,7 +165,7 @@
         [query whereKey:@"groupInviteCode" equalTo:self.inviteCodeEntryField.text];
         [query findObjectsInBackgroundWithBlock:^(NSArray *group, NSError *error) {
             if (error != nil) {
-                [self createAlert:@"Unable to join tapestry. Please check your internet connection and try again!" error:@"Unable to Join Tapestry"];
+                [self.alertManager createAlert:self withMessage:@"Unable to join tapestry. Please check your internet connection and try again!" error:@"Unable to Join Tapestry"];
                 NSLog(@"Error: %@", error.localizedDescription);
             } else {
                 Group *groupToJoin = group[0];
@@ -173,7 +174,6 @@
                     if (error) {
                         NSLog(@"Error: %@", error.localizedDescription);
                     } else {
-                        NSLog(@"Members array!!!!! : %@", groupToJoin[@"membersArray"]);
                         [groupToJoin addUniqueObject:PFUser.currentUser forKey:@"membersArray"];
                         [PFUser.currentUser addObject:groupToJoin forKey:@"groups"];
                         [PFObject saveAllInBackground:@[groupToJoin, PFUser.currentUser] block:^(BOOL succeeded, NSError * _Nullable error) {
@@ -191,28 +191,13 @@
         }];
     }
     else {
-        [self createAlert:@"Please input a valid tapestry invite code and try again!" error:@"Unable to Join Tapestry"];
+        [self.alertManager createAlert:self withMessage:@"Please input a valid tapestry invite code and try again!" error:@"Unable to Join Tapestry"];
     }
 }
 
 - (IBAction)onTapDone:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^{
         // Do something after the view goes back.
-    }];
-}
-
-// A function to create alerts, instead of writing this out multiple times.
-- (void) createAlert: (NSString *)message error:(NSString*)error {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:error message:message preferredStyle:(UIAlertControllerStyleAlert)];
-    // create an OK action
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    // handle response here.
-    }];
-    // add the OK action to the alert controller
-    [alert addAction:okAction];
-    // show alert
-    [self presentViewController:alert animated:YES completion:^{
-        // optional code for what happens after the alert controller has finished presenting
     }];
 }
 

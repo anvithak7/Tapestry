@@ -6,7 +6,6 @@
 //
 
 #import "ComposeStoryViewController.h"
-#import "TapestryAPIManager.h"
 #import "LoginViewController.h"
 #import "SceneDelegate.h"
 #import "Story.h"
@@ -22,16 +21,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *storyImageView;
 @property (weak, nonatomic) IBOutlet UILabel *addImageLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
-@property (weak, nonatomic) IBOutlet UIButton *sendStoryButton; //TODO: does this need to be an IBOutlet???
 @property (nonatomic, strong) NSMutableArray *buttonsCurrentlyOnScreen;
-@property (nonatomic, strong) NSMutableArray *groupsCurrentlyOnScreen;
 @property (nonatomic, strong) NSMutableDictionary *groupsSelected;
 @property (nonatomic, strong) NSMutableArray *groupNamesForUpdate;
-@property (nonatomic, strong) NSArray *groupsForUpdate;
 @property (nonatomic, strong) NSMutableArray *buttonColorsArray;
 @property (nonatomic) int currentXEdge;
 @property (nonatomic) int currentYLine;
-@property (nonatomic, strong) TapestryAPIManager *manager;
 @end
 
 @implementation ComposeStoryViewController
@@ -41,12 +36,12 @@
     // Do any additional setup after loading the view.
     // To use text view methods, we set the view controller as a delegate for the text view.
     self.storyTextView.delegate = self;
-    self.manager = [TapestryAPIManager new];
+    self.APIManager = [TapestryAPIManager new];
+    self.alertManager = [AlertManager new];
     // The default text is light gray, because it is meant to go away when a user types in their real text.
     self.storyTextView.textColor = UIColor.lightGrayColor;
     //self.storyTextView.textContainer.heightTracksTextView = true;
     self.groupNamesForUpdate = [NSMutableArray new];
-    self.groupsForUpdate = [NSArray new];
     // I have to somehow query the groups array and add My Stories to the list of groups to send the update to
     self.buttonColorsArray = [NSMutableArray new];
     self.buttonsCurrentlyOnScreen = [NSMutableArray new];
@@ -58,7 +53,7 @@
     self.currentYLine = self.storyTextView.frame.origin.y + self.storyTextView.frame.size.height + 8;
     self.addImageLabel.alpha = 1;
     self.photoImageView.alpha = 1;
-    self.sendStoryButton = nil;
+    self.storyImageView.image = nil;
     [self addGroupButtons];
 }
 
@@ -107,13 +102,13 @@
         }
     }
     [self.groupNamesForUpdate addObject:@"My Stories"];
-    [self.manager postStoryToTapestries:self.groupNamesForUpdate :^(NSMutableArray * _Nonnull groups, NSError * _Nonnull error) {
+    [self.APIManager postStoryToTapestries:self.groupNamesForUpdate :^(NSMutableArray * _Nonnull groups, NSError * _Nonnull error) {
         if (error) {
             NSLog(@"Error: %@", error.localizedDescription);
         } else {
             [Story createStory:self.storyTextView.text withGroups:groups withImage: self.storyImageView.image withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
                 if (error != nil) {
-                    [self createAlert:@"Unable to share story. Please check your internet connection and try again!" error:@"Unable to Share"];
+                    [self.alertManager createAlert:self withMessage:@"Unable to share story. Please check your internet connection and try again!" error:@"Unable to Share"];
                 } else {
                     NSLog(@"Story shared");
                     self.storyTextView.text = @"How's it going?";
@@ -139,10 +134,10 @@
     int count = 0;
     // TODO: add an all groups button too
     for (Group *group in user[@"groups"]) {
-        [self.manager fetchGroup:group :^(PFObject * _Nonnull group, NSError * _Nonnull error) {
+        [self.APIManager fetchGroup:group :^(PFObject * _Nonnull group, NSError * _Nonnull error) {
             if (error) {
                 NSLog(@"Error: %@", error.localizedDescription);
-                [self createAlert:@"Please check your internet connection and try again!" error:@"Unable to load groups"];
+                [self.alertManager createAlert:self withMessage:@"Please check your internet connection and try again!" error:@"Unable to load groups"];
             } else {
                 if (![group[@"groupName"] isEqual:@"My Stories"]) {
                     [self createButtonforObject:group withTag:count];
@@ -154,7 +149,6 @@
     self.storyImageView.frame = CGRectMake(8.0, self.currentYLine + 46, 50.0, 50.0); // TODO: why am I unable to place this where I want it to go???
     //TODO: redo autolayout constraints in program
     //TODO: can I add some constraints programmatically and others through autolayout?
-    //self.sendStoryButton.frame = CGRectMake((self.view.frame.size.width - 150) / 2, self.currentYLine + 96.0, 150.0, 30.0);
 }
 
 - (void) createButtonforObject: (PFObject*) group withTag: (int) tag{
@@ -189,7 +183,6 @@
     self.groupsSelected[group[@"groupName"]] = @0;
     [self.view addSubview:groupButton];
     [self.buttonsCurrentlyOnScreen addObject:groupButton];
-    [self.groupsCurrentlyOnScreen addObject:group];
 }
 
 -(void)buttonClicked:(UIButton*)sender {
@@ -236,12 +229,10 @@
     imagePickerVC.allowsEditing = YES;
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
-        self.addImageLabel.alpha = 0;
-        self.photoImageView.alpha = 0;
         [self presentViewController:imagePickerVC animated:YES completion:nil];
     }
     else {
-        [self createAlert:@"Please allow camera access and try again!" error:@"Unable to Acccess Camera"];
+        [self.alertManager createAlert:self withMessage:@"Please allow camera access and try again!" error:@"Unable to Acccess Camera"];
     }
 }
 
@@ -251,12 +242,10 @@
     imagePickerVC.allowsEditing = YES;
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        self.addImageLabel.alpha = 0;
-        self.photoImageView.alpha = 0;
         [self presentViewController:imagePickerVC animated:YES completion:nil];
     }
     else {
-        [self createAlert:@"Please allow photo library access and try again!" error:@"Unable to Acccess Photo Library"];
+        [self.alertManager createAlert:self withMessage:@"Please allow photo library access and try again!" error:@"Unable to Acccess Photo Library"];
     }
 }
 
@@ -288,21 +277,6 @@
     UIGraphicsEndImageContext();
     
     return newImage;
-}
-
-// A function to create alerts, instead of writing this out multiple times.
-- (void) createAlert: (NSString *)message error:(NSString*)error {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:error message:message preferredStyle:(UIAlertControllerStyleAlert)];
-    // create an OK action
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    // handle response here.
-    }];
-    // add the OK action to the alert controller
-    [alert addAction:okAction];
-    // show alert
-    [self presentViewController:alert animated:YES completion:^{
-        // optional code for what happens after the alert controller has finished presenting
-    }];
 }
 
 /*

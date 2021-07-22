@@ -23,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.alertManager = [AlertManager new];
 }
 
 - (IBAction)onTapLogin:(id)sender {
@@ -32,7 +33,7 @@
         [PFUser logInWithUsernameInBackground:self.usernameField.text password:self.passwordField.text block:^(PFUser * user, NSError * error) {
             if (error != nil) {
                 NSLog(@"Error: %@", error.localizedDescription);
-                [self createAlert:@"Unable to login. Please check your credentials or your internet connection and try again!" error:@"Login Failed"];
+                [self.alertManager createAlert:self withMessage:@"Unable to login. Please check your credentials or your internet connection and try again!" error:@"Login Failed"];
             } else {
                 NSLog(@"User registered successfully");
                 [self performSegueWithIdentifier:@"LoginToHome" sender:nil]; // Manually segue to logged in view
@@ -53,28 +54,13 @@
 // The below method checks for whether fields are blank, in which case an error would be thrown.
 - (BOOL) validateFields {
     if ([self.usernameField.text isEqual:@""]) {
-        [self createAlert:@"Username cannot be blank. Please enter a valid username and try again!" error:@"Unable to Login"];
+        [self.alertManager createAlert:self withMessage:@"Username cannot be blank. Please enter a valid username and try again!" error:@"Unable to Login"];
         return NO;
     } else if ([self.passwordField.text isEqual:@""]) {
-        [self createAlert:@"Password cannot be blank. Please enter a valid password and try again!" error:@"Unable to Login"];
+        [self.alertManager createAlert:self withMessage:@"Password cannot be blank. Please enter a valid password and try again!" error:@"Unable to Login"];
         return NO;
     }
     return YES;
-}
-
-// A function to create alerts, instead of writing this out multiple times.
-- (void) createAlert: (NSString *)message error:(NSString*)error {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:error message:message preferredStyle:(UIAlertControllerStyleAlert)];
-    // create an OK action
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    // handle response here.
-    }];
-    // add the OK action to the alert controller
-    [alert addAction:okAction];
-    // show alert
-    [self presentViewController:alert animated:YES completion:^{
-        // optional code for what happens after the alert controller has finished presenting
-    }];
 }
 
 
