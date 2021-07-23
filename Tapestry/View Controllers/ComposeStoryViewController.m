@@ -13,6 +13,8 @@
 #import "Parse/Parse.h"
 #import <AVFoundation/AVFoundation.h>
 
+// This view controller allows a user to compose a story, with text, and add additional media and attributes.
+
 @interface ComposeStoryViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *storyTextView;
@@ -23,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
 @property (nonatomic, strong) NSMutableArray *buttonsCurrentlyOnScreen;
 @property (nonatomic, strong) NSMutableDictionary *groupsSelected;
-@property (nonatomic, strong) NSMutableArray *groupNamesForUpdate;
+@property (nonatomic, strong) NSMutableArray *groupNamesForStory;
 @property (nonatomic, strong) NSMutableArray *buttonColorsArray;
 @property (nonatomic) int currentXEdge;
 @property (nonatomic) int currentYLine;
@@ -31,24 +33,25 @@
 
 @implementation ComposeStoryViewController
 
+#pragma mark Loading/Setting Up the View
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    // To use text view methods, we set the view controller as a delegate for the text view.
-    self.storyTextView.delegate = self;
     self.APIManager = [TapestryAPIManager new];
     self.alertManager = [AlertManager new];
-    // The default text is light gray, because it is meant to go away when a user types in their real text.
+    // To use text view methods, we set the view controller as a delegate for the text view.
+    self.storyTextView.delegate = self;
+    // The default text is light gray, because it is meant to go away and turn black when a user types in their real text.
     self.storyTextView.textColor = UIColor.lightGrayColor;
     //self.storyTextView.textContainer.heightTracksTextView = true;
-    self.groupNamesForUpdate = [NSMutableArray new];
-    // I have to somehow query the groups array and add My Stories to the list of groups to send the update to
+    self.groupNamesForStory = [NSMutableArray new];
     self.buttonColorsArray = [NSMutableArray new];
     self.buttonsCurrentlyOnScreen = [NSMutableArray new];
     self.groupsSelected = [NSMutableDictionary new];
 }
 
-- (void) viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
     self.currentXEdge = 8;
     self.currentYLine = self.storyTextView.frame.origin.y + self.storyTextView.frame.size.height + 8;
     self.addImageLabel.alpha = 1;
@@ -64,7 +67,9 @@
     [self.buttonsCurrentlyOnScreen removeAllObjects];
 }
 
-// The below is for style purposes, so that the textview placeholder text disappears when a user starts typing and turns black, so a user knows it is their actual text.
+#pragma mark UITextViewDelegate Methods
+
+// When a user starts typing, the text becomes solid black to replace the placeholder text.
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     if (textView.textColor == UIColor.lightGrayColor) {
         textView.text = @"";
@@ -72,7 +77,7 @@
     }
 }
 
-// And when a user finishes editing, we want to make sure they actually wrote something, or else we remind them again to write a caption in gray text. Otherwise, the caption is whatever they said it is.
+// When a user stops typing, we check to make sure they wrote something, or else there should be placeholder text again.
 - (void)textViewDidEndEditing:(UITextView *)textView {
     if ([textView.text isEqual:@""]) {
         textView.text = @"How's it going?";
@@ -80,29 +85,35 @@
     }
 }
 
+// A user can close the keyboard by tapping anywhere on the screen.
 - (IBAction)onTapAnywhere:(id)sender {
     [self.storyTextView endEditing:true];
 }
 
+#pragma mark Navigation Bar Button Methods
+
+// Upon tapping logout, a user is logged out and returned to the log in view controller.
 - (IBAction)onTapLogout:(id)sender {
     SceneDelegate *myDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     myDelegate.window.rootViewController = loginViewController;
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
-        // PFUser.current() will now be nil
+        // PFUser.current will now be nil
     }];
 }
+
+# pragma mark Weave!
 
 - (IBAction)onTapWeave:(id)sender {
     for (id key in self.groupsSelected) {
         id value = [self.groupsSelected objectForKey:key];
         if ([value isEqual:@(1)]) {
-            [self.groupNamesForUpdate addObject:key];
+            [self.groupNamesForStory addObject:key];
         }
     }
-    [self.groupNamesForUpdate addObject:@"My Stories"];
-    [self.APIManager postStoryToTapestries:self.groupNamesForUpdate :^(NSMutableArray * _Nonnull groups, NSError * _Nonnull error) {
+    [self.groupNamesForStory addObject:@"My Stories"];
+    [self.APIManager postStoryToTapestries:self.groupNamesForStory :^(NSMutableArray * _Nonnull groups, NSError * _Nonnull error) {
         if (error) {
             NSLog(@"Error: %@", error.localizedDescription);
         } else {
@@ -129,7 +140,9 @@
     }];
 }
 
-- (void) addGroupButtons {
+#pragma mark User Group Buttons
+
+- (void)addGroupButtons {
     PFUser *user = PFUser.currentUser;
     int count = 0;
     // TODO: add an all groups button too
@@ -151,7 +164,7 @@
     //TODO: can I add some constraints programmatically and others through autolayout?
 }
 
-- (void) createButtonforObject: (PFObject*) group withTag: (int) tag{
+- (void)createButtonforObject:(PFObject*)group withTag:(int)tag {
     UIButton *groupButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     groupButton.tag = tag;
     groupButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -207,6 +220,8 @@
     }
 }
 
+#pragma mark Add Image Methods
+
 - (IBAction)onTapImageView:(id)sender {
     UIAlertController* addPhotoAction = [UIAlertController alertControllerWithTitle:@"Add Photo" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction* fromCameraAction = [UIAlertAction actionWithTitle:@"Take Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
@@ -223,7 +238,7 @@
     [self presentViewController:addPhotoAction animated:YES completion:nil];
 }
 
-- (void) fromCamera {
+- (void)fromCamera {
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.delegate = self;
     imagePickerVC.allowsEditing = YES;
@@ -236,7 +251,7 @@
     }
 }
 
-- (void) fromLibrary {
+- (void)fromLibrary {
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.delegate = self;
     imagePickerVC.allowsEditing = YES;

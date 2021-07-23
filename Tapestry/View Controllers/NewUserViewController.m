@@ -29,19 +29,19 @@
     self.alertManager = [AlertManager new];
 }
 
+// After validating that the required fields are not empty, this function creates a new User object and adds it to the Parse User database.
 - (IBAction)onTapSignUp:(id)sender {
     BOOL accepted = [self validateFields];
     if (accepted) {
-        // initialize a user object
+        // Initialize a user object
         PFUser *newUser = [PFUser user];
-        
-        // set user properties
+        // Set user's properties
         newUser.email = self.emailField.text;
         newUser[@"fullName"] = self.nameField.text;
         newUser.username = self.usernameField.text;
         newUser.password = self.passwordField.text;
         newUser[@"groups"] = [NSMutableArray new];
-        // call sign up function on the object
+        // Call the sign up function on the object
         [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
             if (error != nil) {
                 NSLog(@"Error: %@", error.localizedDescription);
@@ -54,23 +54,24 @@
                     }
                 }];
                 [self performSegueWithIdentifier:@"SignUpToHome" sender:nil];
-                // manually segue to logged in view
+                // Manually segue to logged in view
             }
         }];
     }
 }
 
+// The log in button allows users to easily switch between creating a new account and logging in.
 - (IBAction)onTapLogin:(id)sender {
     [self performSegueWithIdentifier:@"SignUpToLogin" sender:nil];
 }
 
-// A user can tap anywhere to stop editing the fields and close the keyboard.
+// A user can close the keyboard by tapping anywhere on the screen.
 - (IBAction)onTapAnywhere:(id)sender {
     [self.view endEditing:true];
 }
 
-// The below method checks all of the fields and calls out errors in case any of the fields are blank. Parse seems to validate emails and valid strings, so I didn't have to do that here.
-- (BOOL) validateFields {
+// The below method checks all of the fields and calls out errors in case any of the fields are blank. Parse already validates types of inputs (such as valid emails).
+- (BOOL)validateFields {
     if ([self.nameField.text isEqual:@""]) {
         [self.alertManager createAlert:self withMessage:@"Please enter your full name and try again!" error:@"Unable to Register User"];
         return NO;
