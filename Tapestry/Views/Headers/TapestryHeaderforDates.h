@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class TapestryHeaderforDates;
 
 @interface TapestryHeaderforDates : UICollectionReusableView
+@property (nonatomic, strong) UILabel *titleLabel;
 
 @end
 

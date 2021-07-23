@@ -15,8 +15,8 @@
     self.cellPadding = 2;
     self.extraHeightInCell = 65;
     self.cache = [NSMutableArray new];
-    self.xOffsets = [NSMutableArray new];
-    self.yOffsets = [NSMutableArray new];
+    NSMutableArray *xOffsets = [NSMutableArray new];
+    NSMutableArray *yOffsets = [NSMutableArray new];
     self.contentHeight = 0;
     self.contentWidth = self.collectionView.frame.size.width - (self.collectionView.contentInset.left + self.collectionView.contentInset.right);
     /*if ([self.cache count] != 0) {
@@ -25,25 +25,26 @@
     NSLog(@"Starting to prepare layout");
     self.columnWidth = self.contentWidth / self.numberOfColumns;
     for (int i = 0; i < (int) roundf(self.numberOfColumns); i++) {
-        [self.xOffsets addObject: [NSNumber numberWithFloat:(CGFloat) i * self.columnWidth]];
+        [xOffsets addObject: [NSNumber numberWithFloat:(CGFloat) i * self.columnWidth]];
         NSLog(@"Added x offset: %@", [NSNumber numberWithFloat:(CGFloat) i * self.columnWidth]);
-        [self.yOffsets addObject:[NSNumber numberWithFloat:self.collectionView.contentInset.top]];
+        [yOffsets addObject:[NSNumber numberWithFloat:self.collectionView.contentInset.top]];
         NSLog(@"Added y offset: %@", [NSNumber numberWithFloat:self.collectionView.contentInset.top]);
     }
     NSLog(@"Added all offsets");
+    [self.cache addObject:[self layoutAttributesForSupplementaryViewOfKind:@"TapestryHeaderforDates" atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]];
     int column = 0;
     for (int i = 0; i < [self.collectionView numberOfItemsInSection:0]; i++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
         NSLog(@"Returned by delegate function: %f", [self.delegate heightForText:self.collectionView atIndexPath:indexPath]);
         self.textHeight = [self.delegate heightForText:self.collectionView atIndexPath:indexPath] + self.extraHeightInCell;
         CGFloat cellHeight = self.textHeight + 2 * self.cellPadding;
-        self.itemFrame = CGRectMake([self.xOffsets[column] floatValue], [self.yOffsets[column] floatValue], self.columnWidth, cellHeight);
-        self.insetFrame = CGRectInset(self.itemFrame, self.cellPadding, self.cellPadding);
+        CGRect itemFrame = CGRectMake([xOffsets[column] floatValue], [yOffsets[column] floatValue], self.columnWidth, cellHeight);
+        CGRect insetFrame = CGRectInset(itemFrame, self.cellPadding, self.cellPadding);
         UICollectionViewLayoutAttributes *attribute = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-        attribute.frame = self.insetFrame;
+        attribute.frame = insetFrame;
         [self.cache addObject:attribute];
-        self.contentHeight = MAX(self.contentHeight, CGRectGetMaxY(self.itemFrame));
-        self.yOffsets[column] = [NSNumber numberWithFloat:[[self.yOffsets objectAtIndex:column] floatValue] + cellHeight];
+        self.contentHeight = MAX(self.contentHeight, CGRectGetMaxY(itemFrame));
+        yOffsets[column] = [NSNumber numberWithFloat:[[yOffsets objectAtIndex:column] floatValue] + cellHeight];
         if (column < (self.numberOfColumns - 1)) {
             column ++;
         } else {
@@ -58,7 +59,6 @@
 
 - (NSArray<__kindof UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSMutableArray *attributes = [NSMutableArray new];
-    [attributes addObject:[self layoutAttributesForSupplementaryViewOfKind:@"TapestryHeaderforDates" atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]];
     for (UICollectionViewLayoutAttributes *attribute in self.cache) {
         if (CGRectIntersectsRect(attribute.frame, rect)) {
             [attributes addObject:attribute];
@@ -71,10 +71,17 @@
     return self.cache[indexPath.item];
 }
 
+// TODO: why does it keep going in here? Caused some Sig STOP or something? I think the whole prepare Layout happening twice has something to do with this?
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewLayoutAttributes *attribute = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:@"TapestryHeaderforDates" withIndexPath:indexPath];
     attribute.frame = CGRectMake(0, 0, self.collectionView.frame.size.width, 50);
     return attribute;
 }
+
+/*
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
+    
+    
+} */
 
 @end

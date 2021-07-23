@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0583D6339532957F16853CEE /* Pods_TapestryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3EA13843EC42B98569A41AE /* Pods_TapestryTests.framework */; };
 		65F0D822C428B4A7B08C552C /* Pods_Tapestry_TapestryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 481AB0633733FFBF8D08A8AD /* Pods_Tapestry_TapestryUITests.framework */; };
+		9E0A8AEA26AA9489005FEA51 /* TextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8AE926AA9489005FEA51 /* TextCell.m */; };
 		9E430D23269C9C2A00C0B571 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D22269C9C2A00C0B571 /* AppDelegate.m */; };
 		9E430D26269C9C2A00C0B571 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D25269C9C2A00C0B571 /* SceneDelegate.m */; };
 		9E430D2C269C9C2A00C0B571 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E430D2A269C9C2A00C0B571 /* Main.storyboard */; };
@@ -35,6 +36,9 @@
 		9E430D8A26A93C5D00C0B571 /* TapestryAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8926A93C5D00C0B571 /* TapestryAPIManager.m */; };
 		9E430D8E26A94B4800C0B571 /* AlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8D26A94B4800C0B571 /* AlertManager.m */; };
 		9E430D9126A94B5200C0B571 /* PhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D9026A94B5200C0B571 /* PhotoManager.m */; };
+		9E430D9726A9DC5500C0B571 /* StoryDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D9626A9DC5500C0B571 /* StoryDetailsViewController.m */; };
+		9E5A76AB26A9EB9300B846B9 /* GroupDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5A76AA26A9EB9300B846B9 /* GroupDetailsViewController.m */; };
+		9E5A76AE26A9EDEE00B846B9 /* MemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5A76AD26A9EDEE00B846B9 /* MemberCell.m */; };
 		BAC26881E50874E261006A77 /* Pods_Tapestry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CED42AE8DCC4FEDB9E95E72 /* Pods_Tapestry.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +67,8 @@
 		93621979B05B69AC600BAC1B /* Pods-Tapestry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tapestry.debug.xcconfig"; path = "Target Support Files/Pods-Tapestry/Pods-Tapestry.debug.xcconfig"; sourceTree = "<group>"; };
 		99E584B0DEB38DE95ADF8DC7 /* Pods-Tapestry-TapestryUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tapestry-TapestryUITests.debug.xcconfig"; path = "Target Support Files/Pods-Tapestry-TapestryUITests/Pods-Tapestry-TapestryUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9CED42AE8DCC4FEDB9E95E72 /* Pods_Tapestry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tapestry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E0A8AE826AA9489005FEA51 /* TextCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextCell.h; sourceTree = "<group>"; };
+		9E0A8AE926AA9489005FEA51 /* TextCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextCell.m; sourceTree = "<group>"; };
 		9E430D1E269C9C2A00C0B571 /* Tapestry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tapestry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E430D21269C9C2A00C0B571 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9E430D22269C9C2A00C0B571 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -113,6 +119,12 @@
 		9E430D8D26A94B4800C0B571 /* AlertManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertManager.m; sourceTree = "<group>"; };
 		9E430D8F26A94B5200C0B571 /* PhotoManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoManager.h; sourceTree = "<group>"; };
 		9E430D9026A94B5200C0B571 /* PhotoManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoManager.m; sourceTree = "<group>"; };
+		9E430D9526A9DC5500C0B571 /* StoryDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoryDetailsViewController.h; sourceTree = "<group>"; };
+		9E430D9626A9DC5500C0B571 /* StoryDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoryDetailsViewController.m; sourceTree = "<group>"; };
+		9E5A76A926A9EB9300B846B9 /* GroupDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupDetailsViewController.h; sourceTree = "<group>"; };
+		9E5A76AA26A9EB9300B846B9 /* GroupDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupDetailsViewController.m; sourceTree = "<group>"; };
+		9E5A76AC26A9EDEE00B846B9 /* MemberCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemberCell.h; sourceTree = "<group>"; };
+		9E5A76AD26A9EDEE00B846B9 /* MemberCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MemberCell.m; sourceTree = "<group>"; };
 		A3EA13843EC42B98569A41AE /* Pods_TapestryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TapestryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D85BF7482663768E2DA14120 /* Pods-Tapestry-TapestryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tapestry-TapestryUITests.release.xcconfig"; path = "Target Support Files/Pods-Tapestry-TapestryUITests/Pods-Tapestry-TapestryUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,6 +169,17 @@
 				9152BE9926D94E339FBF2552 /* Pods-TapestryTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		9E0A8AE726AA946E005FEA51 /* GroupDetails */ = {
+			isa = PBXGroup;
+			children = (
+				9E5A76AC26A9EDEE00B846B9 /* MemberCell.h */,
+				9E5A76AD26A9EDEE00B846B9 /* MemberCell.m */,
+				9E0A8AE826AA9489005FEA51 /* TextCell.h */,
+				9E0A8AE926AA9489005FEA51 /* TextCell.m */,
+			);
+			path = GroupDetails;
 			sourceTree = "<group>";
 		};
 		9E430D15269C9C2900C0B571 = {
@@ -237,6 +260,10 @@
 				9E430D6D26A6195A00C0B571 /* GroupsViewController.m */,
 				9E430D7A26A7E0E400C0B571 /* TapestryViewController.h */,
 				9E430D7B26A7E0E400C0B571 /* TapestryViewController.m */,
+				9E430D9526A9DC5500C0B571 /* StoryDetailsViewController.h */,
+				9E430D9626A9DC5500C0B571 /* StoryDetailsViewController.m */,
+				9E5A76A926A9EB9300B846B9 /* GroupDetailsViewController.h */,
+				9E5A76AA26A9EB9300B846B9 /* GroupDetailsViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -255,6 +282,7 @@
 		9E430D7226A7424500C0B571 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9E0A8AE726AA946E005FEA51 /* GroupDetails */,
 				9E430D7626A776C400C0B571 /* Headers */,
 				9E430D7326A7426800C0B571 /* TapestryGridCell.h */,
 				9E430D7426A7426800C0B571 /* TapestryGridCell.m */,
@@ -558,12 +586,14 @@
 				9E430D5C269E164D00C0B571 /* LoginViewController.m in Sources */,
 				9E430D23269C9C2A00C0B571 /* AppDelegate.m in Sources */,
 				9E430D7F26A7EB2000C0B571 /* StoryCell.m in Sources */,
+				9E430D9726A9DC5500C0B571 /* StoryDetailsViewController.m in Sources */,
 				9E430D6B26A0D09100C0B571 /* Story.m in Sources */,
 				9E430D34269C9C2A00C0B571 /* main.m in Sources */,
 				9E430D7526A7426800C0B571 /* TapestryGridCell.m in Sources */,
 				9E430D26269C9C2A00C0B571 /* SceneDelegate.m in Sources */,
 				9E430D6E26A6195A00C0B571 /* GroupsViewController.m in Sources */,
 				9E430D7C26A7E0E400C0B571 /* TapestryViewController.m in Sources */,
+				9E5A76AB26A9EB9300B846B9 /* GroupDetailsViewController.m in Sources */,
 				9E430D7926A776E400C0B571 /* TapestriesHeaderReusableView.m in Sources */,
 				9E430D9126A94B5200C0B571 /* PhotoManager.m in Sources */,
 				9E430D8E26A94B4800C0B571 /* AlertManager.m in Sources */,
@@ -572,6 +602,8 @@
 				9E430D65269F3D0100C0B571 /* NewUserViewController.m in Sources */,
 				9E430D68269F512700C0B571 /* Group.m in Sources */,
 				9E430D8326A87F5F00C0B571 /* StoriesLayout.m in Sources */,
+				9E0A8AEA26AA9489005FEA51 /* TextCell.m in Sources */,
+				9E5A76AE26A9EDEE00B846B9 /* MemberCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

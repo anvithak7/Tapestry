@@ -25,6 +25,18 @@
     }];
 }
 
+- (void) fetchUser:(PFUser *)user :(void(^)(PFUser *user, NSError *error))completion {
+    [user fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Error: %@", error.localizedDescription);
+            completion(nil, error);
+        } else {
+            PFUser *user = (PFUser*) object;
+            completion(user, nil);
+        }
+    }];
+}
+
 - (void)postStoryToTapestries:(NSArray*)groups :(void(^)(NSMutableArray *groups, NSError *error))completion {
     PFQuery *query = [PFQuery queryWithClassName:@"Group"];
     [query whereKey:@"groupName" containedIn:groups];

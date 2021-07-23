@@ -15,7 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TapestryAPIManager : NSObject
 
 - (void) fetchGroup:(Group *)group :(void(^)(PFObject *group, NSError *error))completion;
+- (void) fetchUser:(PFUser *)user :(void(^)(PFUser *user, NSError *error))completion;
 - (void) postStoryToTapestries:(NSArray*)groups :(void(^)(NSMutableArray *groups, NSError *error))completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

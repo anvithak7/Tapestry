@@ -6,7 +6,9 @@
 //
 
 #import "TapestryViewController.h"
+#import "GroupDetailsViewController.h"
 #import "TapestryHeaderforDates.h"
+#import "TapestriesHeaderReusableView.h"
 #import "StoriesLayout.h"
 #import "StoryCell.h"
 
@@ -14,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) StoriesLayout *layout;
+@property (nonatomic, strong) TapestryHeaderforDates *tapestryHeader;
+@property (nonatomic, strong) TapestriesHeaderReusableView *header;
 
 @end
 
@@ -24,23 +28,31 @@
     // Do any additional setup after loading the view.
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    [self.collectionView registerClass:TapestryHeaderforDates.self forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"TapestryHeaderforDates"];
+    self.APIManager = [TapestryAPIManager new];
+    self.tapestryHeader = [TapestryHeaderforDates new];
+    [self.collectionView registerClass:[TapestryHeaderforDates class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"TapestryHeaderforDates"];
     self.layout = [StoriesLayout new];
     self.collectionView.collectionViewLayout = self.layout;
     self.layout.delegate = self;
     self.stringsToGetSizeFrom = [NSMutableArray new];
     self.extraMediaExists = [NSMutableArray new];
-    [self getStories];
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(getStories) forControlEvents:UIControlEventValueChanged];
-    [self.collectionView insertSubview:self.refreshControl atIndex:0];
+    self.collectionView.refreshControl = self.refreshControl;
+}
+
+//TODO: as a design choice, figure out where to put the getStories function
+- (void)viewDidAppear:(BOOL)animated {
+    [self getStories];
 }
 
 - (void) getStories {
     PFQuery *query = [PFQuery queryWithClassName:@"Story"];
     [query whereKey:@"groupsArray" containsAllObjectsInArray:@[self.group]];
     [query orderByDescending:@"createdAt"];
-    query.limit = self.group.membersArray.count;
+    if (![[self.group objectForKey:@"groupName"] isEqual:@"My Stories"]) {
+        query.limit = self.group.membersArray.count;
+    }
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error != nil) {
             NSLog(@"Error: %@", error.localizedDescription);
@@ -108,14 +120,18 @@
     //return [self.stringsToGetSizeFrom[indexPath.item] sizeWithAttributes:attributes].height;
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqual:@"groupDetails"]) {
+        GroupDetailsViewController *detailsViewController = [segue destinationViewController];
+        detailsViewController.group = self.group; // Passing over group to next view controller.
+    }
 }
-*/
+
 
 @end

@@ -113,11 +113,13 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    UICollectionViewCell *tappedCell = sender;
-    NSIndexPath *indexPath = [self.collectionView indexPathForCell:tappedCell];
-    Group *group = self.userTapestries[indexPath.row];
-    TapestryViewController *tapestryViewController = [segue destinationViewController];
-    tapestryViewController.group = group; // Passing over group to next view controller.
+    if ([segue.identifier isEqual:@"openTapestry"]) {
+        UICollectionViewCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.collectionView indexPathForCell:tappedCell];
+        Group *group = self.userTapestries[indexPath.row];
+        TapestryViewController *tapestryViewController = [segue destinationViewController];
+        tapestryViewController.group = group; // Passing over group to next view controller.
+    }
 }
 
 
