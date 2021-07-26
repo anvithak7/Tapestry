@@ -10,6 +10,7 @@
 		0583D6339532957F16853CEE /* Pods_TapestryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3EA13843EC42B98569A41AE /* Pods_TapestryTests.framework */; };
 		65F0D822C428B4A7B08C552C /* Pods_Tapestry_TapestryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 481AB0633733FFBF8D08A8AD /* Pods_Tapestry_TapestryUITests.framework */; };
 		9E0A8AEA26AA9489005FEA51 /* TextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8AE926AA9489005FEA51 /* TextCell.m */; };
+		9E0A8AF126AF65D5005FEA51 /* ImageFromWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8AF026AF65D5005FEA51 /* ImageFromWebViewController.m */; };
 		9E430D23269C9C2A00C0B571 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D22269C9C2A00C0B571 /* AppDelegate.m */; };
 		9E430D26269C9C2A00C0B571 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D25269C9C2A00C0B571 /* SceneDelegate.m */; };
 		9E430D2C269C9C2A00C0B571 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E430D2A269C9C2A00C0B571 /* Main.storyboard */; };
@@ -68,6 +69,8 @@
 		9CED42AE8DCC4FEDB9E95E72 /* Pods_Tapestry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tapestry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E0A8AE826AA9489005FEA51 /* TextCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextCell.h; sourceTree = "<group>"; };
 		9E0A8AE926AA9489005FEA51 /* TextCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextCell.m; sourceTree = "<group>"; };
+		9E0A8AEF26AF65D5005FEA51 /* ImageFromWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageFromWebViewController.h; sourceTree = "<group>"; };
+		9E0A8AF026AF65D5005FEA51 /* ImageFromWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageFromWebViewController.m; sourceTree = "<group>"; };
 		9E430D1E269C9C2A00C0B571 /* Tapestry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tapestry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E430D21269C9C2A00C0B571 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9E430D22269C9C2A00C0B571 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -261,6 +264,8 @@
 				9E430D9626A9DC5500C0B571 /* StoryDetailsViewController.m */,
 				9E5A76A926A9EB9300B846B9 /* GroupDetailsViewController.h */,
 				9E5A76AA26A9EB9300B846B9 /* GroupDetailsViewController.m */,
+				9E0A8AEF26AF65D5005FEA51 /* ImageFromWebViewController.h */,
+				9E0A8AF026AF65D5005FEA51 /* ImageFromWebViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -578,6 +583,7 @@
 			files = (
 				9E430D62269E3CC100C0B571 /* AddGroupsViewController.m in Sources */,
 				9E430D5C269E164D00C0B571 /* LoginViewController.m in Sources */,
+				9E0A8AF126AF65D5005FEA51 /* ImageFromWebViewController.m in Sources */,
 				9E430D23269C9C2A00C0B571 /* AppDelegate.m in Sources */,
 				9E430D7F26A7EB2000C0B571 /* StoryCell.m in Sources */,
 				9E430D9726A9DC5500C0B571 /* StoryDetailsViewController.m in Sources */,

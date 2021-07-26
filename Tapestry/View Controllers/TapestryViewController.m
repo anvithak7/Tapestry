@@ -69,7 +69,6 @@
                     [self.extraMediaExists addObject:@""];
                 }
             }
-            NSLog(@"List of image files %@", self.extraMediaExists);
             [self.collectionView reloadData];
             [self.refreshControl endRefreshing];
         }
@@ -107,7 +106,6 @@
     stringLabel.numberOfLines = 0;
     stringLabel.text = self.stringsToGetSizeFrom[indexPath.item];
     [stringLabel sizeToFit];
-    NSLog(@"String to get size of: %@", self.stringsToGetSizeFrom[indexPath.item]);
     if ([self.extraMediaExists[indexPath.item] isEqual:@"Yes"]) {
         return stringLabel.frame.size.height + 130;
     } else {

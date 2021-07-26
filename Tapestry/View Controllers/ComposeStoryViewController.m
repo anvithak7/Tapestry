@@ -7,6 +7,7 @@
 
 #import "ComposeStoryViewController.h"
 #import "LoginViewController.h"
+#import "ImageFromWebViewController.h"
 #import "SceneDelegate.h"
 #import "Story.h"
 #import "Group.h"
@@ -15,20 +16,29 @@
 
 // This view controller allows a user to compose a story, with text, and add additional media and attributes.
 
-@interface ComposeStoryViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+@interface ComposeStoryViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIColorPickerViewControllerDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *storyTextView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addGroupsButton;
+
 @property (weak, nonatomic) IBOutlet UIView *imageSelectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *storyImageView;
 @property (weak, nonatomic) IBOutlet UILabel *addImageLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *addPhotoImage;
+
+@property (weak, nonatomic) IBOutlet UIView *addColorView;
+@property (weak, nonatomic) IBOutlet UILabel *addColorLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *addColorPhoto;
+
 @property (nonatomic, strong) NSMutableArray *buttonsCurrentlyOnScreen;
 @property (nonatomic, strong) NSMutableDictionary *groupsSelected;
 @property (nonatomic, strong) NSMutableArray *groupNamesForStory;
 @property (nonatomic, strong) NSMutableArray *buttonColorsArray;
+
+@property (nonatomic, strong) NSMutableDictionary *storyProperties;
 @property (nonatomic) int currentXEdge;
 @property (nonatomic) int currentYLine;
+
 @end
 
 @implementation ComposeStoryViewController
@@ -49,14 +59,19 @@
     self.buttonColorsArray = [NSMutableArray new];
     self.buttonsCurrentlyOnScreen = [NSMutableArray new];
     self.groupsSelected = [NSMutableDictionary new];
+    self.storyProperties = [NSMutableDictionary new];
+    NSLog(@"Dictionary of properties: %@", self.storyProperties);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     self.currentXEdge = 8;
     self.currentYLine = self.storyTextView.frame.origin.y + self.storyTextView.frame.size.height + 8;
     self.addImageLabel.alpha = 1;
-    self.photoImageView.alpha = 1;
+    self.addPhotoImage.alpha = 1;
     self.storyImageView.image = nil;
+    self.addColorLabel.alpha = 1;
+    self.addColorPhoto.alpha = 1;
+    self.addColorView.backgroundColor = [UIColor systemGray6Color];
     [self addGroupButtons];
 }
 
@@ -117,7 +132,7 @@
         if (error) {
             NSLog(@"Error: %@", error.localizedDescription);
         } else {
-            [Story createStory:self.storyTextView.text withGroups:groups withImage: self.storyImageView.image withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+            [Story createStory:self.storyTextView.text withGroups:groups withProperties:self.storyProperties withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
                 if (error != nil) {
                     [self.alertManager createAlert:self withMessage:@"Unable to share story. Please check your internet connection and try again!" error:@"Unable to Share"];
                 } else {
@@ -130,14 +145,18 @@
                     }
                     self.storyImageView.image = nil;
                     self.addImageLabel.alpha = 1;
-                    self.photoImageView.alpha = 1;
+                    self.addPhotoImage.alpha = 1;
                     self.storyImageView.image = nil;
+                    self.addColorLabel.alpha = 1;
+                    self.addColorPhoto.alpha = 1;
+                    self.addColorView.backgroundColor = [UIColor systemGray6Color];
                     [self.storyImageView setTintColor:[UIColor systemGray6Color]];
                     [self.storyTextView endEditing:true];
                 }
             }];
         }
     }];
+    NSLog(@"Dictionary of properties %@", self.storyProperties);
 }
 
 #pragma mark User Group Buttons
@@ -230,12 +249,30 @@
     UIAlertAction* fromPhotosAction = [UIAlertAction actionWithTitle:@"From Photos Library" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         [self fromLibrary];
     }];
+    UIAlertAction* fromURL = [UIAlertAction actionWithTitle:@"From Web" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [self fromWeb];
+    }];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
     }];
     [addPhotoAction addAction:fromCameraAction];
     [addPhotoAction addAction:fromPhotosAction];
+    [addPhotoAction addAction:fromURL];
     [addPhotoAction addAction:cancelAction];
     [self presentViewController:addPhotoAction animated:YES completion:nil];
+}
+
+- (void) fromWeb {
+    ImageFromWebViewController *imageFromWebController = [ImageFromWebViewController new];
+    [self presentViewController:imageFromWebController animated:YES completion:nil];
+    NSURL *url = [NSURL URLWithString:@"http://www.fnordware.com/superpng/pnggrad16rgb.png"];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSLog(@"imageData: %@", data);
+    UIImage *image = [UIImage imageWithData:data];
+    NSLog(@"image: %@", image);
+    CGSize imageSize = CGSizeMake(self.storyImageView.frame.size.width, self.storyImageView.frame.size.height);
+    UIImage *resizedImage = [self resizeImage:image withSize:imageSize];
+    self.storyImageView.image = resizedImage;
+    self.storyProperties[@"Image"] = resizedImage;
 }
 
 - (void)fromCamera {
@@ -267,7 +304,7 @@
 // This function is to set the image in the post to the image picked or taken and to make sure it's been resized.
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     self.addImageLabel.alpha = 0;
-    self.photoImageView.alpha = 0;
+    self.addPhotoImage.alpha = 0;
     // Get the image captured by the UIImagePickerController
     UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
     //UIImage *editedImage = info[UIImagePickerControllerEditedImage]; Not sure what this line is for.
@@ -275,6 +312,8 @@
     UIImage *resizedImage = [self resizeImage:originalImage withSize:imageSize];
     // Do something with the images (based on your use case)
     self.storyImageView.image = resizedImage;
+    self.storyProperties[@"Image"] = resizedImage;
+    NSLog(@"Dictionary of properties after image: %@", self.storyProperties);
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -292,6 +331,27 @@
     UIGraphicsEndImageContext();
     
     return newImage;
+}
+
+#pragma mark Add Color Methods
+
+- (IBAction)onTapAddColor:(id)sender {
+    UIColorPickerViewController *colorPicker = [UIColorPickerViewController new];
+    colorPicker.delegate = self;
+    colorPicker.supportsAlpha = true;
+    [self presentViewController:colorPicker animated:YES completion:nil];
+}
+
+- (void)colorPickerViewControllerDidFinish:(UIColorPickerViewController *)viewController {
+    self.addColorLabel.alpha = 0;
+    self.addColorPhoto.alpha = 0;
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)colorPickerViewControllerDidSelectColor:(UIColorPickerViewController *)viewController {
+    self.addColorView.backgroundColor = viewController.selectedColor;
+    self.storyProperties[@"Background Color"] = viewController.selectedColor;
+    NSLog(@"Dictionary of properties after color: %@", self.storyProperties);
 }
 
 /*

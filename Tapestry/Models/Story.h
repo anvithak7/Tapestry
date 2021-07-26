@@ -15,10 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) PFUser *author;
 @property (nonatomic, strong) NSString *storyText;
 @property (nonatomic, strong) PFFileObject *image;
+@property (nonatomic, strong) NSString *backgroundColor;
 @property (nonatomic, strong) NSArray *groupsArray;
 
 //+ (void) createStory: ( NSString * _Nullable )story withImage:( UIImage * _Nullable )image withGroups:(NSMutableArray *)groups withCompletion: (PFBooleanResultBlock  _Nullable)completion;
-+ (void) createStory: ( NSString * _Nullable )story withGroups:(NSArray*) groups withImage:( UIImage * _Nullable )image withCompletion: (PFBooleanResultBlock  _Nullable)completion;
++ (void) createStory: ( NSString * _Nullable )story withGroups:(NSArray*) groups withProperties:(NSMutableDictionary * _Nullable )dictionary withCompletion: (PFBooleanResultBlock  _Nullable)completion;
 
 @end
 
