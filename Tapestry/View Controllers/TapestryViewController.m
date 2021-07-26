@@ -7,7 +7,6 @@
 
 #import "TapestryViewController.h"
 #import "GroupDetailsViewController.h"
-#import "TapestryHeaderforDates.h"
 #import "TapestriesHeaderReusableView.h"
 #import "StoriesLayout.h"
 #import "StoryCell.h"
@@ -15,9 +14,8 @@
 @interface TapestryViewController () <UICollectionViewDelegate, UICollectionViewDataSource, StoriesLayoutDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (weak, nonatomic) IBOutlet UILabel *groupNameTitle;
 @property (nonatomic, strong) StoriesLayout *layout;
-@property (nonatomic, strong) TapestryHeaderforDates *tapestryHeader;
-@property (nonatomic, strong) TapestriesHeaderReusableView *header;
 
 @end
 
@@ -29,8 +27,11 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     self.APIManager = [TapestryAPIManager new];
-    self.tapestryHeader = [TapestryHeaderforDates new];
-    [self.collectionView registerClass:[TapestryHeaderforDates class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"TapestryHeaderforDates"];
+    [self.startDatePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.endDatePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
+    self.endDatePicker.minimumDate = self.startDatePicker.date;
+    self.startDatePicker.maximumDate = self.endDatePicker.date;
+    self.groupNameTitle.text = self.group.groupName;
     self.layout = [StoriesLayout new];
     self.collectionView.collectionViewLayout = self.layout;
     self.layout.delegate = self;
@@ -41,18 +42,16 @@
     self.collectionView.refreshControl = self.refreshControl;
 }
 
-//TODO: as a design choice, figure out where to put the getStories function
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [self getStories];
 }
 
 - (void) getStories {
     PFQuery *query = [PFQuery queryWithClassName:@"Story"];
     [query whereKey:@"groupsArray" containsAllObjectsInArray:@[self.group]];
+    [query whereKey:@"createdAt" greaterThanOrEqualTo:self.startDatePicker.date];
+    [query whereKey:@"createdAt" lessThanOrEqualTo:self.endDatePicker.date];
     [query orderByDescending:@"createdAt"];
-    if (![[self.group objectForKey:@"groupName"] isEqual:@"My Stories"]) {
-        query.limit = self.group.membersArray.count;
-    }
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error != nil) {
             NSLog(@"Error: %@", error.localizedDescription);
@@ -77,17 +76,14 @@
     }];
 }
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1; //TODO: change this later!!!
+- (void) dateChanged:(id)sender {
+    self.endDatePicker.minimumDate = self.startDatePicker.date;
+    self.startDatePicker.maximumDate = self.endDatePicker.date;
+    [self getStories];
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    TapestryHeaderforDates *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"TapestryHeaderforDates" forIndexPath:indexPath];
-        //NSString *title = [[NSString alloc]initWithFormat:@"Recipe Group #%i", indexPath.section + 1];
-        //headerView.title.text = title;
-        //UIImage *headerImage = [UIImage imageNamed:@"header_banner.png"];
-        //headerView.backgroundImage.image = headerImage;
-    return headerView;
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1; //TODO: change this later!!!
 }
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {

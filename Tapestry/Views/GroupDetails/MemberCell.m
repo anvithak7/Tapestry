@@ -25,14 +25,17 @@
             [self.memberProfileImageView loadInBackground];
             PFUser *admin = [self.group objectForKey:@"administrator"];
             [admin fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-                if (error != nil) {
-                    NSString *adminID = [object objectForKey:@"objectId"];
-                    NSString *userID = [user objectForKey:@"objectId"];
+                if (error == nil) {
+                    NSString *adminID = object.objectId;
+                    NSString *userID = user.objectId;
                     if ([adminID isEqual:userID]) {
                         self.adminLabel.alpha = 1;
                     } else {
                         self.adminLabel.alpha = 0;
                     }
+                }
+                else {
+                    NSLog(@"Error while fetching admin in background: %@", error.localizedDescription);
                 }
             }];
         }

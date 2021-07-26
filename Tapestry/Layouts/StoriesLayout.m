@@ -31,7 +31,7 @@
         NSLog(@"Added y offset: %@", [NSNumber numberWithFloat:self.collectionView.contentInset.top]);
     }
     NSLog(@"Added all offsets");
-    [self.cache addObject:[self layoutAttributesForSupplementaryViewOfKind:@"TapestryHeaderforDates" atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]];
+    //For header that didn't work:[self.cache addObject:[self layoutAttributesForSupplementaryViewOfKind:@"TapestryHeaderforDates" atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]];
     int column = 0;
     for (int i = 0; i < [self.collectionView numberOfItemsInSection:0]; i++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
@@ -71,12 +71,12 @@
     return self.cache[indexPath.item];
 }
 
-// TODO: why does it keep going in here? Caused some Sig STOP or something? I think the whole prepare Layout happening twice has something to do with this?
+/* For header that didn't work:
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewLayoutAttributes *attribute = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:@"TapestryHeaderforDates" withIndexPath:indexPath];
     attribute.frame = CGRectMake(0, 0, self.collectionView.frame.size.width, 50);
     return attribute;
-}
+} */
 
 /*
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {

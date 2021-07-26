@@ -25,6 +25,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 48;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.APIManager = [TapestryAPIManager new];
     [self.APIManager fetchGroup:self.group :^(PFObject * _Nonnull group, NSError * _Nonnull error) {
         if (error) {
@@ -61,12 +62,11 @@
         cell.group = self.group;
         cell.user = user;
         return cell;
-    } else if (indexPath.section == 2) {
+    } else {
         TextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TextCell"];
         cell.cellTextLabel.text = self.tableData[indexPath.section][0];
         return cell;
     }
-    return [UITableViewCell new];
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

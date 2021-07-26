@@ -32,7 +32,6 @@
 		9E430D7C26A7E0E400C0B571 /* TapestryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D7B26A7E0E400C0B571 /* TapestryViewController.m */; };
 		9E430D7F26A7EB2000C0B571 /* StoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D7E26A7EB2000C0B571 /* StoryCell.m */; };
 		9E430D8326A87F5F00C0B571 /* StoriesLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8226A87F5F00C0B571 /* StoriesLayout.m */; };
-		9E430D8626A8F1EE00C0B571 /* TapestryHeaderforDates.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8526A8F1EE00C0B571 /* TapestryHeaderforDates.m */; };
 		9E430D8A26A93C5D00C0B571 /* TapestryAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8926A93C5D00C0B571 /* TapestryAPIManager.m */; };
 		9E430D8E26A94B4800C0B571 /* AlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8D26A94B4800C0B571 /* AlertManager.m */; };
 		9E430D9126A94B5200C0B571 /* PhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D9026A94B5200C0B571 /* PhotoManager.m */; };
@@ -111,8 +110,6 @@
 		9E430D7E26A7EB2000C0B571 /* StoryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoryCell.m; sourceTree = "<group>"; };
 		9E430D8126A87F5F00C0B571 /* StoriesLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoriesLayout.h; sourceTree = "<group>"; };
 		9E430D8226A87F5F00C0B571 /* StoriesLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoriesLayout.m; sourceTree = "<group>"; };
-		9E430D8426A8F1EE00C0B571 /* TapestryHeaderforDates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TapestryHeaderforDates.h; sourceTree = "<group>"; };
-		9E430D8526A8F1EE00C0B571 /* TapestryHeaderforDates.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TapestryHeaderforDates.m; sourceTree = "<group>"; };
 		9E430D8826A93C5D00C0B571 /* TapestryAPIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TapestryAPIManager.h; sourceTree = "<group>"; };
 		9E430D8926A93C5D00C0B571 /* TapestryAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TapestryAPIManager.m; sourceTree = "<group>"; };
 		9E430D8C26A94B4800C0B571 /* AlertManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertManager.h; sourceTree = "<group>"; };
@@ -297,8 +294,6 @@
 			children = (
 				9E430D7726A776E400C0B571 /* TapestriesHeaderReusableView.h */,
 				9E430D7826A776E400C0B571 /* TapestriesHeaderReusableView.m */,
-				9E430D8426A8F1EE00C0B571 /* TapestryHeaderforDates.h */,
-				9E430D8526A8F1EE00C0B571 /* TapestryHeaderforDates.m */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -581,7 +576,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E430D8626A8F1EE00C0B571 /* TapestryHeaderforDates.m in Sources */,
 				9E430D62269E3CC100C0B571 /* AddGroupsViewController.m in Sources */,
 				9E430D5C269E164D00C0B571 /* LoginViewController.m in Sources */,
 				9E430D23269C9C2A00C0B571 /* AppDelegate.m in Sources */,
