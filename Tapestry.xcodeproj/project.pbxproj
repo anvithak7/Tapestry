@@ -12,6 +12,7 @@
 		9E0A8AEA26AA9489005FEA51 /* TextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8AE926AA9489005FEA51 /* TextCell.m */; };
 		9E0A8AF126AF65D5005FEA51 /* ImageFromWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8AF026AF65D5005FEA51 /* ImageFromWebViewController.m */; };
 		9E0A8AF426B09AEA005FEA51 /* GroupImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8AF326B09AEA005FEA51 /* GroupImageCell.m */; };
+		9E0A8AF726B0BD88005FEA51 /* AddImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8AF626B0BD88005FEA51 /* AddImageManager.m */; };
 		9E430D23269C9C2A00C0B571 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D22269C9C2A00C0B571 /* AppDelegate.m */; };
 		9E430D26269C9C2A00C0B571 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D25269C9C2A00C0B571 /* SceneDelegate.m */; };
 		9E430D2C269C9C2A00C0B571 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E430D2A269C9C2A00C0B571 /* Main.storyboard */; };
@@ -36,7 +37,6 @@
 		9E430D8326A87F5F00C0B571 /* StoriesLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8226A87F5F00C0B571 /* StoriesLayout.m */; };
 		9E430D8A26A93C5D00C0B571 /* TapestryAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8926A93C5D00C0B571 /* TapestryAPIManager.m */; };
 		9E430D8E26A94B4800C0B571 /* AlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D8D26A94B4800C0B571 /* AlertManager.m */; };
-		9E430D9126A94B5200C0B571 /* PhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D9026A94B5200C0B571 /* PhotoManager.m */; };
 		9E430D9726A9DC5500C0B571 /* StoryDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D9626A9DC5500C0B571 /* StoryDetailsViewController.m */; };
 		9E5A76AB26A9EB9300B846B9 /* GroupDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5A76AA26A9EB9300B846B9 /* GroupDetailsViewController.m */; };
 		9E5A76AE26A9EDEE00B846B9 /* MemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E5A76AD26A9EDEE00B846B9 /* MemberCell.m */; };
@@ -74,6 +74,8 @@
 		9E0A8AF026AF65D5005FEA51 /* ImageFromWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageFromWebViewController.m; sourceTree = "<group>"; };
 		9E0A8AF226B09AEA005FEA51 /* GroupImageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupImageCell.h; sourceTree = "<group>"; };
 		9E0A8AF326B09AEA005FEA51 /* GroupImageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupImageCell.m; sourceTree = "<group>"; };
+		9E0A8AF526B0BD88005FEA51 /* AddImageManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddImageManager.h; sourceTree = "<group>"; };
+		9E0A8AF626B0BD88005FEA51 /* AddImageManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddImageManager.m; sourceTree = "<group>"; };
 		9E430D1E269C9C2A00C0B571 /* Tapestry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tapestry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E430D21269C9C2A00C0B571 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9E430D22269C9C2A00C0B571 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -120,8 +122,6 @@
 		9E430D8926A93C5D00C0B571 /* TapestryAPIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TapestryAPIManager.m; sourceTree = "<group>"; };
 		9E430D8C26A94B4800C0B571 /* AlertManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertManager.h; sourceTree = "<group>"; };
 		9E430D8D26A94B4800C0B571 /* AlertManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertManager.m; sourceTree = "<group>"; };
-		9E430D8F26A94B5200C0B571 /* PhotoManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoManager.h; sourceTree = "<group>"; };
-		9E430D9026A94B5200C0B571 /* PhotoManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoManager.m; sourceTree = "<group>"; };
 		9E430D9526A9DC5500C0B571 /* StoryDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoryDetailsViewController.h; sourceTree = "<group>"; };
 		9E430D9626A9DC5500C0B571 /* StoryDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoryDetailsViewController.m; sourceTree = "<group>"; };
 		9E5A76A926A9EB9300B846B9 /* GroupDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupDetailsViewController.h; sourceTree = "<group>"; };
@@ -331,8 +331,8 @@
 			children = (
 				9E430D8C26A94B4800C0B571 /* AlertManager.h */,
 				9E430D8D26A94B4800C0B571 /* AlertManager.m */,
-				9E430D8F26A94B5200C0B571 /* PhotoManager.h */,
-				9E430D9026A94B5200C0B571 /* PhotoManager.m */,
+				9E0A8AF526B0BD88005FEA51 /* AddImageManager.h */,
+				9E0A8AF626B0BD88005FEA51 /* AddImageManager.m */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -589,6 +589,7 @@
 				9E430D62269E3CC100C0B571 /* AddGroupsViewController.m in Sources */,
 				9E430D5C269E164D00C0B571 /* LoginViewController.m in Sources */,
 				9E0A8AF126AF65D5005FEA51 /* ImageFromWebViewController.m in Sources */,
+				9E0A8AF726B0BD88005FEA51 /* AddImageManager.m in Sources */,
 				9E430D23269C9C2A00C0B571 /* AppDelegate.m in Sources */,
 				9E430D7F26A7EB2000C0B571 /* StoryCell.m in Sources */,
 				9E430D9726A9DC5500C0B571 /* StoryDetailsViewController.m in Sources */,
@@ -601,7 +602,6 @@
 				9E430D7C26A7E0E400C0B571 /* TapestryViewController.m in Sources */,
 				9E5A76AB26A9EB9300B846B9 /* GroupDetailsViewController.m in Sources */,
 				9E430D7926A776E400C0B571 /* TapestriesHeaderReusableView.m in Sources */,
-				9E430D9126A94B5200C0B571 /* PhotoManager.m in Sources */,
 				9E430D8E26A94B4800C0B571 /* AlertManager.m in Sources */,
 				9E430D5F269E3A3F00C0B571 /* ComposeStoryViewController.m in Sources */,
 				9E430D8A26A93C5D00C0B571 /* TapestryAPIManager.m in Sources */,

@@ -16,15 +16,13 @@
 
 // This view controller allows a user to compose a story, with text, and add additional media and attributes.
 
-@interface ComposeStoryViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIColorPickerViewControllerDelegate, ImagesFromWebDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+@interface ComposeStoryViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIColorPickerViewControllerDelegate, AddImageDelegate, ImagesFromWebDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *buttonsCurrentlyOnScreen;
 @property (nonatomic, strong) NSMutableDictionary *groupsSelected;
 @property (nonatomic, strong) NSMutableArray *groupNamesForStory;
 @property (nonatomic, strong) NSMutableArray *buttonColorsArray;
-
 @property (nonatomic, strong) NSMutableDictionary *storyProperties;
-@property (nonatomic, strong) ImageFromWebViewController *imageFromWebController;
 @property (nonatomic) int currentXEdge;
 @property (nonatomic) int currentYLine;
 
@@ -39,6 +37,8 @@
     // Do any additional setup after loading the view.
     self.APIManager = [TapestryAPIManager new];
     self.alertManager = [AlertManager new];
+    self.imageManager = [AddImageManager new];
+    self.imageManager.delegate = self;
     // To use text view methods, we set the view controller as a delegate for the text view.
     self.storyTextView.delegate = self;
     // The default text is light gray, because it is meant to go away and turn black when a user types in their real text.
@@ -49,10 +49,6 @@
     self.buttonsCurrentlyOnScreen = [NSMutableArray new];
     self.groupsSelected = [NSMutableDictionary new];
     self.storyProperties = [NSMutableDictionary new];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    self.imageFromWebController = [storyboard instantiateViewControllerWithIdentifier:@"ImageFromWebViewController"];
-    self.imageFromWebController.delegate = self;
-    NSLog(@"Dictionary of properties: %@", self.storyProperties);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -128,7 +124,6 @@
                 if (error != nil) {
                     [self.alertManager createAlert:self withMessage:@"Unable to share story. Please check your internet connection and try again!" error:@"Unable to Share"];
                 } else {
-                    NSLog(@"Story shared");
                     self.storyTextView.text = @"How's it going?";
                     self.storyTextView.textColor = UIColor.lightGrayColor;
                     for (UIButton *button in self.buttonsCurrentlyOnScreen) {
@@ -149,7 +144,6 @@
             }];
         }
     }];
-    NSLog(@"Dictionary of properties %@", self.storyProperties);
 }
 
 #pragma mark User Group Buttons
@@ -235,33 +229,19 @@
 #pragma mark Add Image Methods
 
 - (IBAction)onTapImageView:(id)sender {
-    UIAlertController* addPhotoAction = [UIAlertController alertControllerWithTitle:@"Add Photo" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction* fromCameraAction = [UIAlertAction actionWithTitle:@"Take Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [self fromCamera];
-    }];
-    UIAlertAction* fromPhotosAction = [UIAlertAction actionWithTitle:@"From Photos Library" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [self fromLibrary];
-    }];
-    UIAlertAction* fromURL = [UIAlertAction actionWithTitle:@"From Web" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [self fromWeb];
-    }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
-    }];
-    [addPhotoAction addAction:fromCameraAction];
-    [addPhotoAction addAction:fromPhotosAction];
-    [addPhotoAction addAction:fromURL];
-    [addPhotoAction addAction:cancelAction];
-    [self presentViewController:addPhotoAction animated:YES completion:nil];
+    [self presentViewController:[self.imageManager addImageOptionsControllerTo:self] animated:YES completion:nil];
 }
 
 - (void)fromWeb {
-    [self presentViewController:self.imageFromWebController animated:YES completion:nil];
+    ImageFromWebViewController *imageFromWebViewController = [self.imageManager createImageFromWebControllerFor:self];
+    imageFromWebViewController.delegate = self;
+    [self presentViewController:imageFromWebViewController animated:YES completion:nil];
 }
 
 - (void)setImageFromWeb:(UIImage *)image {
     if (image) {
         CGSize imageSize = CGSizeMake(self.storyImageView.frame.size.width, self.storyImageView.frame.size.height);
-        UIImage *resizedImage = [self resizeImage:image withSize:imageSize];
+        UIImage *resizedImage = [self.imageManager resizeImage:image withSize:imageSize];
         self.storyImageView.image = resizedImage;
         self.storyProperties[@"Image"] = resizedImage;
         self.addImageLabel.alpha = 0;
@@ -270,27 +250,21 @@
 }
 
 - (void)fromCamera {
-    UIImagePickerController *imagePickerVC = [UIImagePickerController new];
-    imagePickerVC.delegate = self;
-    imagePickerVC.allowsEditing = YES;
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+    UIImagePickerController *imagePickerVC = [self.imageManager createFromCameraImagePickerFor:self];
+    if (imagePickerVC) {
+        imagePickerVC.delegate = self;
         [self presentViewController:imagePickerVC animated:YES completion:nil];
-    }
-    else {
+    } else {
         [self.alertManager createAlert:self withMessage:@"Please allow camera access and try again!" error:@"Unable to Acccess Camera"];
     }
 }
 
 - (void)fromLibrary {
-    UIImagePickerController *imagePickerVC = [UIImagePickerController new];
-    imagePickerVC.delegate = self;
-    imagePickerVC.allowsEditing = YES;
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-        imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    UIImagePickerController *imagePickerVC = [self.imageManager createFromPhotosImagePickerFor:self];
+    if (imagePickerVC) {
+        imagePickerVC.delegate = self;
         [self presentViewController:imagePickerVC animated:YES completion:nil];
-    }
-    else {
+    } else {
         [self.alertManager createAlert:self withMessage:@"Please allow photo library access and try again!" error:@"Unable to Acccess Photo Library"];
     }
 }
@@ -303,28 +277,12 @@
     UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
     //UIImage *editedImage = info[UIImagePickerControllerEditedImage]; Not sure what this line is for.
     CGSize imageSize = CGSizeMake(self.storyImageView.frame.size.width, self.storyImageView.frame.size.height);
-    UIImage *resizedImage = [self resizeImage:originalImage withSize:imageSize];
+    UIImage *resizedImage = [self.imageManager resizeImage:originalImage withSize:imageSize];
     // Do something with the images (based on your use case)
     self.storyImageView.image = resizedImage;
     self.storyProperties[@"Image"] = resizedImage;
-    NSLog(@"Dictionary of properties after image: %@", self.storyProperties);
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-// This function resizes images in case they are too large so they can be stored in the database.
-- (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
-    UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-    
-    resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
-    resizeImageView.image = image;
-    
-    UIGraphicsBeginImageContext(size);
-    [resizeImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return newImage;
 }
 
 #pragma mark Add Color Methods
@@ -346,7 +304,6 @@
     self.storyProperties[@"Background Color"] = viewController.selectedColor;
     self.addColorLabel.alpha = 0;
     self.addColorPhoto.alpha = 0;
-    NSLog(@"Dictionary of properties after color: %@", self.storyProperties);
 }
 
 /*

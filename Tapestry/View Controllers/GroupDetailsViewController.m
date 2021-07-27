@@ -45,6 +45,7 @@
     }];
 }
 
+
 /*
 #pragma mark - Navigation
 
@@ -111,6 +112,18 @@
         return 48; // These are the tapestry members
     } else {
         return 48;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            // Change group image
+        } else {
+            // Change group name
+        }
+    } else if (indexPath.row == 2) {
+        // Bring up an alert to ask if the user really wants to leave
     }
 }
 

@@ -8,12 +8,14 @@
 #import <UIKit/UIKit.h>
 #import "TapestryAPIManager.h"
 #import "AlertManager.h"
+#import "AddImageManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ComposeStoryViewController : UIViewController
 @property (nonatomic, strong) TapestryAPIManager *APIManager;
 @property (nonatomic, strong) AlertManager *alertManager;
+@property (nonatomic, strong) AddImageManager *imageManager;
 
 @property (weak, nonatomic) IBOutlet UITextView *storyTextView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addGroupsButton;

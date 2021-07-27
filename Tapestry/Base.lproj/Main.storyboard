@@ -374,15 +374,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addColorLabel" destination="Kad-ey-wJl" id="G4j-xU-M8L"/>
-                        <outlet property="addColorPhoto" destination="wE4-ef-2gM" id="pQl-dw-UrZ"/>
-                        <outlet property="addColorView" destination="d4K-GI-pRB" id="81n-NU-dr2"/>
-                        <outlet property="addGroupsButton" destination="wQV-z5-9ee" id="pvg-kU-7YB"/>
-                        <outlet property="addImageLabel" destination="jta-CI-u95" id="fQa-QN-QdY"/>
-                        <outlet property="addPhotoImage" destination="7Ax-j6-NLn" id="har-lw-0dv"/>
-                        <outlet property="imageSelectionView" destination="Bse-Il-jGX" id="rDq-Qz-EqZ"/>
-                        <outlet property="storyImageView" destination="FX4-5N-L99" id="sNF-gf-BTd"/>
-                        <outlet property="storyTextView" destination="V5A-Mf-nlG" id="5KV-KA-ggQ"/>
+                        <outlet property="addColorLabel" destination="Kad-ey-wJl" id="Kmq-Gr-BXa"/>
+                        <outlet property="addColorPhoto" destination="wE4-ef-2gM" id="oCD-nB-myM"/>
+                        <outlet property="addColorView" destination="d4K-GI-pRB" id="2jq-ti-ZYw"/>
+                        <outlet property="addGroupsButton" destination="wQV-z5-9ee" id="0zk-CK-vov"/>
+                        <outlet property="addImageLabel" destination="jta-CI-u95" id="4pe-WL-NUw"/>
+                        <outlet property="addPhotoImage" destination="7Ax-j6-NLn" id="ZMA-OM-QvE"/>
+                        <outlet property="imageSelectionView" destination="Bse-Il-jGX" id="x0Q-Q0-131"/>
+                        <outlet property="storyImageView" destination="FX4-5N-L99" id="dlr-lG-hiS"/>
+                        <outlet property="storyTextView" destination="V5A-Mf-nlG" id="o6D-DS-BIA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4OG-JK-hmd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -818,7 +818,9 @@
                             <constraint firstItem="3cl-oM-Eer" firstAttribute="top" secondItem="3By-UB-lKg" secondAttribute="top" id="tCt-TG-Gyy"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="vMS-Cx-4Zv"/>
+                    <navigationItem key="navigationItem" id="vMS-Cx-4Zv">
+                        <barButtonItem key="rightBarButtonItem" image="person.fill" catalog="system" id="feg-p7-h7Z"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="3cl-oM-Eer" id="5o1-en-gEi"/>
                     </connections>
@@ -1221,6 +1223,7 @@
         <image name="circles.hexagongrid.fill" catalog="system" width="128" height="112"/>
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="person.2.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="photo" catalog="system" width="128" height="93"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
