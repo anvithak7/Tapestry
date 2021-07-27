@@ -149,6 +149,7 @@
                     self.storyImageView.image = nil;
                     self.addColorLabel.alpha = 1;
                     self.addColorPhoto.alpha = 1;
+                    [self.groupNamesForStory removeAllObjects];
                     self.addColorView.backgroundColor = [UIColor systemGray6Color];
                     [self.storyImageView setTintColor:[UIColor systemGray6Color]];
                     [self.storyTextView endEditing:true];
@@ -342,15 +343,16 @@
     [self presentViewController:colorPicker animated:YES completion:nil];
 }
 
+// This method needs to be there but doesn't have to do anything since it is taken care of when the color is selected.
 - (void)colorPickerViewControllerDidFinish:(UIColorPickerViewController *)viewController {
-    self.addColorLabel.alpha = 0;
-    self.addColorPhoto.alpha = 0;
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 - (void)colorPickerViewControllerDidSelectColor:(UIColorPickerViewController *)viewController {
     self.addColorView.backgroundColor = viewController.selectedColor;
     self.storyProperties[@"Background Color"] = viewController.selectedColor;
+    self.addColorLabel.alpha = 0;
+    self.addColorPhoto.alpha = 0;
     NSLog(@"Dictionary of properties after color: %@", self.storyProperties);
 }
 

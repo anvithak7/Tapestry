@@ -1036,7 +1036,6 @@
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tapestry Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8NI-We-xK3">
                                                                     <rect key="frame" x="8" y="8" width="398" height="18"/>
-                                                                    <color key="backgroundColor" red="0.57802763410000002" green="0.72532807939999999" blue="0.28087201210000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -1080,7 +1079,6 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
-                                                            <color key="backgroundColor" red="0.78594720363616943" green="0.88870209455490112" blue="0.94672971963882446" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="trailingMargin" secondItem="cD8-3w-hR3" secondAttribute="trailing" constant="8" id="2o1-sf-CjE"/>
                                                                 <constraint firstItem="Gji-t6-Kk2" firstAttribute="top" secondItem="cD8-3w-hR3" secondAttribute="bottom" id="B3j-wi-Rte"/>

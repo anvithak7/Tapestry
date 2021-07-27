@@ -29,6 +29,9 @@
     self.APIManager = [TapestryAPIManager new];
     [self.startDatePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
     [self.endDatePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
+    self.startDatePicker.date = [calendar startOfDayForDate:[NSDate date]];
+    self.endDatePicker.maximumDate = [NSDate date];
     self.endDatePicker.minimumDate = self.startDatePicker.date;
     self.startDatePicker.maximumDate = self.endDatePicker.date;
     self.groupNameTitle.text = self.group.groupName;
@@ -75,7 +78,7 @@
     }];
 }
 
-- (void) dateChanged:(id)sender {
+- (void)dateChanged:(id)sender {
     self.endDatePicker.minimumDate = self.startDatePicker.date;
     self.startDatePicker.maximumDate = self.endDatePicker.date;
     [self getStories];
