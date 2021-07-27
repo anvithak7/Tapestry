@@ -16,19 +16,7 @@
 
 // This view controller allows a user to compose a story, with text, and add additional media and attributes.
 
-@interface ComposeStoryViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIColorPickerViewControllerDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
-
-@property (weak, nonatomic) IBOutlet UITextView *storyTextView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *addGroupsButton;
-
-@property (weak, nonatomic) IBOutlet UIView *imageSelectionView;
-@property (weak, nonatomic) IBOutlet UIImageView *storyImageView;
-@property (weak, nonatomic) IBOutlet UILabel *addImageLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *addPhotoImage;
-
-@property (weak, nonatomic) IBOutlet UIView *addColorView;
-@property (weak, nonatomic) IBOutlet UILabel *addColorLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *addColorPhoto;
+@interface ComposeStoryViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIColorPickerViewControllerDelegate, ImagesFromWebDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *buttonsCurrentlyOnScreen;
 @property (nonatomic, strong) NSMutableDictionary *groupsSelected;
@@ -36,6 +24,7 @@
 @property (nonatomic, strong) NSMutableArray *buttonColorsArray;
 
 @property (nonatomic, strong) NSMutableDictionary *storyProperties;
+@property (nonatomic, strong) ImageFromWebViewController *imageFromWebController;
 @property (nonatomic) int currentXEdge;
 @property (nonatomic) int currentYLine;
 
@@ -60,6 +49,9 @@
     self.buttonsCurrentlyOnScreen = [NSMutableArray new];
     self.groupsSelected = [NSMutableDictionary new];
     self.storyProperties = [NSMutableDictionary new];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    self.imageFromWebController = [storyboard instantiateViewControllerWithIdentifier:@"ImageFromWebViewController"];
+    self.imageFromWebController.delegate = self;
     NSLog(@"Dictionary of properties: %@", self.storyProperties);
 }
 
@@ -262,18 +254,19 @@
     [self presentViewController:addPhotoAction animated:YES completion:nil];
 }
 
-- (void) fromWeb {
-    ImageFromWebViewController *imageFromWebController = [ImageFromWebViewController new];
-    [self presentViewController:imageFromWebController animated:YES completion:nil];
-    NSURL *url = [NSURL URLWithString:@"http://www.fnordware.com/superpng/pnggrad16rgb.png"];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    NSLog(@"imageData: %@", data);
-    UIImage *image = [UIImage imageWithData:data];
-    NSLog(@"image: %@", image);
-    CGSize imageSize = CGSizeMake(self.storyImageView.frame.size.width, self.storyImageView.frame.size.height);
-    UIImage *resizedImage = [self resizeImage:image withSize:imageSize];
-    self.storyImageView.image = resizedImage;
-    self.storyProperties[@"Image"] = resizedImage;
+- (void)fromWeb {
+    [self presentViewController:self.imageFromWebController animated:YES completion:nil];
+}
+
+- (void)setImageFromWeb:(UIImage *)image {
+    if (image) {
+        CGSize imageSize = CGSizeMake(self.storyImageView.frame.size.width, self.storyImageView.frame.size.height);
+        UIImage *resizedImage = [self resizeImage:image withSize:imageSize];
+        self.storyImageView.image = resizedImage;
+        self.storyProperties[@"Image"] = resizedImage;
+        self.addImageLabel.alpha = 0;
+        self.addPhotoImage.alpha = 0;
+    }
 }
 
 - (void)fromCamera {

@@ -18,6 +18,27 @@
     // Do any additional setup after loading the view.
 }
 
+- (IBAction)onTapAnywhere:(id)sender {
+    [self.imageURLField endEditing:true];
+}
+
+- (IBAction)imageURLEditingEnded:(id)sender {
+    NSURL *url = [NSURL URLWithString:self.imageURLField.text];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    UIImage *image = [UIImage imageWithData:data];
+    NSLog(@"image: %@", image);
+    self.URLImageView.image = image;
+}
+
+- (IBAction)donePickingImage:(id)sender {
+    [self.delegate setImageFromWeb:self.URLImageView.image];
+    self.imageURLField.text = @"";
+    self.imageURLField.placeholder = @"Image URL";
+    self.URLImageView.image = nil;
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 /*
 #pragma mark - Navigation
 

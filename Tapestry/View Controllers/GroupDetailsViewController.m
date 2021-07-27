@@ -6,14 +6,15 @@
 //
 
 #import "GroupDetailsViewController.h"
+#import "GroupImageCell.h"
 #import "TextCell.h"
 #import "MemberCell.h"
 
 @interface GroupDetailsViewController ()  <UITableViewDelegate, UITableViewDataSource>
-@property (weak, nonatomic) IBOutlet UIImageView *groupImageView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *tapestryMembers;
 @property (nonatomic, strong) NSMutableArray *tableData;
+@property (nonatomic, strong) PFFileObject *groupImageFile;
 
 @end
 
@@ -24,7 +25,6 @@
     // Do any additional setup after loading the view.
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.rowHeight = 48;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.APIManager = [TapestryAPIManager new];
     [self.APIManager fetchGroup:self.group :^(PFObject * _Nonnull group, NSError * _Nonnull error) {
@@ -33,6 +33,11 @@
         } else {
             self.tapestryMembers = [group[@"membersArray"] copy];
             self.tableData = [NSMutableArray new];
+            if (group[@"groupImage"]) {
+                self.groupImageFile = group[@"groupImage"];
+            } else {
+                self.groupImageFile = nil;
+            }
             [self.tableData addObjectsFromArray:@[@[group[@"groupName"]], @[@"Leave Tapestry"]]];
             [self.tableData insertObject:self.tapestryMembers atIndex:1];
             NSLog(@"Table data: %@", self.tableData);
@@ -52,9 +57,18 @@
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        TextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TextCell"];
-        cell.cellTextLabel.text = self.tableData[indexPath.section][0];
-        return cell;
+        if (indexPath.row == 0) {
+            GroupImageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GroupImageCell"];
+            cell.groupImageView.file = self.groupImageFile;
+            if (cell.groupImageView.file) {
+                [cell.groupImageView loadInBackground];
+            }
+            return cell;
+        } else {
+            TextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TextCell"];
+            cell.cellTextLabel.text = self.tableData[indexPath.section][1];
+            return cell;
+        }
     } else if (indexPath.section == 1) {
         MemberCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell"]; // We create a table view cell of type PostCell.
         PFUser *user = self.tapestryMembers[indexPath.row];
@@ -77,9 +91,27 @@
     return self.tableData.count;
 }
 
-/*
-- (NSString *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-}*/
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 1) {
+        return @"Tapestry Weavers";
+    }
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            // This is the image;
+            return 100;
+        } else {
+            return 30;
+        }
+    } else if (indexPath.row == 1) {
+        return 48; // These are the tapestry members
+    } else {
+        return 30;
+    }
+}
 
 @end
