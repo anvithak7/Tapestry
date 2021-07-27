@@ -38,7 +38,7 @@
             } else {
                 self.groupImageFile = nil;
             }
-            [self.tableData addObjectsFromArray:@[@[group[@"groupName"]], @[@"Leave Tapestry"]]];
+            [self.tableData addObjectsFromArray:@[@[@"Image", group[@"groupName"]], @[@"Leave Tapestry"]]];
             [self.tableData insertObject:self.tapestryMembers atIndex:1];
             NSLog(@"Table data: %@", self.tableData);
         }
@@ -94,7 +94,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 1) {
-        return @"Tapestry Weavers";
+        return @"Weavers";
     }
     return nil;
 }
@@ -103,14 +103,14 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             // This is the image;
-            return 100;
+            return 250;
         } else {
-            return 30;
+            return 48;
         }
     } else if (indexPath.row == 1) {
         return 48; // These are the tapestry members
     } else {
-        return 30;
+        return 48;
     }
 }
 

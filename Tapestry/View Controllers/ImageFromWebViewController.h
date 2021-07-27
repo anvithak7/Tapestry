@@ -18,7 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ImageFromWebViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *imageURLField;
 @property (weak, nonatomic) IBOutlet UIImageView *URLImageView;
-@property (weak, nonatomic) IBOutlet UIButton *donePickingButton;
 @property (weak, nonatomic) id<ImagesFromWebDelegate> delegate;
 
 

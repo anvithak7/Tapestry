@@ -174,7 +174,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Image URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BxB-Tc-XuX">
-                                <rect key="frame" x="8" y="60" width="398" height="34"/>
+                                <rect key="frame" x="8" y="104" width="398" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -182,41 +182,37 @@
                                 </connections>
                             </textField>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pJG-kU-X54">
-                                <rect key="frame" x="8" y="110" width="398" height="250"/>
+                                <rect key="frame" x="8" y="154" width="398" height="250"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="gpc-Dg-PLy"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a95-Nd-irP">
-                                <rect key="frame" x="182" y="376" width="50" height="30"/>
-                                <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="bYi-IS-f7H"/>
-                                </constraints>
-                                <color key="tintColor" systemColor="labelColor"/>
-                                <state key="normal" title="Done"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="donePickingImage:" destination="73D-rH-1nj" eventType="touchUpInside" id="BPy-aN-ymV"/>
-                                </connections>
-                            </button>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tUi-9i-NI0">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <items>
+                                    <navigationItem title="Add Image" id="uOV-Md-rTi">
+                                        <barButtonItem key="rightBarButtonItem" title="Done" id="l56-Dm-hzd">
+                                            <connections>
+                                                <action selector="donePickingImage:" destination="73D-rH-1nj" id="t9U-iZ-5Th"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="5oh-Uq-t0D"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="pJG-kU-X54" firstAttribute="leading" secondItem="5oh-Uq-t0D" secondAttribute="leading" constant="8" id="0Fc-bh-mAQ"/>
-                            <constraint firstItem="a95-Nd-irP" firstAttribute="centerX" secondItem="Sbp-Ah-9op" secondAttribute="centerX" id="AeH-GQ-weD"/>
                             <constraint firstItem="5oh-Uq-t0D" firstAttribute="trailing" secondItem="BxB-Tc-XuX" secondAttribute="trailing" constant="8" id="JhT-0q-zUL"/>
-                            <constraint firstItem="BxB-Tc-XuX" firstAttribute="top" secondItem="5oh-Uq-t0D" secondAttribute="top" constant="16" id="JqT-Ni-QwN"/>
-                            <constraint firstItem="a95-Nd-irP" firstAttribute="top" secondItem="pJG-kU-X54" secondAttribute="bottom" constant="16" id="Q6z-l2-nSv"/>
+                            <constraint firstItem="BxB-Tc-XuX" firstAttribute="top" secondItem="tUi-9i-NI0" secondAttribute="bottom" constant="16" id="JqT-Ni-QwN"/>
                             <constraint firstItem="BxB-Tc-XuX" firstAttribute="leading" secondItem="5oh-Uq-t0D" secondAttribute="leading" constant="8" id="ddc-ms-X4m"/>
+                            <constraint firstItem="tUi-9i-NI0" firstAttribute="leading" secondItem="5oh-Uq-t0D" secondAttribute="leading" id="eoA-pF-iMQ"/>
                             <constraint firstItem="pJG-kU-X54" firstAttribute="top" secondItem="BxB-Tc-XuX" secondAttribute="bottom" constant="16" id="gR7-JY-kod"/>
                             <constraint firstItem="5oh-Uq-t0D" firstAttribute="trailing" secondItem="pJG-kU-X54" secondAttribute="trailing" constant="8" id="oaa-1j-WCi"/>
+                            <constraint firstItem="tUi-9i-NI0" firstAttribute="top" secondItem="5oh-Uq-t0D" secondAttribute="top" id="sgm-ct-nC5"/>
+                            <constraint firstItem="tUi-9i-NI0" firstAttribute="trailing" secondItem="5oh-Uq-t0D" secondAttribute="trailing" id="z6X-AT-4ra"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="mdN-1N-A6M" appends="YES" id="57Y-RF-CDD"/>
@@ -224,7 +220,6 @@
                     </view>
                     <connections>
                         <outlet property="URLImageView" destination="pJG-kU-X54" id="sPq-bW-70D"/>
-                        <outlet property="donePickingButton" destination="a95-Nd-irP" id="bhf-YC-fLk"/>
                         <outlet property="imageURLField" destination="BxB-Tc-XuX" id="Dp3-hq-ovb"/>
                     </connections>
                 </viewController>
@@ -1068,14 +1063,14 @@
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GroupImageCell" id="f8a-4m-wNA" customClass="GroupImageCell">
-                                                        <rect key="frame" x="0.0" y="49.5" width="414" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="49.5" width="414" height="43.5"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f8a-4m-wNA" id="LEc-3U-Jcp">
-                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.2" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="0fe-fo-e8c" customClass="PFImageView">
-                                                                    <rect key="frame" x="0.0" y="1.5" width="414" height="18"/>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0fe-fo-e8c" customClass="PFImageView">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <constraints>
@@ -1090,14 +1085,14 @@
                                                         </connections>
                                                     </tableViewCell>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextCell" id="1Im-HC-lBf" customClass="TextCell">
-                                                        <rect key="frame" x="0.0" y="70" width="414" height="43.5"/>
+                                                        <rect key="frame" x="0.0" y="93" width="414" height="34.5"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1Im-HC-lBf" id="OQb-yn-KwG">
-                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="34.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tapestry Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8NI-We-xK3">
-                                                                    <rect key="frame" x="8" y="8" width="398" height="18"/>
+                                                                    <rect key="frame" x="8" y="8" width="398" height="18.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -1107,6 +1102,7 @@
                                                                 <constraint firstItem="8NI-We-xK3" firstAttribute="top" secondItem="OQb-yn-KwG" secondAttribute="top" constant="8" id="8jR-0d-eRL"/>
                                                                 <constraint firstItem="8NI-We-xK3" firstAttribute="leading" secondItem="OQb-yn-KwG" secondAttribute="leading" constant="8" id="Bjh-Zf-7Bj"/>
                                                                 <constraint firstAttribute="trailing" secondItem="8NI-We-xK3" secondAttribute="trailing" constant="8" id="KxU-ax-r8o"/>
+                                                                <constraint firstAttribute="bottom" secondItem="8NI-We-xK3" secondAttribute="bottom" constant="8" id="NoQ-51-Pbm"/>
                                                             </constraints>
                                                         </tableViewCellContentView>
                                                         <connections>
@@ -1115,7 +1111,7 @@
                                                         </connections>
                                                     </tableViewCell>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberCell" rowHeight="72" id="1KG-6x-dq8" customClass="MemberCell">
-                                                        <rect key="frame" x="0.0" y="113.5" width="414" height="72"/>
+                                                        <rect key="frame" x="0.0" y="127.5" width="414" height="72"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1KG-6x-dq8" id="ykC-5j-5tW">
                                                             <rect key="frame" x="0.0" y="0.0" width="414" height="72"/>
@@ -1224,7 +1220,6 @@
         <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
         <image name="circles.hexagongrid.fill" catalog="system" width="128" height="112"/>
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>
-        <image name="person.2" catalog="system" width="128" height="81"/>
         <image name="person.2.circle.fill" catalog="system" width="128" height="121"/>
         <image name="photo" catalog="system" width="128" height="93"/>
         <systemColor name="labelColor">
