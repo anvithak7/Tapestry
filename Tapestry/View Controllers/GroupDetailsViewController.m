@@ -184,9 +184,9 @@
             }];
         }
     }];
-    //TODO: figure out how to go back to groups view controller
-    [self popoverPresentationController];
-    [self popoverPresentationController];
+    UINavigationController *nav = [self navigationController];
+    [nav popViewControllerAnimated:YES];
+    [nav popViewControllerAnimated:YES];
 }
 
 #pragma mark Change Group Image Methods
