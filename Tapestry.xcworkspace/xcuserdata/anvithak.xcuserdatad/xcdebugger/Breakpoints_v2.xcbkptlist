@@ -311,33 +311,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1D923DD5-06F8-4DAF-97A6-DE9F3AEDA886"
-            shouldBeEnabled = "No"
+            uuid = "B7CA44D0-2157-4877-942B-D75B4955F955"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tapestry/View Controllers/GroupDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "-viewWillAppear:"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
+            landmarkName = "-setMediaUponPicking:"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8F755090-B709-46A9-961A-1CA140EA67E7"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tapestry/Managers/AddImageManager.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "-createFromCameraImagePickerFor:"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B7CA44D0-2157-4877-942B-D75B4955F955 - c65caeaa2db5e7be"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[GroupDetailsViewController setMediaUponPicking:]"
+                  moduleName = "Tapestry"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anvithak/Documents/Tapestry/Tapestry/View%20Controllers/GroupDetailsViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "204"
+                  endingLineNumber = "204"
+                  offsetFromSymbolStart = "162">
+               </Location>
+               <Location
+                  uuid = "B7CA44D0-2157-4877-942B-D75B4955F955 - 50e8a01365fe911e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__50-[GroupDetailsViewController setMediaUponPicking:]_block_invoke"
+                  moduleName = "Tapestry"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anvithak/Documents/Tapestry/Tapestry/View%20Controllers/GroupDetailsViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "205"
+                  endingLineNumber = "205"
+                  offsetFromSymbolStart = "55">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

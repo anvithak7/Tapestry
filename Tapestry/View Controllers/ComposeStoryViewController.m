@@ -16,7 +16,7 @@
 
 // This view controller allows a user to compose a story, with text, and add additional media and attributes.
 
-@interface ComposeStoryViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIColorPickerViewControllerDelegate, ImagesFromWebDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+@interface ComposeStoryViewController () <UITextViewDelegate, UIColorPickerViewControllerDelegate, AddImageDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *buttonsCurrentlyOnScreen;
 @property (nonatomic, strong) NSMutableDictionary *groupsSelected;
@@ -39,6 +39,7 @@
     self.APIManager = [TapestryAPIManager new];
     self.alertManager = [AlertManager new];
     self.imageManager = [[AddImageManager alloc] initWithViewController:self];
+    self.imageManager.delegate = self;
     // To use text view methods, we set the view controller as a delegate for the text view.
     self.storyTextView.delegate = self;
     // The default text is light gray, because it is meant to go away and turn black when a user types in their real text.
@@ -54,12 +55,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     self.currentXEdge = 8;
     self.currentYLine = self.storyTextView.frame.origin.y + self.storyTextView.frame.size.height + 8;
-    self.addImageLabel.alpha = 1;
-    self.addPhotoImage.alpha = 1;
-    self.storyImageView.image = nil;
-    self.addColorLabel.alpha = 1;
-    self.addColorPhoto.alpha = 1;
-    self.addColorView.backgroundColor = [UIColor systemGray6Color];
+    [self resetComposeView];
     [self addGroupButtons];
 }
 
@@ -68,6 +64,18 @@
         [button removeFromSuperview];
     }
     [self.buttonsCurrentlyOnScreen removeAllObjects];
+}
+
+- (void)resetComposeView {
+    self.storyImageView.image = nil;
+    self.addImageLabel.alpha = 1;
+    self.addPhotoImage.alpha = 1;
+    self.addColorLabel.alpha = 1;
+    self.addColorPhoto.alpha = 1;
+    [self.groupNamesForStory removeAllObjects];
+    self.addColorView.backgroundColor = [UIColor systemGray6Color];
+    [self.storyImageView setTintColor:[UIColor systemGray6Color]];
+    [self.storyTextView endEditing:true];
 }
 
 #pragma mark UITextViewDelegate Methods
@@ -130,16 +138,7 @@
                         [button setBackgroundColor:[UIColor lightGrayColor]];
                         [button setSelected:false];
                     }
-                    self.storyImageView.image = nil;
-                    self.addImageLabel.alpha = 1;
-                    self.addPhotoImage.alpha = 1;
-                    self.storyImageView.image = nil;
-                    self.addColorLabel.alpha = 1;
-                    self.addColorPhoto.alpha = 1;
-                    [self.groupNamesForStory removeAllObjects];
-                    self.addColorView.backgroundColor = [UIColor systemGray6Color];
-                    [self.storyImageView setTintColor:[UIColor systemGray6Color]];
-                    [self.storyTextView endEditing:true];
+                    [self resetComposeView];
                 }
             }];
         }
@@ -233,31 +232,15 @@
     [self presentViewController:[self.imageManager addImageOptionsControllerTo:self] animated:YES completion:nil];
 }
 
-- (void)setImageFromWeb:(UIImage *)image {
-    if (image) {
-        CGSize imageSize = CGSizeMake(self.storyImageView.frame.size.width, self.storyImageView.frame.size.height);
-        UIImage *resizedImage = [self.imageManager resizeImage:image withSize:imageSize];
-        self.storyImageView.image = resizedImage;
-        self.storyProperties[@"Image"] = resizedImage;
-        self.addImageLabel.alpha = 0;
-        self.addPhotoImage.alpha = 0;
-    }
+- (UIImageView *)sendImageViewToFitInto {
+    return self.storyImageView;
 }
 
-// This function is to set the image in the post to the image picked or taken and to make sure it's been resized.
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+- (void)setMediaUponPicking:(UIImage *)image {
     self.addImageLabel.alpha = 0;
     self.addPhotoImage.alpha = 0;
-    // Get the image captured by the UIImagePickerController
-    UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
-    //UIImage *editedImage = info[UIImagePickerControllerEditedImage]; Not sure what this line is for.
-    CGSize imageSize = CGSizeMake(self.storyImageView.frame.size.width, self.storyImageView.frame.size.height);
-    UIImage *resizedImage = [self.imageManager resizeImage:originalImage withSize:imageSize];
-    // Do something with the images (based on your use case)
-    self.storyImageView.image = resizedImage;
-    self.storyProperties[@"Image"] = resizedImage;
-    // Dismiss UIImagePickerController to go back to your original view controller
-    [self dismissViewControllerAnimated:YES completion:nil];
+    self.storyImageView.image = image;
+    self.storyProperties[@"Image"] = image;
 }
 
 #pragma mark Add Color Methods

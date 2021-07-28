@@ -9,6 +9,7 @@
 
 @implementation AddImageManager
 
+#pragma mark Initialization
 - (instancetype) initWithViewController:(UIViewController*)viewController {
     self = [super init];
     if (self) {
@@ -18,6 +19,8 @@
     }
     return self;
 }
+
+#pragma mark Creating Add Image Panel
 
 - (UIAlertController*) addImageOptionsControllerTo:(UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, ImagesFromWebDelegate>*)viewController {
     UIAlertController* addPhotoAction = [UIAlertController alertControllerWithTitle:@"Add Photo" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
@@ -39,11 +42,12 @@
     return addPhotoAction;
 }
 
-// UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>*
+#pragma mark Add Image Options
+
 - (void)createFromCameraImagePickerFor:(UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>*)viewController {
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.allowsEditing = YES;
-    imagePickerVC.delegate = viewController;
+    imagePickerVC.delegate = self;
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
         [viewController presentViewController:imagePickerVC animated:YES completion:nil];
@@ -55,7 +59,7 @@
 - (void)createFromPhotosImagePickerFor:(UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>*)viewController {
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.allowsEditing = YES;
-    imagePickerVC.delegate = viewController;
+    imagePickerVC.delegate = self;
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         [viewController presentViewController:imagePickerVC animated:YES completion:nil];
@@ -64,11 +68,34 @@
     }
 }
 
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
+    UIImageView* mediaView = [self.delegate sendImageViewToFitInto];
+    CGSize imageSize = CGSizeMake(mediaView.frame.size.width, mediaView.frame.size.height);
+    UIImage *resizedImage = [self resizeImage:originalImage withSize:imageSize];
+    self.imageForViewController = resizedImage;
+    [self.delegate setMediaUponPicking:resizedImage];
+    // Dismiss UIImagePickerController to go back to your original view controller
+    [self.myViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)createImageFromWebControllerFor:(UIViewController<ImagesFromWebDelegate>*)viewController {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ImageFromWebViewController *imageFromWebViewController = [storyboard instantiateViewControllerWithIdentifier:@"ImageFromWebViewController"];
-    imageFromWebViewController.delegate = viewController;
+    imageFromWebViewController.delegate = self;
     [viewController presentViewController:imageFromWebViewController animated:YES completion:nil];
+}
+
+- (void)setImageFromWeb:(UIImage *)image {
+    self.imageForViewController = image;
+    [self.delegate setMediaUponPicking:image];
+}
+- (UIImage* _Nullable)getImageFromManager {
+    return self.imageForViewController;
+}
+
+- (PFFileObject*)getImageFileFromManager {
+    return [self getPFFileFromImage:self.imageForViewController];
 }
 
 - (PFFileObject *)getPFFileFromImage:(UIImage * _Nullable)image {

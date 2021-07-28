@@ -11,7 +11,8 @@
 #import "TextCell.h"
 #import "MemberCell.h"
 
-@interface GroupDetailsViewController ()  <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImagesFromWebDelegate>
+@interface GroupDetailsViewController ()  <UITableViewDelegate, UITableViewDataSource, AddImageDelegate>
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *tapestryMembers;
 @property (nonatomic, strong) NSMutableArray *tableData;
@@ -32,6 +33,7 @@
     self.alertManager = [AlertManager new];
     self.APIManager = [TapestryAPIManager new];
     self.imageManager = [[AddImageManager alloc] initWithViewController:self];
+    self.imageManager.delegate = self;
     [self fetchTableData];
 }
 
@@ -193,38 +195,19 @@
 
 #pragma mark Change Group Image Methods
 
-// This function is to set the image in the post to the image picked or taken and to make sure it's been resized.
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    // Get the image captured by the UIImagePickerController
-    UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
-    CGSize imageSize = CGSizeMake(self.groupImageCell.groupImageView.frame.size.width, self.groupImageCell.groupImageView.frame.size.height);
-    UIImage *resizedImage = [self.imageManager resizeImage:originalImage withSize:imageSize];
-    // Do something with the images (based on your use case)
-    self.groupImageCell.groupImageView.image = resizedImage;
-    [self.APIManager updateImageFor:self.group withKey:@"groupImage" withImageFile:[self.imageManager getPFFileFromImage:resizedImage] :^(BOOL succeeded, NSError * _Nonnull error) {
+- (UIImageView *)sendImageViewToFitInto {
+    return self.groupImageCell.groupImageView;
+}
+
+- (void)setMediaUponPicking:(UIImage *)image {
+    self.groupImageCell.groupImageView.image = image;
+    [self.APIManager updateImageFor:self.group withKey:@"groupImage" withImageFile:[self.imageManager getImageFileFromManager] :^(BOOL succeeded, NSError * _Nonnull error) {
         if (succeeded) {
             NSLog(@"Group data was updated");
         } else {
             [self.alertManager createAlert:self withMessage:error.description error:@"Error"];
         }
     }];
-    // Dismiss UIImagePickerController to go back to your original view controller
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)setImageFromWeb:(UIImage *)image {
-    if (image) {
-        CGSize imageSize = CGSizeMake(self.groupImageCell.groupImageView.frame.size.width, self.groupImageCell.groupImageView.frame.size.height);
-        UIImage *resizedImage = [self.imageManager resizeImage:image withSize:imageSize];
-        self.groupImageCell.groupImageView.image = resizedImage;
-        [self.APIManager updateImageFor:self.group withKey:@"groupImage" withImageFile:[self.imageManager getPFFileFromImage:resizedImage] :^(BOOL succeeded, NSError * _Nonnull error) {
-            if (succeeded) {
-                NSLog(@"Group data was updated");
-            } else {
-                [self.alertManager createAlert:self withMessage:error.description error:@"Error"];
-            }
-        }];
-    }
 }
 
 @end

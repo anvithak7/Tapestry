@@ -11,18 +11,27 @@
 @import Parse;
 
 NS_ASSUME_NONNULL_BEGIN
+@protocol AddImageDelegate
 
-@interface AddImageManager : NSObject <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+- (UIImageView*)sendImageViewToFitInto;
+- (void)setMediaUponPicking:(UIImage* _Nullable)image;
+
+@end
+
+@interface AddImageManager : NSObject <UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImagesFromWebDelegate>
 
 @property (nonatomic, strong) AlertManager *alertManager;
 @property (nonatomic, strong) UIViewController* myViewController;
+@property (nonatomic, strong) UIImage* imageForViewController;
+@property (nonatomic, strong) PFFileObject* fileForViewController;
+
+@property (weak, nonatomic) id<AddImageDelegate> delegate;
 
 - (instancetype) initWithViewController:(UIViewController*)viewController;
 - (UIAlertController*) addImageOptionsControllerTo:(UIViewController*)viewController;
-- (void)createFromCameraImagePickerFor:(UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>*)viewController;
-- (void)createFromPhotosImagePickerFor:(UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>*)viewController;
-- (void)createImageFromWebControllerFor:(UIViewController<ImagesFromWebDelegate>*)viewController;
-- (PFFileObject *)getPFFileFromImage:(UIImage * _Nullable)image;
+- (UIImage* _Nullable)getImageFromManager;
+- (PFFileObject*)getImageFileFromManager;
+- (PFFileObject*)getPFFileFromImage:(UIImage * _Nullable)image;
 - (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size;
 
 @end

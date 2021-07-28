@@ -8,7 +8,7 @@
 #import "EditProfileViewController.h"
 #import "ImageFromWebViewController.h"
 
-@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImagesFromWebDelegate>
+@interface EditProfileViewController () <AddImageDelegate>
 
 @end
 
@@ -20,6 +20,7 @@
     self.alertManager = [AlertManager new];
     self.APIManager = [TapestryAPIManager new];
     self.imageManager = [[AddImageManager alloc] initWithViewController:self];
+    self.imageManager.delegate = self;
     self.profilePhotoView.layer.masksToBounds = YES;
     self.profilePhotoView.layer.cornerRadius = self.profilePhotoView.frame.size.width / 2;
     self.nameField.text = self.user[@"fullName"];
@@ -38,7 +39,7 @@
     [properties setValue:self.nameField.text forKey:@"fullName"];
     [properties setValue:self.usernameField.text forKey:@"username"];
     [properties setValue:self.emailField.text forKey:@"email"];
-    [properties setValue:[self.imageManager getPFFileFromImage:self.profilePhotoView.image] forKey:@"avatarImage"];
+    [properties setValue:[self.imageManager getImageFileFromManager] forKey:@"avatarImage"];
     [self.APIManager updateObject:self.user withProperties:properties :^(BOOL succeeded, NSError * _Nonnull error) {
         if (succeeded) {
             NSLog(@"User profile was updated");
@@ -60,21 +61,12 @@
 }
 */
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
-    CGSize imageSize = CGSizeMake(self.profilePhotoView.frame.size.width, self.profilePhotoView.frame.size.height);
-    UIImage *resizedImage = [self.imageManager resizeImage:originalImage withSize:imageSize];
-    self.profilePhotoView.image = resizedImage;
-    // Dismiss UIImagePickerController to go back to your original view controller
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (UIImageView *)sendImageViewToFitInto {
+    return self.profilePhotoView;
 }
 
-- (void)setImageFromWeb:(UIImage * _Nullable)image {
-    if (image) {
-        CGSize imageSize = CGSizeMake(self.profilePhotoView.frame.size.width, self.profilePhotoView.frame.size.height);
-        UIImage *resizedImage = [self.imageManager resizeImage:image withSize:imageSize];
-        self.profilePhotoView.image = resizedImage;
-    }
+- (void)setMediaUponPicking:(UIImage *)image {
+    self.profilePhotoView.image = image;
 }
 
 @end
