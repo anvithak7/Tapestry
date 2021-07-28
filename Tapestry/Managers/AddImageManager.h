@@ -7,26 +7,21 @@
 
 #import <Foundation/Foundation.h>
 #import "ImageFromWebViewController.h"
+#import "AlertManager.h"
 @import Parse;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol AddImageDelegate
+@interface AddImageManager : NSObject <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-- (void)fromCamera;
-- (void)fromLibrary;
-- (void)fromWeb;
+@property (nonatomic, strong) AlertManager *alertManager;
+@property (nonatomic, strong) UIViewController* myViewController;
 
-@end
-
-@interface AddImageManager : NSObject
-
-@property (weak, nonatomic) id<AddImageDelegate> delegate;
-
+- (instancetype) initWithViewController:(UIViewController*)viewController;
 - (UIAlertController*) addImageOptionsControllerTo:(UIViewController*)viewController;
-- (UIImagePickerController*)createFromCameraImagePickerFor:(UIViewController*)viewController;
-- (UIImagePickerController*)createFromPhotosImagePickerFor:(UIViewController*)viewController;
-- (ImageFromWebViewController*)createImageFromWebControllerFor:(UIViewController*)viewController;
+- (void)createFromCameraImagePickerFor:(UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>*)viewController;
+- (void)createFromPhotosImagePickerFor:(UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>*)viewController;
+- (void)createImageFromWebControllerFor:(UIViewController<ImagesFromWebDelegate>*)viewController;
 - (PFFileObject *)getPFFileFromImage:(UIImage * _Nullable)image;
 - (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size;
 

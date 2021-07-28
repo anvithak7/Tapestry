@@ -11,7 +11,7 @@
 #import "TextCell.h"
 #import "MemberCell.h"
 
-@interface GroupDetailsViewController ()  <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AddImageDelegate, ImagesFromWebDelegate>
+@interface GroupDetailsViewController ()  <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImagesFromWebDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *tapestryMembers;
 @property (nonatomic, strong) NSMutableArray *tableData;
@@ -31,12 +31,11 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.alertManager = [AlertManager new];
     self.APIManager = [TapestryAPIManager new];
-    self.imageManager = [AddImageManager new];
-    self.imageManager.delegate = self;
+    self.imageManager = [[AddImageManager alloc] initWithViewController:self];
     [self fetchTableData];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [self fetchTableData];
 }
 
@@ -55,9 +54,9 @@
             [self.tableData addObjectsFromArray:@[@[@"Image", group[@"groupName"]], @[@"Leave Tapestry"]]];
             [self.tableData insertObject:self.tapestryMembers atIndex:1];
             NSLog(@"Table data: %@", self.tableData);
+            [self.tableView reloadData];
         }
     }];
-    [self.tableView reloadData];
 }
 
 /*
@@ -107,6 +106,9 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"Settings";
+    }
     if (section == 1) {
         return @"Weavers";
     }
@@ -191,26 +193,6 @@
 
 #pragma mark Change Group Image Methods
 
-- (void)fromCamera {
-    UIImagePickerController *imagePickerVC = [self.imageManager createFromCameraImagePickerFor:self];
-    if (imagePickerVC) {
-        imagePickerVC.delegate = self;
-        [self presentViewController:imagePickerVC animated:YES completion:nil];
-    } else {
-        [self.alertManager createAlert:self withMessage:@"Please allow camera access and try again!" error:@"Unable to Acccess Camera"];
-    }
-}
-
-- (void)fromLibrary {
-    UIImagePickerController *imagePickerVC = [self.imageManager createFromPhotosImagePickerFor:self];
-    if (imagePickerVC) {
-        imagePickerVC.delegate = self;
-        [self presentViewController:imagePickerVC animated:YES completion:nil];
-    } else {
-        [self.alertManager createAlert:self withMessage:@"Please allow photo library access and try again!" error:@"Unable to Acccess Photo Library"];
-    }
-}
-
 // This function is to set the image in the post to the image picked or taken and to make sure it's been resized.
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     // Get the image captured by the UIImagePickerController
@@ -228,12 +210,6 @@
     }];
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)fromWeb {
-    ImageFromWebViewController *imageFromWebViewController = [self.imageManager createImageFromWebControllerFor:self];
-    imageFromWebViewController.delegate = self;
-    [self presentViewController:imageFromWebViewController animated:YES completion:nil];
 }
 
 - (void)setImageFromWeb:(UIImage *)image {

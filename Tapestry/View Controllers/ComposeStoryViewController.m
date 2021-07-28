@@ -16,7 +16,7 @@
 
 // This view controller allows a user to compose a story, with text, and add additional media and attributes.
 
-@interface ComposeStoryViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIColorPickerViewControllerDelegate, AddImageDelegate, ImagesFromWebDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+@interface ComposeStoryViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIColorPickerViewControllerDelegate, ImagesFromWebDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *buttonsCurrentlyOnScreen;
 @property (nonatomic, strong) NSMutableDictionary *groupsSelected;
@@ -38,8 +38,7 @@
     // Do any additional setup after loading the view.
     self.APIManager = [TapestryAPIManager new];
     self.alertManager = [AlertManager new];
-    self.imageManager = [AddImageManager new];
-    self.imageManager.delegate = self;
+    self.imageManager = [[AddImageManager alloc] initWithViewController:self];
     // To use text view methods, we set the view controller as a delegate for the text view.
     self.storyTextView.delegate = self;
     // The default text is light gray, because it is meant to go away and turn black when a user types in their real text.
@@ -234,12 +233,6 @@
     [self presentViewController:[self.imageManager addImageOptionsControllerTo:self] animated:YES completion:nil];
 }
 
-- (void)fromWeb {
-    ImageFromWebViewController *imageFromWebViewController = [self.imageManager createImageFromWebControllerFor:self];
-    imageFromWebViewController.delegate = self;
-    [self presentViewController:imageFromWebViewController animated:YES completion:nil];
-}
-
 - (void)setImageFromWeb:(UIImage *)image {
     if (image) {
         CGSize imageSize = CGSizeMake(self.storyImageView.frame.size.width, self.storyImageView.frame.size.height);
@@ -248,26 +241,6 @@
         self.storyProperties[@"Image"] = resizedImage;
         self.addImageLabel.alpha = 0;
         self.addPhotoImage.alpha = 0;
-    }
-}
-
-- (void)fromCamera {
-    UIImagePickerController *imagePickerVC = [self.imageManager createFromCameraImagePickerFor:self];
-    if (imagePickerVC) {
-        imagePickerVC.delegate = self;
-        [self presentViewController:imagePickerVC animated:YES completion:nil];
-    } else {
-        [self.alertManager createAlert:self withMessage:@"Please allow camera access and try again!" error:@"Unable to Acccess Camera"];
-    }
-}
-
-- (void)fromLibrary {
-    UIImagePickerController *imagePickerVC = [self.imageManager createFromPhotosImagePickerFor:self];
-    if (imagePickerVC) {
-        imagePickerVC.delegate = self;
-        [self presentViewController:imagePickerVC animated:YES completion:nil];
-    } else {
-        [self.alertManager createAlert:self withMessage:@"Please allow photo library access and try again!" error:@"Unable to Acccess Photo Library"];
     }
 }
 

@@ -8,7 +8,7 @@
 #import "EditProfileViewController.h"
 #import "ImageFromWebViewController.h"
 
-@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, AddImageDelegate, ImagesFromWebDelegate>
+@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImagesFromWebDelegate>
 
 @end
 
@@ -19,8 +19,7 @@
     // Do any additional setup after loading the view.
     self.alertManager = [AlertManager new];
     self.APIManager = [TapestryAPIManager new];
-    self.imageManager = [AddImageManager new];
-    self.imageManager.delegate = self;
+    self.imageManager = [[AddImageManager alloc] initWithViewController:self];
     self.profilePhotoView.layer.masksToBounds = YES;
     self.profilePhotoView.layer.cornerRadius = self.profilePhotoView.frame.size.width / 2;
     self.nameField.text = self.user[@"fullName"];
@@ -61,26 +60,6 @@
 }
 */
 
-- (void)fromCamera {
-    UIImagePickerController *imagePickerVC = [self.imageManager createFromCameraImagePickerFor:self];
-    if (imagePickerVC) {
-        imagePickerVC.delegate = self;
-        [self presentViewController:imagePickerVC animated:YES completion:nil];
-    } else {
-        [self.alertManager createAlert:self withMessage:@"Please allow camera access and try again!" error:@"Unable to Acccess Camera"];
-    }
-}
-
-- (void)fromLibrary {
-    UIImagePickerController *imagePickerVC = [self.imageManager createFromPhotosImagePickerFor:self];
-    if (imagePickerVC) {
-        imagePickerVC.delegate = self;
-        [self presentViewController:imagePickerVC animated:YES completion:nil];
-    } else {
-        [self.alertManager createAlert:self withMessage:@"Please allow photo library access and try again!" error:@"Unable to Acccess Photo Library"];
-    }
-}
-
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
     CGSize imageSize = CGSizeMake(self.profilePhotoView.frame.size.width, self.profilePhotoView.frame.size.height);
@@ -88,12 +67,6 @@
     self.profilePhotoView.image = resizedImage;
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)fromWeb {
-    ImageFromWebViewController *imageFromWebViewController = [self.imageManager createImageFromWebControllerFor:self];
-    imageFromWebViewController.delegate = self;
-    [self presentViewController:imageFromWebViewController animated:YES completion:nil];
 }
 
 - (void)setImageFromWeb:(UIImage * _Nullable)image {

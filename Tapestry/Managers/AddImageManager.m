@@ -9,16 +9,26 @@
 
 @implementation AddImageManager
 
-- (UIAlertController*) addImageOptionsControllerTo:(UIViewController*)viewController {
+- (instancetype) initWithViewController:(UIViewController*)viewController {
+    self = [super init];
+    if (self) {
+     // remainder of your constructor
+        self.myViewController = viewController;
+        self.alertManager = [AlertManager new];
+    }
+    return self;
+}
+
+- (UIAlertController*) addImageOptionsControllerTo:(UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, ImagesFromWebDelegate>*)viewController {
     UIAlertController* addPhotoAction = [UIAlertController alertControllerWithTitle:@"Add Photo" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction* fromCameraAction = [UIAlertAction actionWithTitle:@"Take Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [self.delegate fromCamera];
+        [self createFromCameraImagePickerFor:viewController];
     }];
     UIAlertAction* fromPhotosAction = [UIAlertAction actionWithTitle:@"From Photos Library" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [self.delegate fromLibrary];
+        [self createFromPhotosImagePickerFor:viewController];
     }];
     UIAlertAction* fromURL = [UIAlertAction actionWithTitle:@"From Web" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [self.delegate fromWeb];
+        [self createImageFromWebControllerFor:viewController];
     }];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
     }];
@@ -29,30 +39,36 @@
     return addPhotoAction;
 }
 
-- (UIImagePickerController*)createFromCameraImagePickerFor:(UIViewController*)viewController {
+// UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>*
+- (void)createFromCameraImagePickerFor:(UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>*)viewController {
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.allowsEditing = YES;
+    imagePickerVC.delegate = viewController;
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
-        return imagePickerVC;
+        [viewController presentViewController:imagePickerVC animated:YES completion:nil];
+    } else {
+        [self.alertManager createAlert:viewController withMessage:@"Please allow camera access and try again!" error:@"Unable to Acccess Camera"];
     }
-    return nil;
 }
 
-- (UIImagePickerController*)createFromPhotosImagePickerFor:(UIViewController*)viewController {
+- (void)createFromPhotosImagePickerFor:(UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>*)viewController {
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.allowsEditing = YES;
+    imagePickerVC.delegate = viewController;
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        return imagePickerVC;
+        [viewController presentViewController:imagePickerVC animated:YES completion:nil];
+    } else {
+        [self.alertManager createAlert:viewController withMessage:@"Please allow photo library access and try again!" error:@"Unable to Acccess Photo Library"];
     }
-    return nil;
 }
 
-- (ImageFromWebViewController*)createImageFromWebControllerFor:(UIViewController*)viewController {
+- (void)createImageFromWebControllerFor:(UIViewController<ImagesFromWebDelegate>*)viewController {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ImageFromWebViewController *imageFromWebViewController = [storyboard instantiateViewControllerWithIdentifier:@"ImageFromWebViewController"];
-    return imageFromWebViewController;
+    imageFromWebViewController.delegate = viewController;
+    [viewController presentViewController:imageFromWebViewController animated:YES completion:nil];
 }
 
 - (PFFileObject *)getPFFileFromImage:(UIImage * _Nullable)image {
