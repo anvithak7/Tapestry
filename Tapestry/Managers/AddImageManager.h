@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ImageFromWebViewController.h"
+@import Parse;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (UIImagePickerController*)createFromCameraImagePickerFor:(UIViewController*)viewController;
 - (UIImagePickerController*)createFromPhotosImagePickerFor:(UIViewController*)viewController;
 - (ImageFromWebViewController*)createImageFromWebControllerFor:(UIViewController*)viewController;
+- (PFFileObject *)getPFFileFromImage:(UIImage * _Nullable)image;
 - (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size;
 
 @end

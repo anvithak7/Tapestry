@@ -22,6 +22,8 @@
             self.author = (PFUser*) object;
             self.userNameLabel.text = object[@"fullName"];
             if (object[@"avatarImage"]) {
+                self.profileImageView.layer.masksToBounds = YES;
+                self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
                 self.profileImageView.file = object[@"avatarImage"];
                 [self.profileImageView loadInBackground];
             }

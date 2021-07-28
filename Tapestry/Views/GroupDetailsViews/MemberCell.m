@@ -13,6 +13,8 @@
     [super awakeFromNib];
     // Initialization code
     self.APIManager = [TapestryAPIManager new];
+    self.memberProfileImageView.layer.masksToBounds = YES;
+    self.memberProfileImageView.layer.cornerRadius = self.memberProfileImageView.frame.size.width / 2;
 }
 
 - (void)setUser:(PFUser *)user {

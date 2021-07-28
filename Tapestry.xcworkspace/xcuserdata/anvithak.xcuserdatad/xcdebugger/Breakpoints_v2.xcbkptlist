@@ -231,80 +231,128 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "423A2E3F-EB66-47CF-9BC7-93A929BFF841"
+            uuid = "F8B8A5C1-CA9D-4EFA-95F9-7FDD34B22397"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tapestry/View Controllers/GroupDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0B58D2A4-78EE-4A7E-8BC5-00179E562E07"
+            uuid = "214FD567-59DD-4F30-BE61-87898D221392"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tapestry/View Controllers/GroupDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "17861112-BC26-4098-B971-917BF3DF5BD4"
+            uuid = "067A257C-9C11-4E2C-8312-9F4C339E34C4"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Tapestry/View Controllers/GroupDetailsViewController.m"
+            filePath = "Tapestry/APIManager/TapestryAPIManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "-updateObject:withProperties::"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "3A2AE304-3621-4AAA-BA5E-C6346B055676"
+            uuid = "66483638-92FA-44C7-AA81-C88B23DA3E36"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Tapestry/View Controllers/ImageFromWebViewController.m"
+            filePath = "Tapestry/APIManager/TapestryAPIManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "-donePickingImage:"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "-updateObject:withProperties::"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BAF79D69-12C8-4338-A0A7-CED85BAD6099"
+            uuid = "1268CD76-8CB8-418B-B866-8FFE8BAC2F87"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Tapestry/View Controllers/ImageFromWebViewController.m"
+            filePath = "Tapestry/APIManager/TapestryAPIManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "-donePickingImage:"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
+            landmarkName = "-updateObject:withProperties::"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1268CD76-8CB8-418B-B866-8FFE8BAC2F87 - e40acc89d5d8192e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[TapestryAPIManager updateObject:withProperties::]"
+                  moduleName = "Tapestry"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anvithak/Documents/Tapestry/Tapestry/APIManager/TapestryAPIManager.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "74"
+                  endingLineNumber = "74"
+                  offsetFromSymbolStart = "665">
+               </Location>
+               <Location
+                  uuid = "1268CD76-8CB8-418B-B866-8FFE8BAC2F87 - 2b87135a31659af1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__51-[TapestryAPIManager updateObject:withProperties::]_block_invoke"
+                  moduleName = "Tapestry"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anvithak/Documents/Tapestry/Tapestry/APIManager/TapestryAPIManager.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "75"
+                  endingLineNumber = "75"
+                  offsetFromSymbolStart = "55">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BBF58B17-4CDA-41BA-987A-60E934B9C033"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Tapestry/APIManager/TapestryAPIManager.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "-updateObject:withProperties::"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

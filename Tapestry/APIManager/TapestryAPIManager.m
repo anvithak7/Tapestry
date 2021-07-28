@@ -56,4 +56,27 @@
     }];
 }
 
+- (void)updateImageFor:(PFObject*)object withKey:(NSString*)key withImageFile:(PFFileObject*)file :(void(^)(BOOL succeeded, NSError *error))completion {
+    object[key] = file;
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Error: %@", error.localizedDescription);
+        }
+        completion(succeeded, error);
+    }];
+}
+
+- (void) updateObject:(PFObject*)object withProperties:(NSMutableDictionary*)featuresToAdd :(void(^)(BOOL succeeded, NSError *error))completion {
+    for (id key in featuresToAdd) {
+        id value = [featuresToAdd objectForKey:key];
+        object[key] = value;
+    }
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Error: %@", error.localizedDescription);
+        }
+        completion(succeeded, error);
+    }];
+}
+
 @end

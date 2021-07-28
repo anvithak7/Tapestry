@@ -7,6 +7,7 @@
 
 #import "GroupsViewController.h"
 #import "TapestryViewController.h"
+#import "EditProfileViewController.h"
 #import "TapestryGridCell.h"
 #import "TapestriesHeaderReusableView.h"
 #import "Group.h"
@@ -105,6 +106,9 @@
     return self.userTapestries.count;
 }
 
+- (IBAction)onTapProfile:(id)sender {
+    [self performSegueWithIdentifier:@"editProfile" sender:nil];
+}
 
 
 #pragma mark - Navigation
@@ -119,6 +123,10 @@
         Group *group = self.userTapestries[indexPath.row];
         TapestryViewController *tapestryViewController = [segue destinationViewController];
         tapestryViewController.group = group; // Passing over group to next view controller.
+    }
+    if ([segue.identifier isEqual:@"editProfile"]) {
+        EditProfileViewController *editProfileViewController = [segue destinationViewController];
+        editProfileViewController.user = PFUser.currentUser;
     }
 }
 

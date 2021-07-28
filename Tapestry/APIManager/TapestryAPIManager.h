@@ -6,9 +6,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Parse/Parse.h"
 #import "Group.h"
 #import "Story.h"
+@import Parse;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) fetchGroup:(Group *)group :(void(^)(PFObject *group, NSError *error))completion;
 - (void) fetchUser:(PFUser *)user :(void(^)(PFUser *user, NSError *error))completion;
 - (void) postStoryToTapestries:(NSArray*)groups :(void(^)(NSMutableArray *groups, NSError *error))completion;
+- (void) updateImageFor:(PFObject*)object withKey:(NSString*)key withImageFile:(PFFileObject*)file :(void(^)(BOOL succeeded, NSError *error))completion;
+- (void) updateObject:(PFObject*)object withProperties:(NSMutableDictionary*)featuresToAdd :(void(^)(BOOL succeeded, NSError *error))completion;
 
 @end
 

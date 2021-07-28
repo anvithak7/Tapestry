@@ -9,6 +9,13 @@
 @import Parse;
 
 NS_ASSUME_NONNULL_BEGIN
+@class GroupImageCell;
+
+@protocol GroupImageCellDelegate
+
+- (void) setGroupImage:(GroupImageCell*) groupImageCell;
+
+@end
 
 @interface GroupImageCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet PFImageView *groupImageView;

@@ -9,7 +9,7 @@
 
 @implementation AddImageManager
 
-- (UIAlertController*) addImageOptionsControllerTo:(UIViewController*)viewController{
+- (UIAlertController*) addImageOptionsControllerTo:(UIViewController*)viewController {
     UIAlertController* addPhotoAction = [UIAlertController alertControllerWithTitle:@"Add Photo" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction* fromCameraAction = [UIAlertAction actionWithTitle:@"Take Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         [self.delegate fromCamera];
@@ -53,6 +53,19 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ImageFromWebViewController *imageFromWebViewController = [storyboard instantiateViewControllerWithIdentifier:@"ImageFromWebViewController"];
     return imageFromWebViewController;
+}
+
+- (PFFileObject *)getPFFileFromImage:(UIImage * _Nullable)image {
+    // check if image is not nil
+    if (!image) {
+        return nil;
+    }
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
+    // get image data and check if that is not nil
+    if (!imageData) {
+        return nil;
+    }
+    return [PFFileObject fileObjectWithName:@"image.png" data:imageData];
 }
 
 // This function resizes images in case they are too large so they can be stored in the database.
