@@ -25,6 +25,7 @@
 @property (nonatomic, strong) NSMutableDictionary *storyProperties;
 @property (nonatomic) int currentXEdge;
 @property (nonatomic) int currentYLine;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewToMediaView;
 
 @end
 
@@ -165,7 +166,8 @@
         }];
         count ++;
     }
-    self.storyImageView.frame = CGRectMake(8.0, self.currentYLine + 46, 50.0, 50.0); // TODO: why am I unable to place this where I want it to go???
+    self.textViewToMediaView.constant = self.currentYLine - (self.storyTextView.frame.origin.y + self.storyTextView.frame.size.height + 8) + 54; // 54 includes 30 (button height) + 24 (3 * 8 away)
+    //self.storyImageView.frame = CGRectMake(8.0, self.currentYLine + 46, 50.0, 50.0);
     //TODO: redo autolayout constraints in program
     //TODO: can I add some constraints programmatically and others through autolayout?
 }

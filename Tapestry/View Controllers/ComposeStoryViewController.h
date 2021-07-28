@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) IBOutlet UITextView *storyTextView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addGroupsButton;
+@property (weak, nonatomic) IBOutlet UIView *additionalInformationView;
 
 @property (weak, nonatomic) IBOutlet UIView *imageSelectionView;
 @property (weak, nonatomic) IBOutlet UIImageView *storyImageView;
