@@ -16,15 +16,10 @@
 
 // This view controller allows a user to compose a story, with text, and add additional media and attributes.
 
-@interface ComposeStoryViewController () <UITextViewDelegate, UIColorPickerViewControllerDelegate, AddImageDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+@interface ComposeStoryViewController () <UITextViewDelegate, UIColorPickerViewControllerDelegate, AddImageDelegate, GroupButtonsDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
-@property (nonatomic, strong) NSMutableArray *buttonsCurrentlyOnScreen;
-@property (nonatomic, strong) NSMutableDictionary *groupsSelected;
-@property (nonatomic, strong) NSMutableArray *groupNamesForStory;
 @property (nonatomic, strong) NSMutableArray *buttonColorsArray;
 @property (nonatomic, strong) NSMutableDictionary *storyProperties;
-@property (nonatomic) int currentXEdge;
-@property (nonatomic) int currentYLine;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewToMediaView;
 
 @end
@@ -35,35 +30,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    // Create all of the necessary managers and set their delegates (if needed) to self:
     self.APIManager = [TapestryAPIManager new];
     self.alertManager = [AlertManager new];
     self.imageManager = [[AddImageManager alloc] initWithViewController:self];
     self.imageManager.delegate = self;
+    self.buttonsManager = [GroupButtonManager alloc];
+    self.buttonsManager.delegate = self;
+    self.buttonsManager = [self.buttonsManager initWithView:self.groupButtonsView];
     // To use text view methods, we set the view controller as a delegate for the text view.
     self.storyTextView.delegate = self;
     // The default text is light gray, because it is meant to go away and turn black when a user types in their real text.
     self.storyTextView.textColor = UIColor.lightGrayColor;
     //self.storyTextView.textContainer.heightTracksTextView = true;
-    self.groupNamesForStory = [NSMutableArray new];
     self.buttonColorsArray = [NSMutableArray new];
-    self.buttonsCurrentlyOnScreen = [NSMutableArray new];
-    self.groupsSelected = [NSMutableDictionary new];
     self.storyProperties = [NSMutableDictionary new];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    self.currentXEdge = 8;
-    self.currentYLine = self.storyTextView.frame.origin.y + self.storyTextView.frame.size.height + 8;
     [self resetComposeView];
     [self addGroupButtons];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    for (UIButton *button in self.buttonsCurrentlyOnScreen) {
-        [button removeFromSuperview];
-    }
-    [self.buttonsCurrentlyOnScreen removeAllObjects];
+    [self.buttonsManager removeAllButtonsFromSuperview:self.groupButtonsView];
 }
 
 - (void)resetComposeView {
@@ -72,7 +62,6 @@
     self.addPhotoImage.alpha = 1;
     self.addColorLabel.alpha = 1;
     self.addColorPhoto.alpha = 1;
-    [self.groupNamesForStory removeAllObjects];
     self.addColorView.backgroundColor = [UIColor systemGray6Color];
     [self.storyImageView setTintColor:[UIColor systemGray6Color]];
     [self.storyTextView endEditing:true];
@@ -117,14 +106,7 @@
 # pragma mark Weave!
 
 - (IBAction)onTapWeave:(id)sender {
-    for (id key in self.groupsSelected) {
-        id value = [self.groupsSelected objectForKey:key];
-        if ([value isEqual:@(1)]) {
-            [self.groupNamesForStory addObject:key];
-        }
-    }
-    [self.groupNamesForStory addObject:@"My Stories"];
-    [self.APIManager postStoryToTapestries:self.groupNamesForStory :^(NSMutableArray * _Nonnull groups, NSError * _Nonnull error) {
+    [self.APIManager postStoryToTapestries:[self.buttonsManager groupsSelectedInView] :^(NSMutableArray * _Nonnull groups, NSError * _Nonnull error) {
         if (error) {
             NSLog(@"Error: %@", error.localizedDescription);
         } else {
@@ -134,10 +116,7 @@
                 } else {
                     self.storyTextView.text = @"How's it going?";
                     self.storyTextView.textColor = UIColor.lightGrayColor;
-                    for (UIButton *button in self.buttonsCurrentlyOnScreen) {
-                        [button setBackgroundColor:[UIColor lightGrayColor]];
-                        [button setSelected:false];
-                    }
+                    [self.buttonsManager resetAllButtons];
                     [self resetComposeView];
                 }
             }];
@@ -149,81 +128,37 @@
 
 - (void)addGroupButtons {
     PFUser *user = PFUser.currentUser;
-    int count = 0;
-    // TODO: add an all groups button too
-    for (Group *group in user[@"groups"]) {
-        [self.APIManager fetchGroup:group :^(PFObject * _Nonnull group, NSError * _Nonnull error) {
-            if (error) {
-                NSLog(@"Error: %@", error.localizedDescription);
-                [self.alertManager createAlert:self withMessage:@"Please check your internet connection and try again!" error:@"Unable to load groups"];
-            } else {
-                if (![group[@"groupName"] isEqual:@"My Stories"]) {
-                    [self createButtonforObject:group withTag:count];
-                }
+    Group *userStories = [user objectForKey:@"userStories"];
+    __block NSString *userStoriesId;
+    [self.APIManager fetchGroup:userStories :^(PFObject * _Nonnull group, NSError * _Nonnull error) {
+        if (error) {
+            NSLog(@"Error: %@", error.localizedDescription);
+            [self.alertManager createAlert:self withMessage:@"Please check your internet connection and try again!" error:@"Unable to load groups"];
+        } else {
+            userStoriesId = userStories.objectId;
+            int count = 0;
+            // TODO: add an all groups button too
+            for (Group *group in user[@"groups"]) {
+                [self.APIManager fetchGroup:group :^(PFObject * _Nonnull group, NSError * _Nonnull error) {
+                    if (error) {
+                        NSLog(@"Error: %@", error.localizedDescription);
+                        [self.alertManager createAlert:self withMessage:@"Please check your internet connection and try again!" error:@"Unable to load groups"];
+                    } else {
+                        NSString *groupId = group.objectId;
+                        if (![groupId isEqual:userStoriesId]) {
+                            [self.buttonsManager createButtonforObject:group withTag:count];
+                        }
+                    }
+                }];
+                count ++;
             }
-        }];
-        count ++;
-    }
-    self.textViewToMediaView.constant = self.currentYLine - (self.storyTextView.frame.origin.y + self.storyTextView.frame.size.height + 8) + 54; // 54 includes 30 (button height) + 24 (3 * 8 away)
+        }
+    }];
+    //self.groupButtonsView.frame = CGRectMake(self.groupButtonsView.frame.origin.x, self.groupButtonsView.frame.origin.y, self.groupButtonsView.frame.size.width, [self.buttonsManager resizeParentViewToButtons:self.groupButtonsView]);
+    //self.textViewToMediaView.constant = 16; // 54 includes 30 (button height) + 24 (3 * 8 away)
     //self.storyImageView.frame = CGRectMake(8.0, self.currentYLine + 46, 50.0, 50.0);
     //TODO: redo autolayout constraints in program
     //TODO: can I add some constraints programmatically and others through autolayout?
-}
-
-- (void)createButtonforObject:(PFObject*)group withTag:(int)tag {
-    UIButton *groupButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    groupButton.tag = tag;
-    groupButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    groupButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    groupButton.titleLabel.font = [UIFont systemFontOfSize:13];
-    [groupButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    if ([group[@"groupName"] length] > 50) {
-        NSString *thisGroupName = group[@"groupName"];
-        NSString *stringToFindSpaceIn = [thisGroupName substringFromIndex:(NSInteger) 45]; // Change this number based on the longest length of a group name;
-        NSInteger indexToCut = [stringToFindSpaceIn rangeOfString:@" "].location + 45;
-        NSString *buttonTitle = [[thisGroupName substringToIndex:indexToCut] stringByAppendingString:@"\n"];
-        NSString *completeButtonTitle = [buttonTitle stringByAppendingString:[thisGroupName substringFromIndex:indexToCut]];
-        // The above allows a group name to be multi-line.
-        [groupButton setTitle:completeButtonTitle forState:UIControlStateNormal];
-    } else {
-        [groupButton setTitle:group[@"groupName"] forState:UIControlStateNormal];
-    }
-    [groupButton sizeToFit];
-    if ((self.currentXEdge + groupButton.frame.size.width + 8) > self.view.frame.size.width) {
-        self.currentYLine += 38;
-        self.currentXEdge = 8;
-    }
-    groupButton.frame = CGRectMake(self.currentXEdge, self.currentYLine, groupButton.frame.size.width + 6, 30.0);
-    self.currentXEdge += groupButton.frame.size.width + 8;
-    groupButton.backgroundColor = [UIColor lightGrayColor]; //TODO: CHANGE THIS COLOR
-    [groupButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    groupButton.layer.cornerRadius = 10;
-    groupButton.clipsToBounds = YES;
-    self.groupsSelected[group[@"groupName"]] = @0;
-    [self.view addSubview:groupButton];
-    [self.buttonsCurrentlyOnScreen addObject:groupButton];
-}
-
--(void)buttonClicked:(UIButton*)sender {
-    // A way to set the selected vs unselected state of a button
-    int tag = (int) sender.tag;
-    if (!sender.isSelected) {
-        [sender setSelected:TRUE];
-        [self.groupsSelected setValue:@1 forKey:sender.titleLabel.text];
-        if (tag == 0) {
-            [sender setBackgroundColor:[UIColor redColor]];
-        } else if (tag == 1) {
-            [sender setBackgroundColor:[UIColor blueColor]];
-        } else if (tag == 2) {
-            [sender setBackgroundColor:[UIColor greenColor]];
-        }
-        NSLog(@"Dictionary of all groups after selected: %@", self.groupsSelected);
-    } else {
-        [sender setSelected:FALSE];
-        [self.groupsSelected setValue:@0 forKey:sender.titleLabel.text];
-        [sender setBackgroundColor:[UIColor lightGrayColor]];
-        NSLog(@"Dictionary of all groups after unselected: %@", self.groupsSelected);
-    }
 }
 
 #pragma mark Add Image Methods

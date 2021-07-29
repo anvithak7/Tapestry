@@ -39,7 +39,7 @@
 
 - (void)postStoryToTapestries:(NSArray*)groups :(void(^)(NSMutableArray *groups, NSError *error))completion {
     PFQuery *query = [PFQuery queryWithClassName:@"Group"];
-    [query whereKey:@"groupName" containedIn:groups];
+    [query whereKey:@"objectId" containedIn:groups];
     [query whereKey:@"membersArray" containsAllObjectsInArray:@[PFUser.currentUser]];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error != nil) {

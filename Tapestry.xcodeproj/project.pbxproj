@@ -16,6 +16,7 @@
 		9E0A8AFF26B0E2DB005FEA51 /* ChangeGroupNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8AFE26B0E2DB005FEA51 /* ChangeGroupNameViewController.m */; };
 		9E0A8B0226B0F7BC005FEA51 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8B0126B0F7BC005FEA51 /* EditProfileViewController.m */; };
 		9E0A8B0626B1E7E0005FEA51 /* GroupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8B0526B1E7E0005FEA51 /* GroupButton.m */; };
+		9E0A8B0A26B208D1005FEA51 /* GroupButtonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8B0926B208D1005FEA51 /* GroupButtonManager.m */; };
 		9E430D23269C9C2A00C0B571 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D22269C9C2A00C0B571 /* AppDelegate.m */; };
 		9E430D26269C9C2A00C0B571 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D25269C9C2A00C0B571 /* SceneDelegate.m */; };
 		9E430D2C269C9C2A00C0B571 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E430D2A269C9C2A00C0B571 /* Main.storyboard */; };
@@ -85,6 +86,8 @@
 		9E0A8B0126B0F7BC005FEA51 /* EditProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
 		9E0A8B0426B1E7E0005FEA51 /* GroupButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupButton.h; sourceTree = "<group>"; };
 		9E0A8B0526B1E7E0005FEA51 /* GroupButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupButton.m; sourceTree = "<group>"; };
+		9E0A8B0826B208D1005FEA51 /* GroupButtonManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupButtonManager.h; sourceTree = "<group>"; };
+		9E0A8B0926B208D1005FEA51 /* GroupButtonManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupButtonManager.m; sourceTree = "<group>"; };
 		9E430D1E269C9C2A00C0B571 /* Tapestry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tapestry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E430D21269C9C2A00C0B571 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9E430D22269C9C2A00C0B571 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -388,6 +391,8 @@
 				9E430D8D26A94B4800C0B571 /* AlertManager.m */,
 				9E0A8AF526B0BD88005FEA51 /* AddImageManager.h */,
 				9E0A8AF626B0BD88005FEA51 /* AddImageManager.m */,
+				9E0A8B0826B208D1005FEA51 /* GroupButtonManager.h */,
+				9E0A8B0926B208D1005FEA51 /* GroupButtonManager.m */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -652,6 +657,7 @@
 				9E0A8B0226B0F7BC005FEA51 /* EditProfileViewController.m in Sources */,
 				9E430D34269C9C2A00C0B571 /* main.m in Sources */,
 				9E0A8B0626B1E7E0005FEA51 /* GroupButton.m in Sources */,
+				9E0A8B0A26B208D1005FEA51 /* GroupButtonManager.m in Sources */,
 				9E430D7526A7426800C0B571 /* TapestryGridCell.m in Sources */,
 				9E430D26269C9C2A00C0B571 /* SceneDelegate.m in Sources */,
 				9E430D6E26A6195A00C0B571 /* GroupsViewController.m in Sources */,

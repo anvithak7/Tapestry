@@ -31,6 +31,9 @@
         if (succeeded) {
             PFUser *user = PFUser.currentUser;
             [user addObject:newGroup forKey:@"groups"];
+            if ([newGroup.groupName isEqual:@"My Stories"]) {
+                user[@"userStories"] = newGroup;
+            }
             [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
                   // The PFUser has been saved.
