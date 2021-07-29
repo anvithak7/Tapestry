@@ -111,6 +111,11 @@
     return [PFFileObject fileObjectWithName:@"image.png" data:imageData];
 }
 
+- (void)resetImageManager {
+    self.imageForViewController = nil;
+    self.fileForViewController = nil;
+}
+
 // This function resizes images in case they are too large so they can be stored in the database.
 - (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
     UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];

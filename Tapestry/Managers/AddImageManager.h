@@ -22,13 +22,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) AlertManager *alertManager;
 @property (nonatomic, strong) UIViewController* myViewController;
-@property (nonatomic, strong) UIImage* imageForViewController;
-@property (nonatomic, strong) PFFileObject* fileForViewController;
+@property (nonatomic, strong) UIImage* _Nullable imageForViewController;
+@property (nonatomic, strong) PFFileObject* _Nullable fileForViewController;
 
 @property (weak, nonatomic) id<AddImageDelegate> delegate;
 
 - (instancetype) initWithViewController:(UIViewController*)viewController;
 - (UIAlertController*) addImageOptionsControllerTo:(UIViewController*)viewController;
+- (void)resetImageManager;
 - (UIImage* _Nullable)getImageFromManager;
 - (PFFileObject*)getImageFileFromManager;
 - (PFFileObject*)getPFFileFromImage:(UIImage * _Nullable)image;

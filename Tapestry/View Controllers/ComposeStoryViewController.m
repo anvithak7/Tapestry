@@ -62,6 +62,7 @@
     self.addPhotoImage.alpha = 1;
     self.addColorLabel.alpha = 1;
     self.addColorPhoto.alpha = 1;
+    [self.storyProperties removeAllObjects];
     self.addColorView.backgroundColor = [UIColor systemGray6Color];
     [self.storyImageView setTintColor:[UIColor systemGray6Color]];
     [self.storyTextView endEditing:true];
@@ -116,6 +117,7 @@
                 } else {
                     self.storyTextView.text = @"How's it going?";
                     self.storyTextView.textColor = UIColor.lightGrayColor;
+                    [self.imageManager resetImageManager];
                     [self.buttonsManager resetAllButtons];
                     [self resetComposeView];
                 }
