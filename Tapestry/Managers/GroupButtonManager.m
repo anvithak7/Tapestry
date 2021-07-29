@@ -40,6 +40,7 @@
     groupButton.frame = CGRectMake(self.currentXEdge, self.currentYLine, groupButton.frame.size.width + 6, 30.0);
     self.currentXEdge += groupButton.frame.size.width + 8;
     groupButton.backgroundColor = [UIColor lightGrayColor]; //TODO: CHANGE THIS COLOR
+    [groupButton setBackgroundColor:[UIColor redColor] forState:UIControlStateSelected]; // TODO: change this color;
     [self.buttonsCurrentlyOnScreen addObject:groupButton];
     self.groupsSelected[group.objectId] = @0;
     [self.viewWithGroups addSubview:groupButton];

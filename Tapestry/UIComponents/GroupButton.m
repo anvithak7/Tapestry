@@ -44,5 +44,19 @@
     button.backgroundColor = [UIColor systemGrayColor];
 }
 
+- (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
+    [self setBackgroundImage:[self imageFromColor:backgroundColor] forState:state];
+}
+
+- (UIImage*)imageFromColor:(UIColor *)color{
+    CGRect rect = self.frame; //TODO: why doesn't this cover the whole background?
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
 
 @end
