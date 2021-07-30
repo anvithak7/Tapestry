@@ -27,11 +27,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) int currentXEdge;
 @property (nonatomic) int currentYLine;
+@property (nonatomic) int numberOfRows;
 
 - (instancetype) initWithView:(UIView*)view;
 - (void)createButtonforObject:(PFObject*)group withTag:(int)tag;
 - (NSMutableArray*) groupsSelectedInView;
-- (int) resizeParentViewToButtons:(UIView*)view; //TODO: might have to get rid of this
+- (void) resizeParentViewToButtons:(UIView*)view;
 
 - (void) resetAllButtons;
 - (void) removeAllButtonsFromSuperview:(UIView*)view;

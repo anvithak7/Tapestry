@@ -16,6 +16,7 @@
         self.viewWithGroups = view;
         self.currentXEdge = 8;
         self.currentYLine = 8;
+        self.numberOfRows = 1;
         self.buttonsCurrentlyOnScreen = [NSMutableArray new];
         self.groupsSelected = [NSMutableDictionary new];
     }
@@ -35,6 +36,7 @@
     [groupButton sizeToFit];
     if ((self.currentXEdge + groupButton.frame.size.width + 8) > self.viewWithGroups.frame.size.width) {
         self.currentYLine += 38;
+        self.numberOfRows += 1;
         self.currentXEdge = 8;
     }
     groupButton.frame = CGRectMake(self.currentXEdge, self.currentYLine, groupButton.frame.size.width + 6, 30.0);
@@ -96,9 +98,9 @@
     self.currentYLine = 8;
 }
 
-// TODO: possibly get rid of this method once we figure out how to move the frames
-- (int) resizeParentViewToButtons:(UIView*)view {
-    return self.currentYLine;
+- (void) resizeParentViewToButtons:(UIView*)view {
+    int viewHeight = (self.numberOfRows * 38) + 8;
+    view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, viewHeight);
 }
 
 - (NSString*) createMultilineButtonTextWith:(NSString*)title {
