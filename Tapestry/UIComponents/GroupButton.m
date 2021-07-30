@@ -45,11 +45,14 @@
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
-    [self setBackgroundImage:[self imageFromColor:backgroundColor] forState:state];
+    UIImage *image = [self imageFromColor:backgroundColor];
+    [self setBackgroundImage:image forState:state];
 }
 
 - (UIImage*)imageFromColor:(UIColor *)color{
-    CGRect rect = self.frame; //TODO: why doesn't this cover the whole background?
+    //CGRect rect = CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height);
+    // THE BELOW WORKS!!!
+    CGRect rect =  CGRectMake(0.0, 0.0, 1.0, 1.0);
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(context, [color CGColor]);
