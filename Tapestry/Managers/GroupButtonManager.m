@@ -100,7 +100,8 @@
 
 - (void) resizeParentViewToButtons:(UIView*)view {
     int viewHeight = (self.numberOfRows * 38) + 8;
-    view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, viewHeight);
+    [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, viewHeight)];
+    //view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, viewHeight);
 }
 
 - (NSString*) createMultilineButtonTextWith:(NSString*)title {
