@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *familyButton;
 @property (weak, nonatomic) IBOutlet UIButton *createButton;
 @property (weak, nonatomic) IBOutlet UILabel *inviteLabel;
+@property (weak, nonatomic) IBOutlet UITextField *inviteStringField;
 @property (weak, nonatomic) IBOutlet UILabel *inviteStringLabel;
 @property (weak, nonatomic) IBOutlet UIView *joinGroupView;
 @property (weak, nonatomic) IBOutlet UITextField *inviteCodeEntryField;
@@ -157,6 +158,15 @@
     }];
     self.doneCreating.alpha = 1;
     self.inviteStringLabel.text = inviteCode;
+}
+
+- (IBAction)longPressInviteCode:(id)sender {
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    [pasteboard setString:self.inviteStringLabel.text];
+    UIAlertController* copiedText = [UIAlertController alertControllerWithTitle:@"Invite Code Copied to Clipboard!" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    [self presentViewController:copiedText animated:YES completion:^{
+        // optional code for what happens after the alert controller has finished presenting
+    }];
 }
 
 - (IBAction)joinGroup:(id)sender {

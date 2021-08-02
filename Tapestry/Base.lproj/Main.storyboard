@@ -530,12 +530,11 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Press create to generate an invite code!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4l-pA-acX">
-                                        <rect key="frame" x="8" y="172" width="256.5" height="17"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Press create to generate an invite code!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CVv-k6-XEN">
+                                        <rect key="frame" x="8" y="172" width="284.5" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="N62-bj-0ce">
                                         <rect key="frame" x="104" y="102.5" width="30" height="29"/>
                                         <color key="tintColor" red="0.57802763413623004" green="0.725328079377762" blue="0.28087201205534673" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -576,7 +575,7 @@
                                     <constraint firstItem="RgC-QL-A89" firstAttribute="leading" secondItem="rqo-hO-MU1" secondAttribute="trailing" constant="16" id="Mkv-fq-oxc"/>
                                     <constraint firstAttribute="trailing" secondItem="UxE-ab-dt2" secondAttribute="trailing" constant="8" id="NUO-AE-7Ta"/>
                                     <constraint firstItem="UxE-ab-dt2" firstAttribute="top" secondItem="cCz-2y-u3g" secondAttribute="top" constant="8" id="QZ8-UH-qfO"/>
-                                    <constraint firstItem="z4l-pA-acX" firstAttribute="top" secondItem="OYc-tF-oKa" secondAttribute="bottom" constant="8" id="Sj7-bb-Bj3"/>
+                                    <constraint firstItem="CVv-k6-XEN" firstAttribute="leading" secondItem="OYc-tF-oKa" secondAttribute="leading" id="SPP-nW-tjG"/>
                                     <constraint firstItem="N62-bj-0ce" firstAttribute="top" secondItem="NhX-Eh-mI7" secondAttribute="top" id="TcD-Wg-09E"/>
                                     <constraint firstItem="UxE-ab-dt2" firstAttribute="leading" secondItem="cCz-2y-u3g" secondAttribute="leading" constant="8" id="UyJ-Pf-PrI"/>
                                     <constraint firstItem="N62-bj-0ce" firstAttribute="bottom" secondItem="NhX-Eh-mI7" secondAttribute="bottom" id="X6m-AZ-SZG"/>
@@ -584,8 +583,8 @@
                                     <constraint firstItem="RgC-QL-A89" firstAttribute="bottom" secondItem="rqo-hO-MU1" secondAttribute="bottom" id="dlj-mm-mJ5"/>
                                     <constraint firstItem="RgC-QL-A89" firstAttribute="top" secondItem="rqo-hO-MU1" secondAttribute="top" id="en2-zJ-glE"/>
                                     <constraint firstItem="N62-bj-0ce" firstAttribute="leading" secondItem="NhX-Eh-mI7" secondAttribute="trailing" constant="16" id="fPr-fu-cHL"/>
+                                    <constraint firstItem="CVv-k6-XEN" firstAttribute="top" secondItem="OYc-tF-oKa" secondAttribute="bottom" constant="8" id="giW-dw-Zt9"/>
                                     <constraint firstAttribute="height" constant="120" id="kU1-df-PHH"/>
-                                    <constraint firstItem="z4l-pA-acX" firstAttribute="leading" secondItem="OYc-tF-oKa" secondAttribute="leading" id="meX-iU-fhg"/>
                                     <constraint firstItem="NhX-Eh-mI7" firstAttribute="top" secondItem="rqo-hO-MU1" secondAttribute="bottom" constant="16" id="ojr-LF-4LM"/>
                                     <constraint firstItem="Z3p-LA-O6u" firstAttribute="top" secondItem="rqo-hO-MU1" secondAttribute="top" id="qSR-1y-QSf"/>
                                     <constraint firstItem="OYc-tF-oKa" firstAttribute="top" secondItem="NhX-Eh-mI7" secondAttribute="bottom" constant="16" id="xXR-FP-q94"/>
@@ -678,7 +677,7 @@
                         <outlet property="groupName" destination="UxE-ab-dt2" id="QGQ-5W-YKL"/>
                         <outlet property="inviteCodeEntryField" destination="DMd-AT-Ek6" id="Mqr-I9-hWj"/>
                         <outlet property="inviteLabel" destination="OYc-tF-oKa" id="ipS-gn-XyW"/>
-                        <outlet property="inviteStringLabel" destination="z4l-pA-acX" id="Kuk-DU-0te"/>
+                        <outlet property="inviteStringField" destination="CVv-k6-XEN" id="AFi-7P-s8o"/>
                         <outlet property="joinButton" destination="ugj-38-mjN" id="Sdz-nd-jRE"/>
                         <outlet property="joinGroupButton" destination="auR-Cj-ujW" id="ecD-ro-Yfk"/>
                         <outlet property="joinGroupView" destination="Cok-In-hKO" id="rpv-L0-u8z"/>
@@ -692,6 +691,11 @@
                         <action selector="onTapAnywhere:" destination="DVJ-kQ-JQM" id="pss-YS-zi2"/>
                     </connections>
                 </tapGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="2gJ-rD-XyM">
+                    <connections>
+                        <action selector="longPressInviteCode:" destination="DVJ-kQ-JQM" id="xAS-Nx-uqw"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1991" y="3797"/>
         </scene>
