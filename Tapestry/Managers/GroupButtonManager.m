@@ -12,7 +12,6 @@
 - (instancetype) initWithView:(UIView*)view {
     self = [super init];
     if (self) {
-     // remainder of your constructor
         self.viewWithGroups = view;
         self.currentXEdge = 8;
         self.currentYLine = 8;
@@ -41,30 +40,19 @@
     }
     groupButton.frame = CGRectMake(self.currentXEdge, self.currentYLine, groupButton.frame.size.width + 6, 30.0);
     self.currentXEdge += groupButton.frame.size.width + 8;
-    groupButton.backgroundColor = [UIColor lightGrayColor]; //TODO: CHANGE THIS COLOR
-    [groupButton setBackgroundColor:[UIColor redColor] forState:UIControlStateSelected]; // TODO: change this color;
+    [groupButton setBackgroundColor:[groupButton getDarkerColor] forState:UIControlStateSelected];
     [self.buttonsCurrentlyOnScreen addObject:groupButton];
     self.groupsSelected[group.objectId] = @0;
     [self.viewWithGroups addSubview:groupButton];
 }
 
 - (void)buttonClicked:(GroupButton*)sender {
-    // A way to set the selected vs unselected state of a button
-    //int tag = (int) sender.tag;
     if (!sender.isSelected) {
         [sender setSelected:TRUE];
         [self.groupsSelected setValue:@1 forKey:sender.groupTag];
-        /*if (tag == 0) {
-            [sender setBackgroundColor:[UIColor redColor]];
-        } else if (tag == 1) {
-            [sender setBackgroundColor:[UIColor blueColor]];
-        } else if (tag == 2) {
-            [sender setBackgroundColor:[UIColor greenColor]];
-        } */
     } else {
         [sender setSelected:FALSE];
         [self.groupsSelected setValue:@0 forKey:sender.groupTag];
-        [sender setBackgroundColor:[UIColor lightGrayColor]]; // TODO: set back to default color
     }
 }
 
@@ -84,7 +72,7 @@
 
 - (void)resetAllButtons {
     for (GroupButton *button in self.buttonsCurrentlyOnScreen) {
-        [button setBackgroundColor:[UIColor lightGrayColor]]; //TODO: change default background color
+        [button setBackgroundColor:button.buttonColor];
         [button setSelected:false];
     }
 }

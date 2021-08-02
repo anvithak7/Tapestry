@@ -53,7 +53,7 @@
             } else {
                 self.groupImageFile = nil;
             }
-            [self.tableData addObjectsFromArray:@[@[@"Image", group[@"groupName"]], @[@"Leave Tapestry"]]];
+            [self.tableData addObjectsFromArray:@[@[@"Image", group[@"groupName"], group[@"groupInviteCode"]], @[@"Leave Tapestry"]]];
             [self.tableData insertObject:self.tapestryMembers atIndex:1];
             NSLog(@"Table data: %@", self.tableData);
             [self.tableView reloadData];
@@ -80,10 +80,15 @@
                 [cell.groupImageView loadInBackground];
             }
             return cell;
-        } else {
+        } else if (indexPath.row == 1) {
             TextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TextCell"];
             cell.cellTextLabel.text = self.tableData[indexPath.section][1];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            return cell;
+        } else {
+            TextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TextCell"];
+            //NSString *inviteCodeLabel = [@"Invite Code: " stringByAppendingString:self.tableData[indexPath.section][2]];
+            cell.cellTextLabel.text = self.tableData[indexPath.section][2];
             return cell;
         }
     } else if (indexPath.section == 1) {
@@ -138,8 +143,7 @@
             // Change group image
             self.groupImageCell = (GroupImageCell*) [self.tableView cellForRowAtIndexPath:indexPath];
             [self presentViewController:[self.imageManager addImageOptionsControllerTo:self] animated:YES completion:nil];
-        } else {
-            // Change group name
+        } else if (indexPath.row == 1){
             self.groupNameCell = (TextCell*) [self.tableView cellForRowAtIndexPath:indexPath];
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             ChangeGroupNameViewController *changeGroupNameViewController = [storyboard instantiateViewControllerWithIdentifier:@"ChangeGroupNameViewController"];

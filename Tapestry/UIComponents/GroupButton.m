@@ -21,6 +21,10 @@
     self = [super initWithCoder:coder];
     if (self) {
         [self setButtonProperties:self];
+        self.colorManager = [AppColorManager new];
+        UIColor *color = [self.colorManager getRandomColorForTheme];
+        [self setBackgroundColor:color forState:UIControlStateNormal];
+        self.buttonColor = color;
     }
     return self;
 }
@@ -29,6 +33,10 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setButtonProperties:self];
+        self.colorManager = [AppColorManager new];
+        UIColor *color = [self.colorManager getRandomColorForTheme];
+        [self setBackgroundColor:color forState:UIControlStateNormal];
+        self.buttonColor = color;
     }
     return self;
 }
@@ -45,13 +53,24 @@
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
+    self.buttonColor = backgroundColor;
     UIImage *image = [self imageFromColor:backgroundColor];
     [self setBackgroundImage:image forState:state];
 }
 
+- (void)setBackgroundColorForState:(UIControlState)state {
+    UIColor *color = [self.colorManager getRandomColorForTheme];
+    self.buttonColor = color;
+    UIImage *image = [self imageFromColor:color];
+    [self setBackgroundImage:image forState:state];
+}
+
+- (UIColor*)getDarkerColor {
+    UIColor *color = [self.colorManager getDarkerColorFor:self.buttonColor];
+    return color;
+}
+
 - (UIImage*)imageFromColor:(UIColor *)color{
-    //CGRect rect = CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height);
-    // THE BELOW WORKS!!!
     CGRect rect =  CGRectMake(0.0, 0.0, 1.0, 1.0);
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();

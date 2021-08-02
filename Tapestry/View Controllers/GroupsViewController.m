@@ -93,12 +93,7 @@
     TapestryGridCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TapestryGridCell" forIndexPath:indexPath];
     Group *group = self.userTapestries[indexPath.item];
     [group fetchIfNeededInBackground];
-    cell.tapestryImageView.image = nil; // Clear out the previous one before presenting the new one.
-    cell.tapestryNameLabel.text = group[@"groupName"];
-    if (group[@"groupImage"]) {
-        cell.tapestryImageView.file = group[@"groupImage"];
-        [cell.tapestryImageView loadInBackground];
-    }
+    cell.group = group;
     return cell;
 }
 
