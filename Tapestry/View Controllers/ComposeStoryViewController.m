@@ -18,7 +18,6 @@
 
 @interface ComposeStoryViewController () <UITextViewDelegate, UIColorPickerViewControllerDelegate, AddImageDelegate, GroupButtonsDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
-@property (nonatomic, strong) NSMutableArray *buttonColorsArray;
 @property (nonatomic, strong) NSMutableDictionary *storyProperties;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewToMediaView;
 
@@ -33,8 +32,9 @@
     // Create all of the necessary managers and set their delegates (if needed) to self:
     self.APIManager = [TapestryAPIManager new];
     self.alertManager = [AlertManager new];
-    self.imageManager = [[AddImageManager alloc] initWithViewController:self];
+    self.imageManager = [AddImageManager alloc];
     self.imageManager.delegate = self;
+    self.imageManager = [self.imageManager initWithViewController:self];
     self.buttonsManager = [GroupButtonManager alloc];
     self.buttonsManager.delegate = self;
     self.buttonsManager = [self.buttonsManager initWithView:self.groupButtonsView];
@@ -42,8 +42,7 @@
     self.storyTextView.delegate = self;
     // The default text is light gray, because it is meant to go away and turn black when a user types in their real text.
     self.storyTextView.textColor = UIColor.lightGrayColor;
-    //self.storyTextView.textContainer.heightTracksTextView = true;
-    self.buttonColorsArray = [NSMutableArray new];
+    //self.storyTextView.textContainer.heightTracksTextView = true;brbdcuhndjkeuctuucgcdhlcrgedkkgt
     self.storyProperties = [NSMutableDictionary new];
 }
 
@@ -179,6 +178,10 @@
     self.addPhotoImage.alpha = 0;
     self.storyImageView.image = image;
     self.storyProperties[@"Image"] = image;
+}
+
+- (void)needsColorForImages {
+    self.imageManager.needsColor = NO;
 }
 
 #pragma mark Add Color Methods

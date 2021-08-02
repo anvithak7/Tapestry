@@ -54,31 +54,20 @@
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state {
     self.buttonColor = backgroundColor;
-    UIImage *image = [self imageFromColor:backgroundColor];
+    UIImage *image = [self.colorManager imageFromColor:backgroundColor];
     [self setBackgroundImage:image forState:state];
 }
 
 - (void)setBackgroundColorForState:(UIControlState)state {
     UIColor *color = [self.colorManager getRandomColorForTheme];
     self.buttonColor = color;
-    UIImage *image = [self imageFromColor:color];
+    UIImage *image = [self.colorManager imageFromColor:color];
     [self setBackgroundImage:image forState:state];
 }
 
 - (UIColor*)getDarkerColor {
     UIColor *color = [self.colorManager getDarkerColorFor:self.buttonColor];
     return color;
-}
-
-- (UIImage*)imageFromColor:(UIColor *)color{
-    CGRect rect =  CGRectMake(0.0, 0.0, 1.0, 1.0);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, rect);
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
 }
 
 @end

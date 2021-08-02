@@ -19,8 +19,9 @@
     // Do any additional setup after loading the view.
     self.alertManager = [AlertManager new];
     self.APIManager = [TapestryAPIManager new];
-    self.imageManager = [[AddImageManager alloc] initWithViewController:self];
+    self.imageManager = [AddImageManager alloc];
     self.imageManager.delegate = self;
+    self.imageManager = [self.imageManager initWithViewController:self];
     self.profilePhotoView.layer.masksToBounds = YES;
     self.profilePhotoView.layer.cornerRadius = self.profilePhotoView.frame.size.width / 2;
     self.nameField.text = self.user[@"fullName"];
@@ -67,6 +68,10 @@
 
 - (void)setMediaUponPicking:(UIImage *)image {
     self.profilePhotoView.image = image;
+}
+
+- (void)needsColorForImages {
+    self.imageManager.needsColor = YES;
 }
 
 @end

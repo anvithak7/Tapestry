@@ -6,6 +6,8 @@
 //
 
 #import <Parse/Parse.h>
+#import "AddImageManager.h"
+#import "AppColorManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

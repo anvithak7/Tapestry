@@ -247,6 +247,21 @@
 			path = UIComponents;
 			sourceTree = "<group>";
 		};
+		9E1F65DC26B87D73003E6234 /* Edit Details Views */ = {
+			isa = PBXGroup;
+			children = (
+				9E5A76A926A9EB9300B846B9 /* GroupDetailsViewController.h */,
+				9E5A76AA26A9EB9300B846B9 /* GroupDetailsViewController.m */,
+				9E0A8B0026B0F7BC005FEA51 /* EditProfileViewController.h */,
+				9E0A8B0126B0F7BC005FEA51 /* EditProfileViewController.m */,
+				9E0A8AFD26B0E2DB005FEA51 /* ChangeGroupNameViewController.h */,
+				9E0A8AFE26B0E2DB005FEA51 /* ChangeGroupNameViewController.m */,
+				9E430D9526A9DC5500C0B571 /* StoryDetailsViewController.h */,
+				9E430D9626A9DC5500C0B571 /* StoryDetailsViewController.m */,
+			);
+			path = "Edit Details Views";
+			sourceTree = "<group>";
+		};
 		9E430D15269C9C2900C0B571 = {
 			isa = PBXGroup;
 			children = (
@@ -314,6 +329,7 @@
 		9E430D56269E11C000C0B571 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9E1F65DC26B87D73003E6234 /* Edit Details Views */,
 				9E0A8AFA26B0E258005FEA51 /* New User */,
 				9E0A8AF926B0E246005FEA51 /* Login */,
 				9E430D5D269E3A3F00C0B571 /* ComposeStoryViewController.h */,
@@ -324,16 +340,8 @@
 				9E430D6D26A6195A00C0B571 /* GroupsViewController.m */,
 				9E430D7A26A7E0E400C0B571 /* TapestryViewController.h */,
 				9E430D7B26A7E0E400C0B571 /* TapestryViewController.m */,
-				9E430D9526A9DC5500C0B571 /* StoryDetailsViewController.h */,
-				9E430D9626A9DC5500C0B571 /* StoryDetailsViewController.m */,
-				9E5A76A926A9EB9300B846B9 /* GroupDetailsViewController.h */,
-				9E5A76AA26A9EB9300B846B9 /* GroupDetailsViewController.m */,
 				9E0A8AEF26AF65D5005FEA51 /* ImageFromWebViewController.h */,
 				9E0A8AF026AF65D5005FEA51 /* ImageFromWebViewController.m */,
-				9E0A8AFD26B0E2DB005FEA51 /* ChangeGroupNameViewController.h */,
-				9E0A8AFE26B0E2DB005FEA51 /* ChangeGroupNameViewController.m */,
-				9E0A8B0026B0F7BC005FEA51 /* EditProfileViewController.h */,
-				9E0A8B0126B0F7BC005FEA51 /* EditProfileViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";

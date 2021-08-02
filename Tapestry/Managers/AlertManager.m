@@ -9,7 +9,7 @@
 
 @implementation AlertManager
 
-// A function to create alerts, instead of writing this out multiple times.
+// A function to create alerts in a view controller.
 - (void) createAlert:(UIViewController*)viewController withMessage:(NSString *)message error:(NSString*)error {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:error message:message preferredStyle:(UIAlertControllerStyleAlert)];
     // create an OK action

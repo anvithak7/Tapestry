@@ -14,7 +14,7 @@
     return self;
 }
 
-- (void) fetchGroup:(Group *)group :(void(^)(PFObject *group, NSError *error))completion {
+- (void)fetchGroup:(Group *)group :(void(^)(PFObject *group, NSError *error))completion {
     [group fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (error != nil) {
             NSLog(@"Error: %@", error.localizedDescription);
@@ -25,7 +25,7 @@
     }];
 }
 
-- (void) fetchUser:(PFUser *)user :(void(^)(PFUser *user, NSError *error))completion {
+- (void)fetchUser:(PFUser *)user :(void(^)(PFUser *user, NSError *error))completion {
     [user fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (error != nil) {
             NSLog(@"Error: %@", error.localizedDescription);
@@ -50,7 +50,6 @@
                 [group fetchIfNeededInBackground];
             }
             storyGroups = [objects copy];
-            NSLog(@"Groups array I am sending out %@", storyGroups);
             completion(storyGroups, nil);
         }
     }];
@@ -66,7 +65,7 @@
     }];
 }
 
-- (void) updateObject:(PFObject*)object withProperties:(NSMutableDictionary*)featuresToAdd :(void(^)(BOOL succeeded, NSError *error))completion {
+- (void)updateObject:(PFObject*)object withProperties:(NSMutableDictionary*)featuresToAdd :(void(^)(BOOL succeeded, NSError *error))completion {
     for (id key in featuresToAdd) {
         id value = [featuresToAdd objectForKey:key];
         object[key] = value;

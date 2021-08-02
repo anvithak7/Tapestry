@@ -32,8 +32,9 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.alertManager = [AlertManager new];
     self.APIManager = [TapestryAPIManager new];
-    self.imageManager = [[AddImageManager alloc] initWithViewController:self];
+    self.imageManager = [AddImageManager alloc];
     self.imageManager.delegate = self;
+    self.imageManager = [self.imageManager initWithViewController:self];
     [self fetchTableData];
 }
 
@@ -185,7 +186,7 @@
                       forKey:@"groups"];
             [self.APIManager updateObject:user withProperties:properties :^(BOOL succeeded, NSError * _Nonnull error) {
                 if (succeeded) {
-                    NSLog(@"Group name was updated");
+                    NSLog(@"User left the tapestry.");
                 } else {
                     [self.alertManager createAlert:self withMessage:error.description error:@"Error"];
                 }
@@ -212,6 +213,10 @@
             [self.alertManager createAlert:self withMessage:error.description error:@"Error"];
         }
     }];
+}
+
+- (void)needsColorForImages {
+    self.imageManager.needsColor = YES;
 }
 
 @end

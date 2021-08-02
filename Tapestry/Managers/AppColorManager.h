@@ -10,12 +10,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+// This manager generates colors according to the app's theme and creates images with them.
+
 @interface AppColorManager : NSObject
 
 @property (nonatomic, strong) NSMutableArray *colorsArray;
 
 - (UIColor*)getRandomColorForTheme;
 - (UIColor*)getDarkerColorFor:(UIColor*)color;
+- (UIImage*)imageFromColor:(UIColor *)color;
 
 @end
 

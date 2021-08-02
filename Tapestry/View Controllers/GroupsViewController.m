@@ -36,8 +36,8 @@
     // We're setting the sizes of the items.
     // The width of the collectionView will change according to the size of the phone.
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.collectionView.collectionViewLayout;
-    layout.minimumInteritemSpacing = 3;
-    layout.minimumLineSpacing = 3;
+    layout.minimumInteritemSpacing = 2;
+    layout.minimumLineSpacing = 2;
     CGFloat groupsPerRow = 3;
     CGFloat itemWidth = (self.collectionView.frame.size.width - layout.minimumInteritemSpacing * (groupsPerRow - 1)) / groupsPerRow;
     CGFloat itemHeight = itemWidth;

@@ -19,10 +19,13 @@
     return @"Group";
 }
 
-+ (NSString *) createGroup:(NSString *) name withCompletion: (PFBooleanResultBlock  _Nullable)completion {
++ (NSString *)createGroup:(NSString *) name withCompletion: (PFBooleanResultBlock  _Nullable)completion {
     Group *newGroup = [Group new];
     newGroup.groupName = name;
     NSString *inviteString = [NSUUID UUID].UUIDString;
+    AppColorManager *colorManager = [AppColorManager new];
+    AddImageManager *imageManager = [AddImageManager new];
+    newGroup.groupImage = [imageManager getPFFileFromImage:[colorManager imageFromColor:[colorManager getRandomColorForTheme]]];
     newGroup.groupInviteCode = inviteString;
     newGroup.administrator = [PFUser currentUser];
     newGroup.membersArray = [NSMutableArray new];

@@ -10,19 +10,21 @@
 @implementation AddImageManager
 
 #pragma mark Initialization
-- (instancetype) initWithViewController:(UIViewController*)viewController {
+- (instancetype)initWithViewController:(UIViewController*)viewController {
     self = [super init];
     if (self) {
      // remainder of your constructor
         self.myViewController = viewController;
         self.alertManager = [AlertManager new];
+        self.colorManager = [AppColorManager new];
+        [self.delegate needsColorForImages];
     }
     return self;
 }
 
 #pragma mark Creating Add Image Panel
 
-- (UIAlertController*) addImageOptionsControllerTo:(UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, ImagesFromWebDelegate>*)viewController {
+- (UIAlertController*)addImageOptionsControllerTo:(UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, ImagesFromWebDelegate>*)viewController {
     UIAlertController* addPhotoAction = [UIAlertController alertControllerWithTitle:@"Add Photo" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction* fromCameraAction = [UIAlertAction actionWithTitle:@"Take Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         [self createFromCameraImagePickerFor:viewController];
@@ -38,6 +40,13 @@
     [addPhotoAction addAction:fromCameraAction];
     [addPhotoAction addAction:fromPhotosAction];
     [addPhotoAction addAction:fromURL];
+    NSLog(@"Needs color! %i", (int) self.needsColor);
+    if (self.needsColor) {
+        UIAlertAction* selectColorAction = [UIAlertAction actionWithTitle:@"Choose Color" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            [self chooseColorForView:viewController];
+        }];
+        [addPhotoAction addAction:selectColorAction];
+    }
     [addPhotoAction addAction:cancelAction];
     return addPhotoAction;
 }
@@ -90,6 +99,28 @@
     self.imageForViewController = image;
     [self.delegate setMediaUponPicking:image];
 }
+
+- (void)chooseColorForView:(UIViewController*)viewController {
+    UIColorPickerViewController *colorPicker = [UIColorPickerViewController new];
+    colorPicker.delegate = self;
+    colorPicker.supportsAlpha = true;
+    [viewController presentViewController:colorPicker animated:YES completion:nil];
+}
+
+- (void)colorPickerViewControllerDidFinish:(UIColorPickerViewController *)viewController {
+    if (!self.imageForViewController) {
+        self.imageForViewController = [self.colorManager imageFromColor:[self.colorManager getRandomColorForTheme]];
+    }
+    [self.delegate setMediaUponPicking:self.imageForViewController];
+}
+
+- (void)colorPickerViewControllerDidSelectColor:(UIColorPickerViewController *)viewController {
+    UIImage *image = [self.colorManager imageFromColor:viewController.selectedColor];
+    self.imageForViewController = image;
+}
+
+#pragma mark Methods for Getting, Resizing, and Resetting
+
 - (UIImage* _Nullable)getImageFromManager {
     return self.imageForViewController;
 }

@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state;
 - (void)setBackgroundColorForState:(UIControlState)state;
-- (UIColor*) getDarkerColor;
+- (UIColor*)getDarkerColor;
 
 @end
 

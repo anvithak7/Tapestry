@@ -1059,6 +1059,11 @@
                                                         <constraint firstItem="KcD-KR-7gH" firstAttribute="leading" secondItem="FMR-mg-TXE" secondAttribute="trailing" constant="8" id="fC8-Jm-Zj1"/>
                                                         <constraint firstAttribute="bottom" secondItem="FMR-mg-TXE" secondAttribute="bottom" id="l5N-x8-afp"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
                                             <constraints>

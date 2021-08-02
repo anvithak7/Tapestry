@@ -86,13 +86,13 @@
     self.currentYLine = 8;
 }
 
-- (void) resizeParentViewToButtons:(UIView*)view {
+- (void)resizeParentViewToButtons:(UIView*)view {
     int viewHeight = (self.numberOfRows * 38) + 8;
     [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, viewHeight)];
     //view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, viewHeight);
 }
 
-- (NSString*) createMultilineButtonTextWith:(NSString*)title {
+- (NSString*)createMultilineButtonTextWith:(NSString*)title {
     NSString *thisGroupName = title;
     NSString *stringToFindSpaceIn = [thisGroupName substringFromIndex:(NSInteger) 45]; // Change this number based on the longest length of a group name;
     NSInteger indexToCut = [stringToFindSpaceIn rangeOfString:@" "].location + 45;

@@ -12,6 +12,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+// This manager creates and controls selectable group buttons in a view.
+
 @protocol GroupButtonsDelegate
 
 // TODO: this might be necessary to create the frame of the view after the buttons are all created
