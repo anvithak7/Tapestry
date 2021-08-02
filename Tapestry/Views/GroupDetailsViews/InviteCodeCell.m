@@ -24,6 +24,7 @@
     return YES;
 }
 
+// I have these here and in GroupDetailsViewController because this works if someone taps on the textfield, but the cell doesn't recognize if just the textfield is tapped.
 - (void)copyTextFieldContent:(id)sender {
     UIPasteboard* pb = [UIPasteboard generalPasteboard];
     pb.string = self.inviteCodeField.text;
@@ -40,11 +41,12 @@
                                                                action:@selector(copyTextFieldContent:)];
              menuController.menuItems = @[copyItem];
              CGRect selectionRect = textField.frame;
-            [menuController showMenuFromView:textField.rightView rect:selectionRect];
+            [menuController showMenuFromView:textField.maskView rect:selectionRect];
          });
          return NO;
     }
     return YES;
 }
+
 
 @end

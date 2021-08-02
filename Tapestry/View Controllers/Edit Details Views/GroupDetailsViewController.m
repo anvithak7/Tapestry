@@ -91,6 +91,7 @@
     } else if (indexPath.section == 1) {
         InviteCodeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InviteCodeCell"];
         cell.inviteCodeField.text = self.tableData[indexPath.section][0];
+        [cell.inviteCodeField sizeToFit];
         return cell;
     } else if (indexPath.section == 2) {
         MemberCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell"]; // We create a table view cell of type PostCell.
@@ -104,24 +105,6 @@
         return cell;
     }
 }
-
-/*
-- (void)longPressInviteCode:(UIGestureRecognizer*)sender {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-             [self becomeFirstResponder];
-             UIMenuController* menuController = [UIMenuController sharedMenuController];
-             UIMenuItem* copyItem = [[UIMenuItem alloc] initWithTitle:@"Copy"
-                                                               action:@selector(copyTextContent:)];
-             menuController.menuItems = @[copyItem];
-             CGRect selectionRect = sender.view.frame;
-        [menuController showMenuFromView:sender.view rect:selectionRect];
-         });
-}
-
-- (void)copyTextContent:(id)sender {
-    UIPasteboard* pb = [UIPasteboard generalPasteboard];
-    pb.string = self.tableData[1][0];
-} */
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.tableData[section] count];
@@ -164,28 +147,33 @@
         if (indexPath.row == 0) {
             // Change group image
             self.groupImageCell = (GroupImageCell*) [self.tableView cellForRowAtIndexPath:indexPath];
-            [self presentViewController:[self.imageManager addImageOptionsControllerTo:self] animated:YES completion:nil];
+            [self presentViewController:[self.imageManager addImageOptionsControllerTo:self] animated:YES completion:^{
+                [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+            }];
         } else if (indexPath.row == 1) {
             self.groupNameCell = (TextCell*) [self.tableView cellForRowAtIndexPath:indexPath];
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             ChangeGroupNameViewController *changeGroupNameViewController = [storyboard instantiateViewControllerWithIdentifier:@"ChangeGroupNameViewController"];
             changeGroupNameViewController.group = self.group;
-            [self presentViewController:changeGroupNameViewController animated:YES completion:nil];
+            [self presentViewController:changeGroupNameViewController animated:YES completion:^{
+                [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+            }];
         }
     } else if (indexPath.section == 1) {
+        InviteCodeCell *inviteCodeCell = [self.tableView cellForRowAtIndexPath:indexPath];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-             [self becomeFirstResponder];
+             [inviteCodeCell becomeFirstResponder];
              UIMenuController* menuController = [UIMenuController sharedMenuController];
              UIMenuItem* copyItem = [[UIMenuItem alloc] initWithTitle:@"Copy"
                                                                action:@selector(copyTextFieldContent:)];
              menuController.menuItems = @[copyItem];
-            InviteCodeCell *inviteCodeCell = [self.tableView cellForRowAtIndexPath:indexPath];
              CGRect selectionRect = inviteCodeCell.inviteCodeField.frame;
             [menuController showMenuFromView:inviteCodeCell.contentView rect:selectionRect];
          });
     } else if (indexPath.section == 3) {
         // Bring up an alert to ask if the user really wants to leave
         [self createAlertForLeavingTapestry];
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
 
