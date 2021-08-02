@@ -92,8 +92,11 @@
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     TapestryGridCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TapestryGridCell" forIndexPath:indexPath];
     Group *group = self.userTapestries[indexPath.item];
-    [group fetchIfNeededInBackground];
-    cell.group = group;
+    [group fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        if(error == nil) {
+            cell.group = group;
+        }
+    }];
     return cell;
 }
 

@@ -19,7 +19,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *createButton;
 @property (weak, nonatomic) IBOutlet UILabel *inviteLabel;
 @property (weak, nonatomic) IBOutlet UITextField *inviteStringField;
-@property (weak, nonatomic) IBOutlet UILabel *inviteStringLabel;
 @property (weak, nonatomic) IBOutlet UIView *joinGroupView;
 @property (weak, nonatomic) IBOutlet UITextField *inviteCodeEntryField;
 @property (weak, nonatomic) IBOutlet UIButton *joinButton;
@@ -45,6 +44,7 @@
     self.createGroupShow = NO;
     self.joinGroupShow = NO;
     self.joinMoved = NO;
+    self.inviteStringField.delegate = self;
 }
 
 - (IBAction)onTapAnywhere:(id)sender {
@@ -55,7 +55,7 @@
 - (IBAction)onTapCreate:(id)sender {
     if (![self.groupName hasText]) {
         self.doneCreating.alpha = 0;
-        self.inviteStringLabel.text = @"Press create to generate an invite code!";
+        self.inviteStringField.placeholder = @"Press create to generate an invite code!";
     }
     self.joinGroupShow = NO;
     if (!self.createGroupShow) {
@@ -65,15 +65,15 @@
     }
 }
 
-- (void) openCreateView {
+- (void)openCreateView {
     [UIView animateWithDuration:0.1 animations:^{
         CGRect joinButtonFrame = self.joinGroupButton.frame;
-        joinButtonFrame.origin.y += 216;
+        joinButtonFrame.origin.y += 306;
         CGRect joinViewFrame = self.joinGroupView.frame;
-        joinViewFrame.origin.y += 216;
+        joinViewFrame.origin.y += 306;
         self.joinGroupButton.frame = joinButtonFrame;
         self.joinGroupView.frame = joinViewFrame;
-        self.spaceBetweenCreateAndJoinButtons.constant = 216;
+        self.spaceBetweenCreateAndJoinButtons.constant = 306;
         self.createNewView.alpha = 1;
         self.joinGroupView.alpha = 0;
         self.joinMoved = YES;
@@ -81,12 +81,12 @@
     self.createGroupShow = YES;
 }
 
-- (void) closeCreateView {
+- (void)closeCreateView {
     [UIView animateWithDuration:0.1 animations:^{
         CGRect joinButtonFrame = self.joinGroupButton.frame;
-        joinButtonFrame.origin.y -= 216;
+        joinButtonFrame.origin.y -= 306;
         CGRect joinViewFrame = self.joinGroupView.frame;
-        joinViewFrame.origin.y -= 216;
+        joinViewFrame.origin.y -= 306;
         self.joinGroupButton.frame = joinButtonFrame;
         self.joinGroupView.frame = joinViewFrame;
         self.spaceBetweenCreateAndJoinButtons.constant = 80;
@@ -105,9 +105,9 @@
     if (self.joinMoved) {
         [UIView animateWithDuration:0.1 animations:^{
             CGRect joinButtonFrame = self.joinGroupButton.frame;
-            joinButtonFrame.origin.y -= 216;
+            joinButtonFrame.origin.y -= 306;
             CGRect joinViewFrame = self.joinGroupView.frame;
-            joinViewFrame.origin.y -= 216;
+            joinViewFrame.origin.y -= 306;
             self.joinGroupButton.frame = joinButtonFrame;
             self.joinGroupView.frame = joinViewFrame;
             self.spaceBetweenCreateAndJoinButtons.constant = 80;
@@ -131,23 +131,54 @@
 
 - (IBAction)groupNameEditingChanged:(id)sender {
     if (![self.groupName hasText]) {
-            self.doneCreating.alpha = 0;
-            self.inviteStringLabel.text = @"Press create to generate an invite code!";
-        }
+        self.doneCreating.alpha = 0;
+        self.inviteStringField.text = @"";
+        self.inviteStringField.placeholder = @"Press create to generate an invite code!";
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     // Prevent crashing undo bug – see note below.
-    if(range.length + range.location > self.groupName.text.length) {
-        return NO;
+    if (textField != self.inviteStringField) {
+        if (range.length + range.location > self.groupName.text.length) {
+            return NO;
+        }
+        return self.groupName.text.length + (string.length - range.length) <= 50;
     }
-    return self.groupName.text.length + (string.length - range.length) <= 50;
+    return textField != self.inviteStringField;
 }
 
 - (IBAction)groupNameEditingDidEnd:(id)sender {
     if (self.groupName.text.length > 50) {
         [self.alertManager createAlert:self withMessage:@"Please choose a shorter tapestry name and try again!" error:@"Tapestry Name Exceeds 50 Characters"];
     }
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (void)copyTextFieldContent:(id)sender {
+    UIPasteboard* pb = [UIPasteboard generalPasteboard];
+    pb.string = self.inviteStringField.text;
+}
+
+// From this post: https://stackoverflow.com/a/31485463/16475718
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    // UIKit changes the first responder after this method, so we need to show the copy menu after this method returns.
+    if (textField == self.inviteStringField) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+             [self becomeFirstResponder];
+             UIMenuController* menuController = [UIMenuController sharedMenuController];
+             UIMenuItem* copyItem = [[UIMenuItem alloc] initWithTitle:@"Copy"
+                                                               action:@selector(copyTextFieldContent:)];
+             menuController.menuItems = @[copyItem];
+             CGRect selectionRect = textField.frame;
+            [menuController showMenuFromView:self.createNewView rect:selectionRect];
+         });
+         return NO;
+    }
+    return YES;
 }
 
 - (IBAction)instantiateGroup:(id)sender {
@@ -157,16 +188,7 @@
         }
     }];
     self.doneCreating.alpha = 1;
-    self.inviteStringLabel.text = inviteCode;
-}
-
-- (IBAction)longPressInviteCode:(id)sender {
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    [pasteboard setString:self.inviteStringLabel.text];
-    UIAlertController* copiedText = [UIAlertController alertControllerWithTitle:@"Invite Code Copied to Clipboard!" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-    [self presentViewController:copiedText animated:YES completion:^{
-        // optional code for what happens after the alert controller has finished presenting
-    }];
+    self.inviteStringField.text = inviteCode;
 }
 
 - (IBAction)joinGroup:(id)sender {

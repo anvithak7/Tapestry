@@ -18,6 +18,7 @@
 		9E0A8B0626B1E7E0005FEA51 /* GroupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8B0526B1E7E0005FEA51 /* GroupButton.m */; };
 		9E0A8B0A26B208D1005FEA51 /* GroupButtonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8B0926B208D1005FEA51 /* GroupButtonManager.m */; };
 		9E1F65DB26B840AF003E6234 /* AppColorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1F65DA26B840AF003E6234 /* AppColorManager.m */; };
+		9E1F65DF26B8AB9E003E6234 /* InviteCodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1F65DE26B8AB9E003E6234 /* InviteCodeCell.m */; };
 		9E430D23269C9C2A00C0B571 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D22269C9C2A00C0B571 /* AppDelegate.m */; };
 		9E430D26269C9C2A00C0B571 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D25269C9C2A00C0B571 /* SceneDelegate.m */; };
 		9E430D2C269C9C2A00C0B571 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E430D2A269C9C2A00C0B571 /* Main.storyboard */; };
@@ -91,6 +92,8 @@
 		9E0A8B0926B208D1005FEA51 /* GroupButtonManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupButtonManager.m; sourceTree = "<group>"; };
 		9E1F65D926B840AF003E6234 /* AppColorManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppColorManager.h; sourceTree = "<group>"; };
 		9E1F65DA26B840AF003E6234 /* AppColorManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppColorManager.m; sourceTree = "<group>"; };
+		9E1F65DD26B8AB9E003E6234 /* InviteCodeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InviteCodeCell.h; sourceTree = "<group>"; };
+		9E1F65DE26B8AB9E003E6234 /* InviteCodeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InviteCodeCell.m; sourceTree = "<group>"; };
 		9E430D1E269C9C2A00C0B571 /* Tapestry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tapestry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E430D21269C9C2A00C0B571 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9E430D22269C9C2A00C0B571 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -198,6 +201,8 @@
 				9E0A8AE926AA9489005FEA51 /* TextCell.m */,
 				9E0A8AF226B09AEA005FEA51 /* GroupImageCell.h */,
 				9E0A8AF326B09AEA005FEA51 /* GroupImageCell.m */,
+				9E1F65DD26B8AB9E003E6234 /* InviteCodeCell.h */,
+				9E1F65DE26B8AB9E003E6234 /* InviteCodeCell.m */,
 			);
 			path = GroupDetailsViews;
 			sourceTree = "<group>";
@@ -660,6 +665,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E430D62269E3CC100C0B571 /* AddGroupsViewController.m in Sources */,
+				9E1F65DF26B8AB9E003E6234 /* InviteCodeCell.m in Sources */,
 				9E430D5C269E164D00C0B571 /* LoginViewController.m in Sources */,
 				9E0A8AF126AF65D5005FEA51 /* ImageFromWebViewController.m in Sources */,
 				9E0A8AF726B0BD88005FEA51 /* AddImageManager.m in Sources */,

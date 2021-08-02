@@ -9,6 +9,7 @@
 #import "ChangeGroupNameViewController.h"
 #import "GroupImageCell.h"
 #import "TextCell.h"
+#import "InviteCodeCell.h"
 #import "MemberCell.h"
 
 @interface GroupDetailsViewController ()  <UITableViewDelegate, UITableViewDataSource, AddImageDelegate>
@@ -54,8 +55,8 @@
             } else {
                 self.groupImageFile = nil;
             }
-            [self.tableData addObjectsFromArray:@[@[@"Image", group[@"groupName"], group[@"groupInviteCode"]], @[@"Leave Tapestry"]]];
-            [self.tableData insertObject:self.tapestryMembers atIndex:1];
+            [self.tableData addObjectsFromArray:@[@[@"Image", group[@"groupName"]], @[group[@"groupInviteCode"]], @[@"Leave Tapestry"]]];
+            [self.tableData insertObject:self.tapestryMembers atIndex:2];
             NSLog(@"Table data: %@", self.tableData);
             [self.tableView reloadData];
         }
@@ -81,18 +82,17 @@
                 [cell.groupImageView loadInBackground];
             }
             return cell;
-        } else if (indexPath.row == 1) {
+        } else {
             TextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TextCell"];
             cell.cellTextLabel.text = self.tableData[indexPath.section][1];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             return cell;
-        } else {
-            TextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TextCell"];
-            //NSString *inviteCodeLabel = [@"Invite Code: " stringByAppendingString:self.tableData[indexPath.section][2]];
-            cell.cellTextLabel.text = self.tableData[indexPath.section][2];
-            return cell;
         }
     } else if (indexPath.section == 1) {
+        InviteCodeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InviteCodeCell"];
+        cell.inviteCodeField.text = self.tableData[indexPath.section][0];
+        return cell;
+    } else if (indexPath.section == 2) {
         MemberCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell"]; // We create a table view cell of type PostCell.
         PFUser *user = self.tapestryMembers[indexPath.row];
         cell.group = self.group;
@@ -104,6 +104,24 @@
         return cell;
     }
 }
+
+/*
+- (void)longPressInviteCode:(UIGestureRecognizer*)sender {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+             [self becomeFirstResponder];
+             UIMenuController* menuController = [UIMenuController sharedMenuController];
+             UIMenuItem* copyItem = [[UIMenuItem alloc] initWithTitle:@"Copy"
+                                                               action:@selector(copyTextContent:)];
+             menuController.menuItems = @[copyItem];
+             CGRect selectionRect = sender.view.frame;
+        [menuController showMenuFromView:sender.view rect:selectionRect];
+         });
+}
+
+- (void)copyTextContent:(id)sender {
+    UIPasteboard* pb = [UIPasteboard generalPasteboard];
+    pb.string = self.tableData[1][0];
+} */
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.tableData[section] count];
@@ -118,6 +136,9 @@
         return @"Settings";
     }
     if (section == 1) {
+        return @"Invite Code";
+    }
+    if (section == 2) {
         return @"Weavers";
     }
     return nil;
@@ -131,7 +152,7 @@
         } else {
             return 48;
         }
-    } else if (indexPath.row == 1) {
+    } else if (indexPath.row == 2) {
         return 48; // These are the tapestry members
     } else {
         return 48;
@@ -144,17 +165,34 @@
             // Change group image
             self.groupImageCell = (GroupImageCell*) [self.tableView cellForRowAtIndexPath:indexPath];
             [self presentViewController:[self.imageManager addImageOptionsControllerTo:self] animated:YES completion:nil];
-        } else if (indexPath.row == 1){
+        } else if (indexPath.row == 1) {
             self.groupNameCell = (TextCell*) [self.tableView cellForRowAtIndexPath:indexPath];
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             ChangeGroupNameViewController *changeGroupNameViewController = [storyboard instantiateViewControllerWithIdentifier:@"ChangeGroupNameViewController"];
             changeGroupNameViewController.group = self.group;
             [self presentViewController:changeGroupNameViewController animated:YES completion:nil];
         }
-    } else if (indexPath.section == 2) {
+    } else if (indexPath.section == 1) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+             [self becomeFirstResponder];
+             UIMenuController* menuController = [UIMenuController sharedMenuController];
+             UIMenuItem* copyItem = [[UIMenuItem alloc] initWithTitle:@"Copy"
+                                                               action:@selector(copyTextFieldContent:)];
+             menuController.menuItems = @[copyItem];
+            InviteCodeCell *inviteCodeCell = [self.tableView cellForRowAtIndexPath:indexPath];
+             CGRect selectionRect = inviteCodeCell.inviteCodeField.frame;
+            [menuController showMenuFromView:inviteCodeCell.contentView rect:selectionRect];
+         });
+    } else if (indexPath.section == 3) {
         // Bring up an alert to ask if the user really wants to leave
         [self createAlertForLeavingTapestry];
     }
+}
+
+- (void)copyTextFieldContent:(id)sender {
+    UIPasteboard* pb = [UIPasteboard generalPasteboard];
+    pb.string = self.tableData[1][0];
+    [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] animated:YES];
 }
 
 - (void)createAlertForLeavingTapestry {
