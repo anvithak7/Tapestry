@@ -32,9 +32,7 @@
     // Create all of the necessary managers and set their delegates (if needed) to self:
     self.APIManager = [TapestryAPIManager new];
     self.alertManager = [AlertManager new];
-    self.imageManager = [AddImageManager alloc];
-    self.imageManager.delegate = self;
-    self.imageManager = [self.imageManager initWithViewController:self];
+    self.imageManager = [[AddImageManager alloc] initWithViewController:self];
     self.buttonsManager = [GroupButtonManager alloc];
     self.buttonsManager.delegate = self;
     self.buttonsManager = [self.buttonsManager initWithView:self.groupButtonsView];
@@ -44,6 +42,8 @@
     self.storyTextView.textColor = UIColor.lightGrayColor;
     //self.storyTextView.textContainer.heightTracksTextView = true;brbdcuhndjkeuctuucgcdhlcrgedkkgt
     self.storyProperties = [NSMutableDictionary new];
+    UIButton *button = [UIButton new];
+    [self.view addSubview:button];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

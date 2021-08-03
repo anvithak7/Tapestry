@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) id<AddImageDelegate> delegate;
 
 - (instancetype) initWithViewController:(UIViewController*)viewController;
-- (UIAlertController*) addImageOptionsControllerTo:(UIViewController*)viewController;
+- (UIAlertController*)addImageOptionsControllerTo:(UIViewController*)viewController;
 - (void)resetImageManager;
 - (UIImage* _Nullable)getImageFromManager;
 - (PFFileObject*)getImageFileFromManager;

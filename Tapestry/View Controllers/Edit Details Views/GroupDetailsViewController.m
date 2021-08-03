@@ -33,9 +33,7 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.alertManager = [AlertManager new];
     self.APIManager = [TapestryAPIManager new];
-    self.imageManager = [AddImageManager alloc];
-    self.imageManager.delegate = self;
-    self.imageManager = [self.imageManager initWithViewController:self];
+    self.imageManager = [[AddImageManager alloc] initWithViewController:self];
     [self fetchTableData];
 }
 

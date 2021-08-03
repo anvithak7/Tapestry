@@ -10,11 +10,12 @@
 @implementation AddImageManager
 
 #pragma mark Initialization
-- (instancetype)initWithViewController:(UIViewController*)viewController {
+- (instancetype)initWithViewController:(UIViewController<AddImageDelegate>*)viewController {
     self = [super init];
     if (self) {
      // remainder of your constructor
         self.myViewController = viewController;
+        self.delegate = viewController;
         self.alertManager = [AlertManager new];
         self.colorManager = [AppColorManager new];
         [self.delegate needsColorForImages];
@@ -96,8 +97,10 @@
 }
 
 - (void)setImageFromWeb:(UIImage *)image {
-    self.imageForViewController = image;
-    [self.delegate setMediaUponPicking:image];
+    if (image) {
+        self.imageForViewController = image;
+        [self.delegate setMediaUponPicking:image];
+    }
 }
 
 - (void)chooseColorForView:(UIViewController*)viewController {
