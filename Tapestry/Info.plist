@@ -2,12 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Tapestry needs microphone access to record voice messages</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Tapestry needs camera access to take photos</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Tapestry needs photo library access to upload images</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Sweetgentle Free.otf</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -26,6 +24,12 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Tapestry needs camera access to take photos</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Tapestry needs microphone access to record voice messages</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Tapestry needs photo library access to upload images</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -60,6 +64,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

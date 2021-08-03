@@ -19,6 +19,7 @@
 		9E0A8B0A26B208D1005FEA51 /* GroupButtonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8B0926B208D1005FEA51 /* GroupButtonManager.m */; };
 		9E1F65DB26B840AF003E6234 /* AppColorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1F65DA26B840AF003E6234 /* AppColorManager.m */; };
 		9E1F65DF26B8AB9E003E6234 /* InviteCodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1F65DE26B8AB9E003E6234 /* InviteCodeCell.m */; };
+		9E1F65E226B8FD3B003E6234 /* Sweetgentle Free.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E1F65E126B8FD3B003E6234 /* Sweetgentle Free.otf */; };
 		9E430D23269C9C2A00C0B571 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D22269C9C2A00C0B571 /* AppDelegate.m */; };
 		9E430D26269C9C2A00C0B571 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E430D25269C9C2A00C0B571 /* SceneDelegate.m */; };
 		9E430D2C269C9C2A00C0B571 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E430D2A269C9C2A00C0B571 /* Main.storyboard */; };
@@ -94,6 +95,7 @@
 		9E1F65DA26B840AF003E6234 /* AppColorManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppColorManager.m; sourceTree = "<group>"; };
 		9E1F65DD26B8AB9E003E6234 /* InviteCodeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InviteCodeCell.h; sourceTree = "<group>"; };
 		9E1F65DE26B8AB9E003E6234 /* InviteCodeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InviteCodeCell.m; sourceTree = "<group>"; };
+		9E1F65E126B8FD3B003E6234 /* Sweetgentle Free.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sweetgentle Free.otf"; sourceTree = "<group>"; };
 		9E430D1E269C9C2A00C0B571 /* Tapestry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tapestry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E430D21269C9C2A00C0B571 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9E430D22269C9C2A00C0B571 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -267,6 +269,14 @@
 			path = "Edit Details Views";
 			sourceTree = "<group>";
 		};
+		9E1F65E026B8FD23003E6234 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9E1F65E126B8FD3B003E6234 /* Sweetgentle Free.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		9E430D15269C9C2900C0B571 = {
 			isa = PBXGroup;
 			children = (
@@ -292,6 +302,7 @@
 		9E430D20269C9C2A00C0B571 /* Tapestry */ = {
 			isa = PBXGroup;
 			children = (
+				9E1F65E026B8FD23003E6234 /* Fonts */,
 				9E0A8B0326B1E7BB005FEA51 /* UIComponents */,
 				9E430D8B26A94B3400C0B571 /* Managers */,
 				9E430D8726A93C2F00C0B571 /* APIManager */,
@@ -536,6 +547,7 @@
 				9E430D59269E136900C0B571 /* Keys.plist in Resources */,
 				9E430D31269C9C2A00C0B571 /* LaunchScreen.storyboard in Resources */,
 				9E430D2E269C9C2A00C0B571 /* Assets.xcassets in Resources */,
+				9E1F65E226B8FD3B003E6234 /* Sweetgentle Free.otf in Resources */,
 				9E430D2C269C9C2A00C0B571 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
