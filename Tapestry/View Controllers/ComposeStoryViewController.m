@@ -19,7 +19,7 @@
 @interface ComposeStoryViewController () <UITextViewDelegate, UIColorPickerViewControllerDelegate, AddImageDelegate, GroupButtonsDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, strong) NSMutableDictionary *storyProperties;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewToMediaView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonsViewHeightConstraint;
 
 @end
 
@@ -65,6 +65,8 @@
     self.addColorView.backgroundColor = [UIColor systemGray6Color];
     [self.storyImageView setTintColor:[UIColor systemGray6Color]];
     [self.storyTextView endEditing:true];
+    self.storyTextView.text = @"What would you like to remember from today? Or, answer one of the prompts above!";
+    self.buttonsViewHeightConstraint.constant = 16;
 }
 
 #pragma mark UITextViewDelegate Methods
@@ -80,7 +82,7 @@
 // When a user stops typing, we check to make sure they wrote something, or else there should be placeholder text again.
 - (void)textViewDidEndEditing:(UITextView *)textView {
     if ([textView.text isEqual:@""]) {
-        textView.text = @"How's it going?";
+        textView.text = @"What would you like to remember from today? Or, answer one of the prompts above!";
         textView.textColor = UIColor.lightGrayColor;
     }
 }
@@ -114,7 +116,7 @@
                 if (error != nil) {
                     [self.alertManager createAlert:self withMessage:@"Unable to share story. Please check your internet connection and try again!" error:@"Unable to Share"];
                 } else {
-                    self.storyTextView.text = @"How's it going?";
+                    self.storyTextView.text = @"What would you like to remember from today? Or, answer one of the prompts above!";
                     self.storyTextView.textColor = UIColor.lightGrayColor;
                     [self.imageManager resetImageManager];
                     [self.buttonsManager resetAllButtons];
@@ -148,12 +150,12 @@
                         NSString *groupId = group.objectId;
                         if (![groupId isEqual:userStoriesId]) {
                             [self.buttonsManager createButtonforObject:group withTag:count];
+                            self.buttonsViewHeightConstraint.constant = [self.buttonsManager resizeParentViewToButtons:self.groupButtonsView];
                         }
                     }
                 }];
                 count ++;
             }
-            [self.buttonsManager resizeParentViewToButtons:self.groupButtonsView];
         }
     }];
     //self.groupButtonsView.frame = CGRectMake(self.groupButtonsView.frame.origin.x, self.groupButtonsView.frame.origin.y, self.groupButtonsView.frame.size.width, [self.buttonsManager resizeParentViewToButtons:self.groupButtonsView]);

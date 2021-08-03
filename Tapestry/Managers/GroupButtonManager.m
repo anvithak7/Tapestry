@@ -84,11 +84,13 @@
     [self.buttonsCurrentlyOnScreen removeAllObjects];
     self.currentXEdge = 8;
     self.currentYLine = 8;
+    self.numberOfRows = 1;
 }
 
-- (void)resizeParentViewToButtons:(UIView*)view {
+- (CGFloat)resizeParentViewToButtons:(UIView*)view {
     int viewHeight = (self.numberOfRows * 38) + 8;
     [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, viewHeight)];
+    return viewHeight;
     //view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, viewHeight);
 }
 

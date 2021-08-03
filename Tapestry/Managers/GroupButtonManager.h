@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) initWithView:(UIView*)view;
 - (void)createButtonforObject:(PFObject*)group withTag:(int)tag;
 - (NSMutableArray*) groupsSelectedInView;
-- (void) resizeParentViewToButtons:(UIView*)view;
+- (CGFloat)resizeParentViewToButtons:(UIView*)view;
 
 - (void) resetAllButtons;
 - (void) removeAllButtonsFromSuperview:(UIView*)view;
