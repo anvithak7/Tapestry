@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0583D6339532957F16853CEE /* Pods_TapestryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3EA13843EC42B98569A41AE /* Pods_TapestryTests.framework */; };
 		65F0D822C428B4A7B08C552C /* Pods_Tapestry_TapestryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 481AB0633733FFBF8D08A8AD /* Pods_Tapestry_TapestryUITests.framework */; };
+		9E084C1D26B9E671007F8F2B /* PromptsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E084C1C26B9E671007F8F2B /* PromptsViewController.m */; };
 		9E0A8AEA26AA9489005FEA51 /* TextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8AE926AA9489005FEA51 /* TextCell.m */; };
 		9E0A8AF126AF65D5005FEA51 /* ImageFromWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8AF026AF65D5005FEA51 /* ImageFromWebViewController.m */; };
 		9E0A8AF426B09AEA005FEA51 /* GroupImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8AF326B09AEA005FEA51 /* GroupImageCell.m */; };
@@ -76,6 +77,8 @@
 		93621979B05B69AC600BAC1B /* Pods-Tapestry.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tapestry.debug.xcconfig"; path = "Target Support Files/Pods-Tapestry/Pods-Tapestry.debug.xcconfig"; sourceTree = "<group>"; };
 		99E584B0DEB38DE95ADF8DC7 /* Pods-Tapestry-TapestryUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tapestry-TapestryUITests.debug.xcconfig"; path = "Target Support Files/Pods-Tapestry-TapestryUITests/Pods-Tapestry-TapestryUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9CED42AE8DCC4FEDB9E95E72 /* Pods_Tapestry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tapestry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E084C1B26B9E671007F8F2B /* PromptsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PromptsViewController.h; sourceTree = "<group>"; };
+		9E084C1C26B9E671007F8F2B /* PromptsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PromptsViewController.m; sourceTree = "<group>"; };
 		9E0A8AE826AA9489005FEA51 /* TextCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextCell.h; sourceTree = "<group>"; };
 		9E0A8AE926AA9489005FEA51 /* TextCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextCell.m; sourceTree = "<group>"; };
 		9E0A8AEF26AF65D5005FEA51 /* ImageFromWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageFromWebViewController.h; sourceTree = "<group>"; };
@@ -363,6 +366,8 @@
 				9E430D7B26A7E0E400C0B571 /* TapestryViewController.m */,
 				9E0A8AEF26AF65D5005FEA51 /* ImageFromWebViewController.h */,
 				9E0A8AF026AF65D5005FEA51 /* ImageFromWebViewController.m */,
+				9E084C1B26B9E671007F8F2B /* PromptsViewController.h */,
+				9E084C1C26B9E671007F8F2B /* PromptsViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -697,6 +702,7 @@
 				9E0A8B0A26B208D1005FEA51 /* GroupButtonManager.m in Sources */,
 				9E430D7526A7426800C0B571 /* TapestryGridCell.m in Sources */,
 				9E430D26269C9C2A00C0B571 /* SceneDelegate.m in Sources */,
+				9E084C1D26B9E671007F8F2B /* PromptsViewController.m in Sources */,
 				9E430D6E26A6195A00C0B571 /* GroupsViewController.m in Sources */,
 				9E0A8AF426B09AEA005FEA51 /* GroupImageCell.m in Sources */,
 				9E430D7C26A7E0E400C0B571 /* TapestryViewController.m in Sources */,

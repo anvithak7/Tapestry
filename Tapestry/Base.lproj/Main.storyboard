@@ -1565,10 +1565,10 @@
             </objects>
             <point key="canvasLocation" x="-570" y="1621"/>
         </scene>
-        <!--View Controller-->
+        <!--Prompts View Controller-->
         <scene sceneID="IsV-WX-r9E">
             <objects>
-                <viewController id="ab9-Ln-tIE" sceneMemberID="viewController">
+                <viewController id="ab9-Ln-tIE" customClass="PromptsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fjC-ZZ-Ko3">
                         <rect key="frame" x="0.0" y="0.0" width="398" height="50"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1585,6 +1585,9 @@
                             <constraint firstItem="tBA-dj-7nh" firstAttribute="leading" secondItem="fjC-ZZ-Ko3" secondAttribute="leading" id="quu-ek-vuF"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="promptsPicker" destination="tBA-dj-7nh" id="Wav-xb-qge"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7qg-MA-Ryh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
