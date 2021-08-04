@@ -11,15 +11,19 @@
 #import "SceneDelegate.h"
 #import "Story.h"
 #import "Group.h"
+#import "PromptCell.h"
 #import "Parse/Parse.h"
 #import <AVFoundation/AVFoundation.h>
 
 // This view controller allows a user to compose a story, with text, and add additional media and attributes.
 
-@interface ComposeStoryViewController () <UITextViewDelegate, UIColorPickerViewControllerDelegate, AddImageDelegate, GroupButtonsDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+@interface ComposeStoryViewController () <UITextViewDelegate, UIColorPickerViewControllerDelegate, AddImageDelegate, GroupButtonsDelegate, UICollectionViewDelegate, UICollectionViewDataSource, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, strong) NSMutableDictionary *storyProperties;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonsViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UICollectionView *promptsCollection;
+@property (strong, nonatomic) NSMutableArray *prompts;
+@property (strong, nonatomic) NSArray *todayPrompts;
 
 @end
 
@@ -36,14 +40,18 @@
     self.buttonsManager = [GroupButtonManager alloc];
     self.buttonsManager.delegate = self;
     self.buttonsManager = [self.buttonsManager initWithView:self.groupButtonsView];
+    self.promptsCollection.delegate = self;
+    self.promptsCollection.dataSource = self;
+    [self.promptsCollection setPagingEnabled:TRUE];
     // To use text view methods, we set the view controller as a delegate for the text view.
     self.storyTextView.delegate = self;
     // The default text is light gray, because it is meant to go away and turn black when a user types in their real text.
     self.storyTextView.textColor = UIColor.lightGrayColor;
-    //self.storyTextView.textContainer.heightTracksTextView = true;brbdcuhndjkeuctuucgcdhlcrgedkkgt
+    //self.storyTextView.textContainer.heightTracksTextView = true;
     self.storyProperties = [NSMutableDictionary new];
-    UIButton *button = [UIButton new];
-    [self.view addSubview:button];
+    self.prompts = [NSMutableArray new];
+    [self addAllPromptsToArray:self.prompts];
+    self.todayPrompts = [NSMutableArray new];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -53,9 +61,11 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [self.buttonsManager removeAllButtonsFromSuperview:self.groupButtonsView];
+    self.todayPrompts = [NSArray new];
 }
 
 - (void)resetComposeView {
+    [self getPromptsForToday];
     self.storyImageView.image = nil;
     self.addImageLabel.alpha = 1;
     self.addPhotoImage.alpha = 1;
@@ -216,5 +226,33 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark Prompts
+
+- (void)addAllPromptsToArray:(NSMutableArray*)array {
+    [array addObjectsFromArray:@[@"A funny story I remember is...", @"Today I made _____ for _____!", @"The most interesting problem I faced today was...", @"The hardest thing about today was...", @"One thing that made me smile today was...", @"Something cute I saw today was...", @"A compliment I received today that I would love to remember...", @"What are some of your hobbies?", @"What song are you currently obsessed with?", @"What book are you currently reading?", @"What's the most recent movie or show you watched?", @"A book you would recommend", @"What is one thing you would like to remember from today?"]];
+}
+
+- (void)shuffle:(NSMutableArray*)array {
+    for (NSUInteger i = array.count; i > 1; i--)
+        [array exchangeObjectAtIndex:i - 1 withObjectAtIndex:arc4random_uniform((u_int32_t)i)];
+}
+
+- (void)getPromptsForToday {
+    [self shuffle:self.prompts];
+    self.todayPrompts = [self.prompts subarrayWithRange:NSMakeRange((NSUInteger) 0, (NSUInteger) 5)];
+    [self.promptsCollection reloadData];
+}
+
+- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    PromptCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PromptCell" forIndexPath:indexPath];
+    cell.prompt = self.todayPrompts[indexPath.item];
+    return cell;
+}
+
+- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.todayPrompts.count;
+}
+
 
 @end

@@ -21,7 +21,7 @@
 - (UIColor*)getDarkerColorFor:(UIColor*)color {
     CGFloat hue, saturation, brightness, alpha;
     if ([color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
-        return [UIColor colorWithHue:hue saturation:saturation brightness:brightness * 0.65 alpha:alpha];
+        return [UIColor colorWithHue:hue saturation:saturation brightness:brightness * 0.8 alpha:alpha];
     }
     return nil;
 }
