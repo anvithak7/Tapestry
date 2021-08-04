@@ -19,48 +19,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C5401D85-933E-4FD8-A4C7-E7253356945C"
+            uuid = "6DC169CF-958D-43A4-AEC3-10FB9B147489"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Tapestry/View Controllers/ComposeStoryViewController.m"
+            filePath = "Tapestry/Managers/HealthKitManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
-            landmarkName = "-onTapFromHealth:"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "-requestAuthorizationFor:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "232C0200-F634-4C5B-A4AD-9ACC029DE989"
+            uuid = "52979B27-7A76-4CA8-B7CD-8F6B23647514"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Tapestry/View Controllers/ComposeStoryViewController.m"
+            filePath = "Tapestry/Managers/HealthKitManager.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
-            landmarkName = "-onTapFromHealth:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3DACCAA6-C0B9-4BF9-84C5-93E2AD978383"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tapestry/View Controllers/ComposeStoryViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
-            landmarkName = "-onTapFromHealth:"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "-requestAuthorizationFor:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

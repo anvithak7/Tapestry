@@ -424,10 +424,31 @@
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="scx-VC-rRa">
                                         <rect key="frame" x="224" y="0.0" width="100" height="100"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Health Data" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HcG-GM-dMz">
+                                                <rect key="frame" x="26" y="38.5" width="72" height="33.5"/>
+                                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="heart.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Ner-g4-O4Z">
+                                                <rect key="frame" x="5" y="40" width="21" height="17.5"/>
+                                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="Gvh-zH-VDz"/>
+                                                    <constraint firstAttribute="width" constant="21" id="vsX-Ne-0h5"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
                                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="Ef4-X3-PI0"/>
+                                            <constraint firstItem="HcG-GM-dMz" firstAttribute="centerX" secondItem="scx-VC-rRa" secondAttribute="centerX" constant="12" id="U7C-40-Jsl"/>
+                                            <constraint firstAttribute="trailing" secondItem="HcG-GM-dMz" secondAttribute="trailing" constant="2" id="YgE-DJ-dya"/>
+                                            <constraint firstItem="HcG-GM-dMz" firstAttribute="leading" secondItem="Ner-g4-O4Z" secondAttribute="trailing" id="ZYj-Nb-fef"/>
+                                            <constraint firstItem="HcG-GM-dMz" firstAttribute="top" secondItem="Ner-g4-O4Z" secondAttribute="top" id="aoA-xB-pzr"/>
+                                            <constraint firstItem="HcG-GM-dMz" firstAttribute="centerY" secondItem="scx-VC-rRa" secondAttribute="centerY" constant="5" id="kep-Ai-Zld"/>
                                             <constraint firstAttribute="width" constant="100" id="o9h-vB-Slr"/>
                                         </constraints>
                                         <connections>
@@ -1633,6 +1654,7 @@
         <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
         <image name="circles.hexagongrid.fill" catalog="system" width="128" height="112"/>
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>
+        <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="icons8-needle-30" width="30" height="30"/>
         <image name="icons8-view-quilt-30" width="30" height="30"/>
         <image name="person.2.circle.fill" catalog="system" width="128" height="121"/>

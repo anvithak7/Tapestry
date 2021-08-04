@@ -17,7 +17,7 @@
 
 // This view controller allows a user to compose a story, with text, and add additional media and attributes.
 
-@interface ComposeStoryViewController () <UITextViewDelegate, UIColorPickerViewControllerDelegate, AddImageDelegate, GroupButtonsDelegate, UICollectionViewDelegate, UICollectionViewDataSource, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+@interface ComposeStoryViewController () <UITextViewDelegate, UIColorPickerViewControllerDelegate, AddImageDelegate, GroupButtonsDelegate, HealthDataDelegate, UICollectionViewDelegate, UICollectionViewDataSource, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, strong) NSMutableDictionary *storyProperties;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonsViewHeightConstraint;
@@ -40,6 +40,8 @@
     self.buttonsManager = [GroupButtonManager alloc];
     self.buttonsManager.delegate = self;
     self.buttonsManager = [self.buttonsManager initWithView:self.groupButtonsView];
+    self.healthManager = [[HealthKitManager alloc] init];
+    self.healthManager.delegate = self;
     self.promptsCollection.delegate = self;
     self.promptsCollection.dataSource = self;
     [self.promptsCollection setPagingEnabled:TRUE];
@@ -52,7 +54,6 @@
     self.prompts = [NSMutableArray new];
     [self addAllPromptsToArray:self.prompts];
     self.todayPrompts = [NSMutableArray new];
-    self.healthStore = [HKHealthStore new];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -62,6 +63,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [self.buttonsManager removeAllButtonsFromSuperview:self.groupButtonsView];
+    self.buttonsViewHeightConstraint.constant = 16;
     self.todayPrompts = [NSArray new];
 }
 
@@ -77,7 +79,6 @@
     [self.storyImageView setTintColor:[UIColor systemGray6Color]];
     [self.storyTextView endEditing:true];
     self.storyTextView.text = @"What would you like to remember from today? Or, answer one of the prompts above!";
-    self.buttonsViewHeightConstraint.constant = 16;
 }
 
 #pragma mark UITextViewDelegate Methods
@@ -219,24 +220,38 @@
 }
 
 - (IBAction)onTapFromHealth:(id)sender {
-    if (HKHealthStore.isHealthDataAvailable) {
-        HKQuantityType *stepCount = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
-        HKQuantityType *flightsClimbed = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierFlightsClimbed];
-        NSSet *types = [NSSet setWithArray:@[stepCount, flightsClimbed, [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierFlightsClimbed]]];
-        if (([self.healthStore authorizationStatusForType:stepCount] == HKAuthorizationStatusSharingAuthorized) && ([self.healthStore authorizationStatusForType:flightsClimbed] == HKAuthorizationStatusSharingAuthorized)) {
-            [self getHealthData];
-        } else {
-            [self.healthStore requestAuthorizationToShareTypes:types readTypes:types completion:^(BOOL success, NSError * _Nullable error) {
-                if (success) {
-                    [self getHealthData];
-                } else {
-                    NSLog(@"Error: %@", error.description);
-                }
-            }];
-        }
+    [self presentViewController:[self.healthManager addHealthOptionsControllerTo:self] animated:YES completion:nil];
+}
+
+- (void)displayHealthDataFromString:(NSString *)update {
+    self.storyTextView.textColor = UIColor.blackColor;
+    if ([self.storyTextView.text isEqualToString:@"What would you like to remember from today? Or, answer one of the prompts above!"]) {
+        self.storyTextView.text = update;
+    } else {
+        NSString *appendedText = [self.storyTextView.text stringByAppendingString:@" "];
+        NSString *newText = [appendedText stringByAppendingString:update];
+        self.storyTextView.text = newText;
     }
 }
 
+/*if (HKHealthStore.isHealthDataAvailable) {
+ HKQuantityType *stepCount = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
+ HKQuantityType *flightsClimbed = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierFlightsClimbed];
+ NSSet *types = [NSSet setWithArray:@[stepCount, flightsClimbed, [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierFlightsClimbed]]];
+ if (([self.healthStore authorizationStatusForType:stepCount] == HKAuthorizationStatusSharingAuthorized) && ([self.healthStore authorizationStatusForType:flightsClimbed] == HKAuthorizationStatusSharingAuthorized)) {
+     [self getHealthData];
+ } else {
+     [self.healthStore requestAuthorizationToShareTypes:types readTypes:types completion:^(BOOL success, NSError * _Nullable error) {
+         if (success) {
+             [self getHealthData];
+         } else {
+             NSLog(@"Error: %@", error.description);
+         }
+     }];
+ }
+}*/
+
+/*
 - (void)getHealthData {
     HKQuantityType *type = [HKSampleType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
     NSDate *today = [NSDate date];
@@ -251,14 +266,22 @@
           NSLog(@"Error :%@", error.description);
       } else {
         [result enumerateStatisticsFromDate:startOfDay toDate:today withBlock:^(HKStatistics * _Nonnull result, BOOL * _Nonnull stop) {
-          HKQuantity *quantity = [result sumQuantity];
-          double steps = [quantity doubleValueForUnit:[HKUnit countUnit]];
-          NSLog(@"Steps : %f", steps);
+            HKQuantity *quantity = [result sumQuantity];
+            double steps = [quantity doubleValueForUnit:[HKUnit countUnit]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                            if ([self.storyTextView.text isEqualToString:@"What would you like to remember from today? Or, answer one of the prompts above!"]) {
+                                self.storyTextView.text = [NSString stringWithFormat:@"Today I walked %f steps!", steps];
+                            } else {
+                                NSString *appendedText = [self.storyTextView.text stringByAppendingString:[NSString stringWithFormat:@" Today I walked %f steps!", steps]];
+                                self.storyTextView.text = appendedText;
+                            }
+            });
+            NSLog(@"Steps : %f", steps);
         }];
       }
     };
     [self.healthStore executeQuery:query];
-}
+} */
 
 /*
 #pragma mark - Navigation

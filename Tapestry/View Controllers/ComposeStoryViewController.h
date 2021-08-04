@@ -11,6 +11,7 @@
 #import "AlertManager.h"
 #import "AddImageManager.h"
 #import "GroupButtonManager.h"
+#import "HealthKitManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *addColorPhoto;
 
 @property (weak, nonatomic) IBOutlet UIView *fromHealthView;
-@property (strong, nonatomic) HKHealthStore *healthStore;
+@property (strong, nonatomic) HealthKitManager *healthManager;
 
 @end
 

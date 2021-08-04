@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Tapestry needs access to your Health data in order to share your step count.</string>
+	<string>Tapestry needs access to your Health data in order to allow you to share data about your movement (step count, distance walked/ran or traveled in wheelchair, flights climbed, push count) in your tapestries!</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Tapestry needs access to your Health data in order to share your step count.</string>
+	<string>Tapestry needs access to your Health data in order to allow you to share data about your movement (step count, distance walked/ran or traveled in wheelchair, flights climbed, push count) in your tapestries!</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Sweetgentle Free.otf</string>

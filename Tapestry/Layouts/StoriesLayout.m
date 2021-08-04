@@ -10,7 +10,7 @@
 @implementation StoriesLayout
 
 
-- (void) prepareLayout {
+- (void)prepareLayout {
     self.numberOfColumns = 2;
     self.cellPadding = 2;
     self.extraHeightInCell = 65;

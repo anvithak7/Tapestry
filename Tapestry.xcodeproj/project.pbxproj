@@ -10,6 +10,7 @@
 		0583D6339532957F16853CEE /* Pods_TapestryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3EA13843EC42B98569A41AE /* Pods_TapestryTests.framework */; };
 		65F0D822C428B4A7B08C552C /* Pods_Tapestry_TapestryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 481AB0633733FFBF8D08A8AD /* Pods_Tapestry_TapestryUITests.framework */; };
 		9E084C2126B9FFAC007F8F2B /* PromptCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E084C2026B9FFAC007F8F2B /* PromptCell.m */; };
+		9E084C2426BAE8AD007F8F2B /* HealthKitManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E084C2326BAE8AD007F8F2B /* HealthKitManager.m */; };
 		9E0A8AEA26AA9489005FEA51 /* TextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8AE926AA9489005FEA51 /* TextCell.m */; };
 		9E0A8AF126AF65D5005FEA51 /* ImageFromWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8AF026AF65D5005FEA51 /* ImageFromWebViewController.m */; };
 		9E0A8AF426B09AEA005FEA51 /* GroupImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0A8AF326B09AEA005FEA51 /* GroupImageCell.m */; };
@@ -79,6 +80,8 @@
 		9CED42AE8DCC4FEDB9E95E72 /* Pods_Tapestry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tapestry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E084C1F26B9FFAC007F8F2B /* PromptCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PromptCell.h; sourceTree = "<group>"; };
 		9E084C2026B9FFAC007F8F2B /* PromptCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PromptCell.m; sourceTree = "<group>"; };
+		9E084C2226BAE8AD007F8F2B /* HealthKitManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HealthKitManager.h; sourceTree = "<group>"; };
+		9E084C2326BAE8AD007F8F2B /* HealthKitManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HealthKitManager.m; sourceTree = "<group>"; };
 		9E0A8AE826AA9489005FEA51 /* TextCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextCell.h; sourceTree = "<group>"; };
 		9E0A8AE926AA9489005FEA51 /* TextCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextCell.m; sourceTree = "<group>"; };
 		9E0A8AEF26AF65D5005FEA51 /* ImageFromWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageFromWebViewController.h; sourceTree = "<group>"; };
@@ -440,6 +443,8 @@
 				9E0A8B0926B208D1005FEA51 /* GroupButtonManager.m */,
 				9E1F65D926B840AF003E6234 /* AppColorManager.h */,
 				9E1F65DA26B840AF003E6234 /* AppColorManager.m */,
+				9E084C2226BAE8AD007F8F2B /* HealthKitManager.h */,
+				9E084C2326BAE8AD007F8F2B /* HealthKitManager.m */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -701,6 +706,7 @@
 				9E0A8AF126AF65D5005FEA51 /* ImageFromWebViewController.m in Sources */,
 				9E0A8AF726B0BD88005FEA51 /* AddImageManager.m in Sources */,
 				9E430D23269C9C2A00C0B571 /* AppDelegate.m in Sources */,
+				9E084C2426BAE8AD007F8F2B /* HealthKitManager.m in Sources */,
 				9E430D7F26A7EB2000C0B571 /* StoryCell.m in Sources */,
 				9E430D9726A9DC5500C0B571 /* StoryDetailsViewController.m in Sources */,
 				9E430D6B26A0D09100C0B571 /* Story.m in Sources */,
