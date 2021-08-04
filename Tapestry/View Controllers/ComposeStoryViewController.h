@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <HealthKit/HealthKit.h>
 #import "TapestryAPIManager.h"
 #import "AlertManager.h"
 #import "AddImageManager.h"
@@ -32,6 +33,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *addColorView;
 @property (weak, nonatomic) IBOutlet UILabel *addColorLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *addColorPhoto;
+
+@property (weak, nonatomic) IBOutlet UIView *fromHealthView;
+@property (strong, nonatomic) HKHealthStore *healthStore;
 
 @end
 

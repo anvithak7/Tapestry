@@ -52,6 +52,7 @@
     self.prompts = [NSMutableArray new];
     [self addAllPromptsToArray:self.prompts];
     self.todayPrompts = [NSMutableArray new];
+    self.healthStore = [HKHealthStore new];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -217,6 +218,33 @@
     self.addColorPhoto.alpha = 0;
 }
 
+- (IBAction)onTapFromHealth:(id)sender {
+    if (HKHealthStore.isHealthDataAvailable) {
+        HKQuantityType *type = [HKSampleType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
+        NSDate *today = [NSDate date];
+        NSDate *startOfDay = [[NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian] startOfDayForDate:today];
+        NSPredicate *predicate = [HKQuery predicateForSamplesWithStartDate:startOfDay endDate:today options:HKQueryOptionStrictStartDate];
+        NSDateComponents *interval = [[NSDateComponents alloc] init];
+        interval.day = 1;
+        HKStatisticsCollectionQuery *query = [[HKStatisticsCollectionQuery alloc] initWithQuantityType:type quantitySamplePredicate:predicate options:HKStatisticsOptionCumulativeSum anchorDate:startOfDay intervalComponents:interval];
+        query.initialResultsHandler = ^(HKStatisticsCollectionQuery * _Nonnull query, HKStatisticsCollection * _Nullable result, NSError * _Nullable error) {
+          if (error != nil) {
+            // TODO
+              NSLog(@"Error");
+          } else {
+            [result enumerateStatisticsFromDate:startOfDay toDate:today withBlock:^(HKStatistics * _Nonnull result, BOOL * _Nonnull stop) {
+              HKQuantity *quantity = [result sumQuantity];
+              double steps = [quantity doubleValueForUnit:[HKUnit countUnit]];
+              NSLog(@"Steps : %f", steps);
+            }];
+          }
+        };
+        [self.healthStore executeQuery:query];
+    }
+}
+
+
+
 /*
 #pragma mark - Navigation
 
@@ -230,7 +258,7 @@
 #pragma mark Prompts
 
 - (void)addAllPromptsToArray:(NSMutableArray*)array {
-    [array addObjectsFromArray:@[@"A funny story I remember is...", @"Today I made _____ for _____!", @"The most interesting problem I faced today was...", @"The hardest thing about today was...", @"One thing that made me smile today was...", @"Something cute I saw today was...", @"A compliment I received today that I would love to remember...", @"What are some of your hobbies?", @"What song are you currently obsessed with?", @"What book are you currently reading?", @"What's the most recent movie or show you watched?", @"A book you would recommend", @"What is one thing you would like to remember from today?", @"Today I learned how to...", @"The most interesting thing that happened to me today...", @"Someone interesting I met today...", @"Something new I tried today...", @"Today I remembered that...", @"I felt proud today when...", @"I am grateful for...", @"My favorite food is...", @"I wish I could go to...", @"Something silly I did today...", @"This made my day better today...", @"Today I learned...", @"I hope this will make you laugh...", @"The songs I enjoyed dancing to today...", @"Updates on a new project I started...", @"A yummy meal I had today...", @"A pretty place I saw today...", @"Something that made me happy today...", @"Something that made me think about...", @"Ways I practiced self-care today...", @"The reasons why I think you're awesome...", @"I baked _____ today!", @"I walked _____ steps today!", @"The little things that made me happy today...", @"A good new habit I'm developing..."]];
+    [array addObjectsFromArray:@[@"A funny story I remember is...", @"Today I made _____ for _____!", @"The most interesting problem I faced today was...", @"The hardest thing about today was...", @"One thing that made me smile today was...", @"Something cute I saw today was...", @"A compliment I received today that I would love to remember...", @"What are some of your hobbies?", @"What song are you currently obsessed with?", @"What book are you currently reading?", @"What's the most recent movie or show you watched?", @"A book you would recommend", @"What is one thing you would like to remember from today?", @"Today I learned how to...", @"The most interesting thing that happened to me today...", @"Someone interesting I met today...", @"Something new I tried today...", @"Today I remembered that...", @"I felt proud today when...", @"I am so grateful for...", @"My favorite food is...", @"I wish I could go to...", @"Something silly I did today...", @"This made my day better today...", @"Today I learned...", @"I hope this will make you laugh...", @"The songs I enjoyed dancing to today...", @"Updates on a new project I started...", @"A yummy meal I had today...", @"A pretty place I saw today...", @"Something that made me happy today...", @"Something that made me think about...", @"Ways I practiced self-care today...", @"The reasons why I think you're awesome...", @"I baked _____ today!", @"I walked _____ steps today!", @"The little things that made me happy today...", @"A good new habit I'm developing..."]];
 }
 
 - (void)shuffle:(NSMutableArray*)array {

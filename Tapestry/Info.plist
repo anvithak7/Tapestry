@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Tapestry needs access to your Health data in order to share your step count.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Tapestry needs access to your Health data in order to share your step count.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Sweetgentle Free.otf</string>
