@@ -220,30 +220,45 @@
 
 - (IBAction)onTapFromHealth:(id)sender {
     if (HKHealthStore.isHealthDataAvailable) {
-        HKQuantityType *type = [HKSampleType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
-        NSDate *today = [NSDate date];
-        NSDate *startOfDay = [[NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian] startOfDayForDate:today];
-        NSPredicate *predicate = [HKQuery predicateForSamplesWithStartDate:startOfDay endDate:today options:HKQueryOptionStrictStartDate];
-        NSDateComponents *interval = [[NSDateComponents alloc] init];
-        interval.day = 1;
-        HKStatisticsCollectionQuery *query = [[HKStatisticsCollectionQuery alloc] initWithQuantityType:type quantitySamplePredicate:predicate options:HKStatisticsOptionCumulativeSum anchorDate:startOfDay intervalComponents:interval];
-        query.initialResultsHandler = ^(HKStatisticsCollectionQuery * _Nonnull query, HKStatisticsCollection * _Nullable result, NSError * _Nullable error) {
-          if (error != nil) {
-            // TODO
-              NSLog(@"Error");
-          } else {
-            [result enumerateStatisticsFromDate:startOfDay toDate:today withBlock:^(HKStatistics * _Nonnull result, BOOL * _Nonnull stop) {
-              HKQuantity *quantity = [result sumQuantity];
-              double steps = [quantity doubleValueForUnit:[HKUnit countUnit]];
-              NSLog(@"Steps : %f", steps);
+        HKQuantityType *stepCount = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
+        HKQuantityType *flightsClimbed = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierFlightsClimbed];
+        NSSet *types = [NSSet setWithArray:@[stepCount, flightsClimbed, [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierFlightsClimbed]]];
+        if (([self.healthStore authorizationStatusForType:stepCount] == HKAuthorizationStatusSharingAuthorized) && ([self.healthStore authorizationStatusForType:flightsClimbed] == HKAuthorizationStatusSharingAuthorized)) {
+            [self getHealthData];
+        } else {
+            [self.healthStore requestAuthorizationToShareTypes:types readTypes:types completion:^(BOOL success, NSError * _Nullable error) {
+                if (success) {
+                    [self getHealthData];
+                } else {
+                    NSLog(@"Error: %@", error.description);
+                }
             }];
-          }
-        };
-        [self.healthStore executeQuery:query];
+        }
     }
 }
 
-
+- (void)getHealthData {
+    HKQuantityType *type = [HKSampleType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
+    NSDate *today = [NSDate date];
+    NSDate *startOfDay = [[NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian] startOfDayForDate:today];
+    NSPredicate *predicate = [HKQuery predicateForSamplesWithStartDate:startOfDay endDate:today options:HKQueryOptionStrictStartDate];
+    NSDateComponents *interval = [[NSDateComponents alloc] init];
+    interval.day = 1;
+    HKStatisticsCollectionQuery *query = [[HKStatisticsCollectionQuery alloc] initWithQuantityType:type quantitySamplePredicate:predicate options:HKStatisticsOptionCumulativeSum anchorDate:startOfDay intervalComponents:interval];
+    query.initialResultsHandler = ^(HKStatisticsCollectionQuery * _Nonnull query, HKStatisticsCollection * _Nullable result, NSError * _Nullable error) {
+      if (error != nil) {
+        // TODO
+          NSLog(@"Error :%@", error.description);
+      } else {
+        [result enumerateStatisticsFromDate:startOfDay toDate:today withBlock:^(HKStatistics * _Nonnull result, BOOL * _Nonnull stop) {
+          HKQuantity *quantity = [result sumQuantity];
+          double steps = [quantity doubleValueForUnit:[HKUnit countUnit]];
+          NSLog(@"Steps : %f", steps);
+        }];
+      }
+    };
+    [self.healthStore executeQuery:query];
+}
 
 /*
 #pragma mark - Navigation
