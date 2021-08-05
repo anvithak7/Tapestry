@@ -55,18 +55,19 @@
                 self.groupImageFile = nil;
             }
             PFUser *user = [PFUser currentUser];
-            [user fetchIfNeeded];
-            Group *userStories = [user objectForKey:@"userStories"];
-            if ([userStories.objectId isEqual:group.objectId]) {
-                [self.tableData addObjectsFromArray:@[@[@"Image", group[@"groupName"]]]];
-                [self.tableData insertObject:self.tapestryMembers atIndex:1];
-                self.privateGroup = YES;
-            } else {
-                [self.tableData addObjectsFromArray:@[@[@"Image", group[@"groupName"]], @[group[@"groupInviteCode"]], @[@"Leave Tapestry"]]];
-                [self.tableData insertObject:self.tapestryMembers atIndex:2];
-                self.privateGroup = NO;
-            }
-            [self.tableView reloadData];
+            [self.APIManager fetchUser:user :^(PFUser * _Nonnull user, NSError * _Nonnull error) {
+                Group *userStories = [user objectForKey:@"userStories"];
+                if ([userStories.objectId isEqual:group.objectId]) {
+                    [self.tableData addObjectsFromArray:@[@[@"Image", group[@"groupName"]]]];
+                    [self.tableData insertObject:self.tapestryMembers atIndex:1];
+                    self.privateGroup = YES;
+                } else {
+                    [self.tableData addObjectsFromArray:@[@[@"Image", group[@"groupName"]], @[group[@"groupInviteCode"]], @[@"Leave Tapestry"]]];
+                    [self.tableData insertObject:self.tapestryMembers atIndex:2];
+                    self.privateGroup = NO;
+                }
+                [self.tableView reloadData];
+            }];
         }
     }];
 }

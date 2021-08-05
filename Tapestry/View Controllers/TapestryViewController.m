@@ -52,20 +52,10 @@
 - (void)getStories {
     [self.stringsToGetSizeFrom removeAllObjects];
     [self.extraMediaExists removeAllObjects];
-    PFQuery *query = [PFQuery queryWithClassName:@"Story"];
-    [query whereKey:@"groupsArray" containsAllObjectsInArray:@[self.group]];
-    [query whereKey:@"createdAt" greaterThanOrEqualTo:self.startDatePicker.date];
-    [query whereKey:@"createdAt" lessThanOrEqualTo:self.endDatePicker.date];
-    [query orderByDescending:@"createdAt"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        if (error != nil) {
-            NSLog(@"Error: %@", error.localizedDescription);
-        } else {
-            for (Story *story in objects) {
-                [story fetchIfNeededInBackground];
-            }
-            self.storiesToShow = [objects copy];
-            for (Story *story in objects) {
+    [self.APIManager fetchStoriesForGroup:self.group fromStart:self.startDatePicker.date toEnd:self.endDatePicker.date :^(NSMutableArray * _Nonnull stories, NSError * _Nonnull error) {
+        if (error == nil) {
+            self.storiesToShow = [stories copy];
+            for (Story *story in stories) {
                 NSString *textString = [story objectForKey:@"storyText"];
                 [self.stringsToGetSizeFrom addObject:textString];
                 if (story[@"image"]) {

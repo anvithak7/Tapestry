@@ -27,12 +27,12 @@
     // Do any additional setup after loading the view.
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
+    self.APIManager = [TapestryAPIManager new];
     //self.collectionView.dragDelegate = self;
     //self.collectionView.dropDelegate = self;
     //self.collectionView.dragInteractionEnabled = true;
     // The above three lines are for drag and drop.
     [self getTapestries];
-    // TODO: do we need refresh control here? Since groups get added elsewhere anyways. Might be more useful in the newsletter view?
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(getTapestries) forControlEvents:UIControlEventValueChanged];
     [self.collectionView insertSubview:self.refreshControl atIndex:0]; // addSubview allows you to nest views. insertSubview layers at whatever index.
@@ -42,15 +42,15 @@
     [self getTapestries];
 }
 
-- (void) getTapestries {
+- (void)getTapestries {
     PFUser *user = [PFUser currentUser];
-    [user fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        if (error) {
-            NSLog(@"Error: %@", error.localizedDescription);
-        } else {
-            self.userTapestries = object[@"groups"];
+    [self.APIManager fetchUser:user :^(PFUser * _Nonnull user, NSError * _Nonnull error) {
+        if (error == nil) {
+            self.userTapestries = user[@"groups"];
             [self.collectionView reloadData];
             [self.refreshControl endRefreshing];
+        } else {
+            NSLog(@"Error: %@", error.localizedDescription);
         }
     }];
 }
@@ -81,9 +81,9 @@
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     TapestryGridCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TapestryGridCell" forIndexPath:indexPath];
     Group *group = self.userTapestries[indexPath.item];
-    [group fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+    [self.APIManager fetchGroup:group :^(PFObject * _Nonnull group, NSError * _Nonnull error) {
         if(error == nil) {
-            cell.group = group;
+            cell.group = (Group*) group;
             [cell.tapestryNameLabel sizeToFit];
         }
     }];

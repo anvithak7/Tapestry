@@ -11,21 +11,22 @@
 @implementation StoryCell
 
 - (void)setStory:(Story *)story {
+    self.APIManager = [TapestryAPIManager new];
     self.storyImageView.image = nil; // Clear out the previous one before presenting the new one.
     self.contentView.backgroundColor = nil;
     self.storyLabel.text = story[@"storyText"];
     [self.storyLabel sizeToFit];
     PFUser *user = story[@"author"];
-    [user fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+    [self.APIManager fetchUser:user :^(PFUser * _Nonnull user, NSError * _Nonnull error) {
         if (error != nil) {
             NSLog(@"Error: %@", error.localizedDescription);
         } else {
-            self.author = (PFUser*) object;
-            self.userNameLabel.text = object[@"fullName"];
-            if (object[@"avatarImage"]) {
+            self.author = user;
+            self.userNameLabel.text = user[@"fullName"];
+            if (user[@"avatarImage"]) {
                 self.profileImageView.layer.masksToBounds = YES;
                 self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
-                self.profileImageView.file = object[@"avatarImage"];
+                self.profileImageView.file = user[@"avatarImage"];
                 [self.profileImageView loadInBackground];
             }
         }

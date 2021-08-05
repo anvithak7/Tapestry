@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TapestryAPIManager.h"
 #import "StoriesLayout.h"
 #import "Story.h"
 #import "Group.h"
@@ -14,6 +15,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface StoryCell : UICollectionViewCell
+@property (nonatomic, strong) TapestryAPIManager *APIManager;
 @property (nonatomic, strong) Group *group;
 @property (nonatomic, strong) PFUser *author;
 @property (nonatomic, strong) Story *story;

@@ -37,6 +37,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.alertManager = [AlertManager new];
+    self.APIManager = [TapestryAPIManager new];
     self.createNewView.alpha = 0;
     self.joinGroupView.alpha = 0;
     self.doneCreating.alpha = 0;
@@ -193,34 +194,15 @@
 
 - (IBAction)joinGroup:(id)sender {
     if ([self.inviteCodeEntryField hasText]) {
-        PFQuery *query = [PFQuery queryWithClassName:@"Group"];
-        [query whereKey:@"groupInviteCode" equalTo:self.inviteCodeEntryField.text];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *group, NSError *error) {
-            if (error != nil) {
-                [self.alertManager createAlert:self withMessage:@"Unable to join tapestry. Please check your internet connection and try again!" error:@"Unable to Join Tapestry"];
-                NSLog(@"Error: %@", error.localizedDescription);
+        [self.APIManager joinGroupWithInviteCode:self.inviteCodeEntryField.text forUser:PFUser.currentUser :^(BOOL succeeded, NSError * _Nonnull error) {
+            if (succeeded) {
+                self.doneJoining.alpha = 1;
             } else {
-                Group *groupToJoin = group[0];
-                NSLog(@"%@", groupToJoin);
-                [groupToJoin fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-                    if (error) {
-                        NSLog(@"Error: %@", error.localizedDescription);
-                    } else {
-                        [groupToJoin addUniqueObject:PFUser.currentUser forKey:@"membersArray"];
-                        [PFUser.currentUser addObject:groupToJoin forKey:@"groups"];
-                        [PFObject saveAllInBackground:@[groupToJoin, PFUser.currentUser] block:^(BOOL succeeded, NSError * _Nullable error) {
-                            if (succeeded) {
-                                self.doneJoining.alpha = 1;
-                            } else {
-                                NSLog(@"Error: %@", error.localizedDescription);
-                            }
-                        }];
-                    }
-                }];
+                NSLog(@"Error: %@", error.localizedDescription);
+                [self.alertManager createAlert:self withMessage:@"Unable to join tapestry. Please check your internet connection and try again!" error:@"Unable to Join Tapestry"];
             }
         }];
-    }
-    else {
+    } else {
         [self.alertManager createAlert:self withMessage:@"Please input a valid tapestry invite code and try again!" error:@"Unable to Join Tapestry"];
     }
 }

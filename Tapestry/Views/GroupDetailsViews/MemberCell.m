@@ -22,14 +22,15 @@
         if (error) {
             NSLog(@"Error: %@", error.localizedDescription);
         } else {
-            self.memberName.text = user[@"fullName"];
-            self.memberProfileImageView.file = user[@"avatarImage"];
+            PFUser *cellUser = user;
+            self.memberName.text = cellUser[@"fullName"];
+            self.memberProfileImageView.file = cellUser[@"avatarImage"];
             [self.memberProfileImageView loadInBackground];
             PFUser *admin = [self.group objectForKey:@"administrator"];
-            [admin fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            [self.APIManager fetchUser:admin :^(PFUser * _Nonnull user, NSError * _Nonnull error) {
                 if (error == nil) {
-                    NSString *adminID = object.objectId;
-                    NSString *userID = user.objectId;
+                    NSString *adminID = user.objectId;
+                    NSString *userID = cellUser.objectId;
                     if ([adminID isEqual:userID]) {
                         self.adminLabel.alpha = 1;
                     } else {
@@ -46,7 +47,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
