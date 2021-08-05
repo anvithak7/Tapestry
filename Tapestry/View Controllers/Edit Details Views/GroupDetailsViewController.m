@@ -20,6 +20,7 @@
 @property (nonatomic, strong) PFFileObject *groupImageFile;
 @property (nonatomic, strong) GroupImageCell *groupImageCell;
 @property (nonatomic, strong) TextCell *groupNameCell;
+@property (nonatomic) BOOL privateGroup;
 
 @end
 
@@ -53,8 +54,18 @@
             } else {
                 self.groupImageFile = nil;
             }
-            [self.tableData addObjectsFromArray:@[@[@"Image", group[@"groupName"]], @[group[@"groupInviteCode"]], @[@"Leave Tapestry"]]];
-            [self.tableData insertObject:self.tapestryMembers atIndex:2];
+            PFUser *user = [PFUser currentUser];
+            [user fetchIfNeeded];
+            Group *userStories = [user objectForKey:@"userStories"];
+            if ([userStories.objectId isEqual:group.objectId]) {
+                [self.tableData addObjectsFromArray:@[@[@"Image", group[@"groupName"]]]];
+                [self.tableData insertObject:self.tapestryMembers atIndex:1];
+                self.privateGroup = YES;
+            } else {
+                [self.tableData addObjectsFromArray:@[@[@"Image", group[@"groupName"]], @[group[@"groupInviteCode"]], @[@"Leave Tapestry"]]];
+                [self.tableData insertObject:self.tapestryMembers atIndex:2];
+                self.privateGroup = NO;
+            }
             [self.tableView reloadData];
         }
     }];
@@ -85,21 +96,36 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             return cell;
         }
-    } else if (indexPath.section == 1) {
-        InviteCodeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InviteCodeCell"];
-        cell.inviteCodeField.text = self.tableData[indexPath.section][0];
-        [cell.inviteCodeField sizeToFit];
-        return cell;
-    } else if (indexPath.section == 2) {
-        MemberCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell"]; // We create a table view cell of type PostCell.
-        PFUser *user = self.tapestryMembers[indexPath.row];
-        cell.group = self.group;
-        cell.user = user;
-        return cell;
+    }
+    if (self.privateGroup) { // If it's a my stories group, users should not be able to share the invite code or leave the group.
+        if (indexPath.section == 1) {
+            MemberCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell"];
+            PFUser *user = self.tapestryMembers[indexPath.row];
+            cell.group = self.group;
+            cell.user = user;
+            return cell;
+        } else {
+            TextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TextCell"];
+            cell.cellTextLabel.text = self.tableData[indexPath.section][0];
+            return cell;
+        }
     } else {
-        TextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TextCell"];
-        cell.cellTextLabel.text = self.tableData[indexPath.section][0];
-        return cell;
+        if (indexPath.section == 1) {
+                InviteCodeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InviteCodeCell"];
+                cell.inviteCodeField.text = self.tableData[indexPath.section][0];
+                [cell.inviteCodeField sizeToFit];
+                return cell;
+        } else if (indexPath.section == 2) {
+            MemberCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell"];
+            PFUser *user = self.tapestryMembers[indexPath.row];
+            cell.group = self.group;
+            cell.user = user;
+            return cell;
+        } else {
+            TextCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TextCell"];
+            cell.cellTextLabel.text = self.tableData[indexPath.section][0];
+            return cell;
+        }
     }
 }
 
@@ -115,11 +141,17 @@
     if (section == 0) {
         return @"Settings";
     }
-    if (section == 1) {
-        return @"Invite Code";
-    }
-    if (section == 2) {
-        return @"Weavers";
+    if (self.privateGroup) {
+        if (section == 1) {
+            return @"Weavers";
+        }
+    } else {
+        if (section == 1) {
+            return @"Invite Code";
+        }
+        if (section == 2) {
+            return @"Weavers";
+        }
     }
     return nil;
 }
@@ -156,21 +188,24 @@
                 [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
             }];
         }
-    } else if (indexPath.section == 1) {
-        InviteCodeCell *inviteCodeCell = [self.tableView cellForRowAtIndexPath:indexPath];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-             [inviteCodeCell becomeFirstResponder];
-             UIMenuController* menuController = [UIMenuController sharedMenuController];
-             UIMenuItem* copyItem = [[UIMenuItem alloc] initWithTitle:@"Copy"
-                                                               action:@selector(copyTextFieldContent:)];
-             menuController.menuItems = @[copyItem];
-             CGRect selectionRect = inviteCodeCell.inviteCodeField.frame;
-            [menuController showMenuFromView:inviteCodeCell.contentView rect:selectionRect];
-         });
-    } else if (indexPath.section == 3) {
-        // Bring up an alert to ask if the user really wants to leave
-        [self createAlertForLeavingTapestry];
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+    if (!self.privateGroup) {
+        if (indexPath.section == 1) {
+            InviteCodeCell *inviteCodeCell = [self.tableView cellForRowAtIndexPath:indexPath];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3*NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                 [inviteCodeCell becomeFirstResponder];
+                 UIMenuController* menuController = [UIMenuController sharedMenuController];
+                 UIMenuItem* copyItem = [[UIMenuItem alloc] initWithTitle:@"Copy"
+                                                                   action:@selector(copyTextFieldContent:)];
+                 menuController.menuItems = @[copyItem];
+                 CGRect selectionRect = inviteCodeCell.inviteCodeField.frame;
+                [menuController showMenuFromView:inviteCodeCell.contentView rect:selectionRect];
+             });
+        } else if (indexPath.section == 3) {
+            // Bring up an alert to ask if the user really wants to leave
+            [self createAlertForLeavingTapestry];
+            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        }
     }
 }
 
