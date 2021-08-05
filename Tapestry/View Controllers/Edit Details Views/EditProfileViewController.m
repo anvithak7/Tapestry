@@ -22,6 +22,8 @@
     self.imageManager = [[AddImageManager alloc] initWithViewController:self];
     self.profilePhotoView.layer.masksToBounds = YES;
     self.profilePhotoView.layer.cornerRadius = self.profilePhotoView.frame.size.width / 2;
+    self.profilePhotoView.layer.borderColor = [UIColor blackColor].CGColor;
+    self.profilePhotoView.layer.borderWidth = 0.1;
     self.nameField.text = self.user[@"fullName"];
     self.usernameField.text = self.user.username;
     self.emailField.text = self.user.email;
@@ -68,8 +70,8 @@
     self.profilePhotoView.image = image;
 }
 
-- (void)needsColorForImages {
-    self.imageManager.needsColor = YES;
+- (BOOL)needsColorForImages {
+    return YES;
 }
 
 @end

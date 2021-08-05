@@ -18,7 +18,7 @@
         self.delegate = viewController;
         self.alertManager = [AlertManager new];
         self.colorManager = [AppColorManager new];
-        [self.delegate needsColorForImages];
+        self.needsColor = [self.delegate needsColorForImages];
     }
     return self;
 }
@@ -41,6 +41,7 @@
     [addPhotoAction addAction:fromCameraAction];
     [addPhotoAction addAction:fromPhotosAction];
     [addPhotoAction addAction:fromURL];
+    NSLog(@"Needs color: %i", self.needsColor);
     if (self.needsColor) {
         UIAlertAction* selectColorAction = [UIAlertAction actionWithTitle:@"Choose Color" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             [self chooseColorForView:viewController];

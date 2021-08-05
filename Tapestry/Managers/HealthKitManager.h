@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface HealthKitManager : NSObject
 
 @property (weak, nonatomic) id<HealthDataDelegate> delegate;
-
+@property (nonatomic, strong) UIAlertController *healthController;
 @property (strong, nonatomic) HKHealthStore *healthStore;
 @property (strong, nonatomic) NSString* fitnessUpdate;
 
