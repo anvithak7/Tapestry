@@ -11,7 +11,7 @@
 [Description of your app]
 
 ### App Evaluation
-[Evaluation of your app across the following attributes]
+
 - **Category:** Social Networking, Lifestyle
 - **Mobile:** This app makes it easy to share real-time everyday updates with close friends and family, taking advantage of a mobile device’s camera, location services, and sensors to enhance the user experience.
 - **Story:** Each user can join groups with their family or friends that they want to keep in touch with, and every day (or every week or at a set time interval), they can share what has been going on in their lives with the people that matter to them most. Everyone’s updates are compiled into a newsletter-style format, which helps users know what’s happening in the lives of those in their group without having to schedule frequent calls with everyone and repeating the same information. It’s a virtual group dinner, in a way, but at everyone’s convenience. This app can be used as a personal journal, a way to stay connected and updated on close friends’ and family members’ lives, and a documentation of fond memories over the years.
@@ -62,6 +62,10 @@
    * User can view a list of their groups
 * Tapestry Stream
    * User can view the newsletter for the time period with all of the data from their group
+* User Profile
+   * User can edit their profile information
+* Group Settings
+   * User can view and edit group settings
 
 ### 3. Navigation
 
@@ -85,7 +89,7 @@
   * User Profile
 * Tapestry Stream
   *  Group Stream
-  *  Tapestry Settings
+  *  Group Settings
 
 ## Wireframes
 [Add picture of your hand sketched wireframes in this section]
@@ -137,7 +141,62 @@
    | updatedAt     | DateTime | date when story is last updated (default field) |
    
 ### Networking
-- [Add list of network requests by screen ]
+
+#### List of Network Requests By Screen
+
+* Register
+   * (Create/POST) Create a new user with a full name, email, username, and password
+   ```Objective C
+         [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
+            if (error != nil) {
+                NSLog(@"Error: %@", error.localizedDescription);
+            } else {
+                NSLog(@"User registered successfully");
+            }
+        }];
+         ```
+* Log In 
+   * (Read/GET) Log in the user with the given credentials
+   ```Objective C
+         [PFUser logInWithUsernameInBackground:self.usernameField.text password:self.passwordField.text block:^(PFUser * user, NSError * error) {
+            if (error != nil) {
+                NSLog(@"Error: %@", error.localizedDescription);
+            } else {
+                NSLog(@"User logged in successfully!");
+            }
+        }];
+         ```
+* Story Creation
+   * (Create/POST) Create a new story with the given text, images, and background color
+* Group Creation
+   * (Create/POST) Create a new group with a name
+   * (Update/PUT) Add a user to a group's membersArray and a group to a user's groups
+* Group Stream
+   * (Read/GET) Query all of the groups that a user is in
+* Tapestry Stream
+   * (Read/GET) Query stories based on the members of the group and between the dates given
+   ```Objective C
+         PFQuery *query = [PFQuery queryWithClassName:@"Story"];
+        [query whereKey:@"groupsArray" containsAllObjectsInArray:@[self.group]];
+        [query whereKey:@"createdAt" greaterThanOrEqualTo:self.startDatePicker.date];
+        [query whereKey:@"createdAt" lessThanOrEqualTo:self.endDatePicker.date];
+        [query orderByDescending:@"createdAt"];
+        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            if (error != nil) {
+                NSLog(@"Error: %@", error.localizedDescription);
+            } else {
+                NSLog(@"Stories: %@", objects);
+            }
+        }];
+         ```
+* User Profile
+   * (Read/GET) Query the current user object
+   * (Update/PUT) Edit the user's profile image, name, username, and email
+* Group Settings
+   * (Read/GET) Query the current group object
+   * (Update/PUT) Edit the group image and name
+   * (Delete/DELETE) Remove the current user from the group
+
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
 
