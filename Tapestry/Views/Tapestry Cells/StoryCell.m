@@ -26,6 +26,8 @@
             if (user[@"avatarImage"]) {
                 self.profileImageView.layer.masksToBounds = YES;
                 self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
+                self.profileImageView.layer.borderColor = [UIColor blackColor].CGColor;
+                self.profileImageView.layer.borderWidth = 0.1;
                 self.profileImageView.file = user[@"avatarImage"];
                 [self.profileImageView loadInBackground];
             }

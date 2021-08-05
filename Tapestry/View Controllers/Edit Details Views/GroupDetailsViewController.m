@@ -274,8 +274,8 @@
     }];
 }
 
-- (void)needsColorForImages {
-    self.imageManager.needsColor = YES;
+- (BOOL)needsColorForImages {
+    return YES;
 }
 
 @end

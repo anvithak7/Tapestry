@@ -194,8 +194,8 @@
     self.storyProperties[@"Image"] = image;
 }
 
-- (void)needsColorForImages {
-    self.imageManager.needsColor = NO;
+- (BOOL)needsColorForImages {
+    return NO;
 }
 
 #pragma mark Add Color Methods

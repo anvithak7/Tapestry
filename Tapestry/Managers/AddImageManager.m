@@ -18,7 +18,7 @@
         self.delegate = viewController;
         self.alertManager = [AlertManager new];
         self.colorManager = [AppColorManager new];
-        [self.delegate needsColorForImages];
+        self.needsColor = [self.delegate needsColorForImages];
     }
     return self;
 }

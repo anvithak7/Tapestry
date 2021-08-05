@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (UIImageView*)sendImageViewToFitInto;
 - (void)setMediaUponPicking:(UIImage* _Nullable)image;
-- (void)needsColorForImages;
+- (BOOL)needsColorForImages;
 
 @end
 
