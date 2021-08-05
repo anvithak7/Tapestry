@@ -91,14 +91,51 @@
 [Add picture of your hand sketched wireframes in this section]
 <img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
 
-### [BONUS] Digital Wireframes & Mockups
-
-### [BONUS] Interactive Prototype
-
 ## Schema 
-[This section will be completed in Unit 9]
+
 ### Models
-[Add table of models]
+
+#### User
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique ID for the user (default field) |
+   | username      | String   | user-inputted username to log in (default field) |
+   | password      | String   | user's password to log in (default field) |
+   | email         | String   | user's email address |
+   | fullName      | String   | name of user for identifying user in their groups |
+   | avatarImage   | File     | profile image for user |
+   | groups        | Array of Pointers to Groups  | groups that the user has joined |
+   | userStories   | Pointer to Group  | default group for a user which contains all of the stories that a user has ever woven |
+   | createdAt     | DateTime | date when user is created (default field) |
+   | updatedAt     | DateTime | date when user is last updated (default field) |
+   
+#### Group
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique ID for the group (default field) |
+   | groupInviteCode  | String | unique code for other users to join the group |
+   | groupName     | String   | user-defined name of group |
+   | administrator | Pointer to User| creator of group and first group member |
+   | membersArray  | Array of Pointers to Users   | list of all of the members in a group |
+   | groupImage    | File     | image to represent the group |
+   | createdAt     | DateTime | date when group is created (default field) |
+   | updatedAt     | DateTime | date when group is last updated (default field) |
+
+#### Story
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique ID for the story (default field) |
+   | storyText     | String   | user's story of the day |
+   | author        | Pointer to User| user who posted story |
+   | groupsArray   | Array of Pointers to Groups  | groups that the story is sent to |
+   | image         | File     | image added to story |
+   | backgroundColor | String   | hexcode for background color for story |
+   | createdAt     | DateTime | date when story is created (default field) |
+   | updatedAt     | DateTime | date when story is last updated (default field) |
+   
 ### Networking
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
