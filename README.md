@@ -153,7 +153,7 @@
             } else {
                 NSLog(@"User registered successfully");
             }
-        }];
+          }];
 * Log In 
    * (Read/GET) Log in the user with the given credentials
    ```Objective C
@@ -163,7 +163,7 @@
             } else {
                 NSLog(@"User logged in successfully!");
             }
-        }];
+          }];
 * Story Creation
    * (Create/POST) Create a new story with the given text, images, and background color
 * Group Creation
@@ -174,7 +174,7 @@
 * Tapestry Stream
    * (Read/GET) Query stories based on the members of the group and between the dates given
    ```Objective C
-         PFQuery *query = [PFQuery queryWithClassName:@"Story"];
+          PFQuery *query = [PFQuery queryWithClassName:@"Story"];
         [query whereKey:@"groupsArray" containsAllObjectsInArray:@[self.group]];
         [query whereKey:@"createdAt" greaterThanOrEqualTo:self.startDatePicker.date];
         [query whereKey:@"createdAt" lessThanOrEqualTo:self.endDatePicker.date];
@@ -188,8 +188,27 @@
         }];
 * User Profile
    * (Read/GET) Query the current user object
+     ```Objective C
+       [user fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            if (error != nil) {
+                NSLog(@"Error: %@", error.localizedDescription);
+                completion(nil, error);
+            } else {
+                PFUser *user = (PFUser*) object;
+                completion(user, nil);
+            }
+        }];
    * (Update/PUT) Edit the user's profile image, name, username, and email
 * Group Settings
    * (Read/GET) Query the current group object
+     ```Objective C
+         [group fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+              if (error != nil) {
+                  NSLog(@"Error: %@", error.localizedDescription);
+                  completion(nil, error);
+              } else {
+                  completion(object, nil);
+              }
+          }];
    * (Update/PUT) Edit the group image and name
    * (Delete/DELETE) Remove the current user from the group
