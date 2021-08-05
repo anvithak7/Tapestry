@@ -14,6 +14,7 @@
     self.storyImageView.image = nil; // Clear out the previous one before presenting the new one.
     self.contentView.backgroundColor = nil;
     self.storyLabel.text = story[@"storyText"];
+    [self.storyLabel sizeToFit];
     PFUser *user = story[@"author"];
     [user fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (error != nil) {
@@ -30,11 +31,13 @@
         }
     }];
     if (story[@"image"]) {
+        self.imageHeight.constant = 130;
         self.imageTopToTextTop.constant = 138;
         self.storyImageView.alpha = 1;
         self.storyImageView.file = story[@"image"];
         [self.storyImageView loadInBackground];
     } else {
+        self.imageHeight.constant = 0;
         self.imageTopToTextTop.constant = 8;
         self.storyImageView.alpha = 0;
     }
@@ -51,7 +54,6 @@
 
 - (UIColor *) colorWithHexString: (NSString *) hexString {
     NSString *colorString = [[hexString stringByReplacingOccurrencesOfString: @"#" withString: @""] uppercaseString];
-    NSLog(@"colorString :%@",colorString);
     CGFloat alpha, red, blue, green;
     // #RGB
     alpha = 1.0f;

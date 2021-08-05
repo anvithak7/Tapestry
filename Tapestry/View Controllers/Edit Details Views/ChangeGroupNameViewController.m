@@ -16,7 +16,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSLog(@"Current group name in change group is: %@", self.group);
     self.groupNameField.text = self.group.groupName;
     self.alertManager = [AlertManager new];
     self.APIManager = [TapestryAPIManager new];

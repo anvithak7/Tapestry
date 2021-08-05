@@ -55,7 +55,6 @@
             }
             [self.tableData addObjectsFromArray:@[@[@"Image", group[@"groupName"]], @[group[@"groupInviteCode"]], @[@"Leave Tapestry"]]];
             [self.tableData insertObject:self.tapestryMembers atIndex:2];
-            NSLog(@"Table data: %@", self.tableData);
             [self.tableView reloadData];
         }
     }];

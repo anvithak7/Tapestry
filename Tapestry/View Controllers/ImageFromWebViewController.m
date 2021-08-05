@@ -26,7 +26,6 @@
     NSURL *url = [NSURL URLWithString:self.imageURLField.text];
     NSData *data = [NSData dataWithContentsOfURL:url];
     UIImage *image = [UIImage imageWithData:data];
-    NSLog(@"image: %@", image);
     self.URLImageView.image = image;
 }
 

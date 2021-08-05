@@ -129,7 +129,6 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.delegate displayHealthDataFromString:self.fitnessUpdate];
             });
-            NSLog(@"Fitness string: %@", self.fitnessUpdate);
         }];
       }
     };

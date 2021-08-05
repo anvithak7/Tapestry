@@ -13,7 +13,7 @@
 - (void)prepareLayout {
     self.numberOfColumns = 2;
     self.cellPadding = 2;
-    self.extraHeightInCell = 65;
+    self.extraHeightInCell = 63;
     self.cache = [NSMutableArray new];
     NSMutableArray *xOffsets = [NSMutableArray new];
     NSMutableArray *yOffsets = [NSMutableArray new];
@@ -22,20 +22,15 @@
     /*if ([self.cache count] != 0) {
         return;
     } */
-    NSLog(@"Starting to prepare layout");
     self.columnWidth = self.contentWidth / self.numberOfColumns;
     for (int i = 0; i < (int) roundf(self.numberOfColumns); i++) {
         [xOffsets addObject: [NSNumber numberWithFloat:(CGFloat) i * self.columnWidth]];
-        NSLog(@"Added x offset: %@", [NSNumber numberWithFloat:(CGFloat) i * self.columnWidth]);
         [yOffsets addObject:[NSNumber numberWithFloat:self.collectionView.contentInset.top]];
-        NSLog(@"Added y offset: %@", [NSNumber numberWithFloat:self.collectionView.contentInset.top]);
     }
-    NSLog(@"Added all offsets");
     //For header that didn't work:[self.cache addObject:[self layoutAttributesForSupplementaryViewOfKind:@"TapestryHeaderforDates" atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]];
     int column = 0;
     for (int i = 0; i < [self.collectionView numberOfItemsInSection:0]; i++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
-        NSLog(@"Returned by delegate function: %f", [self.delegate heightForText:self.collectionView atIndexPath:indexPath]);
         self.textHeight = [self.delegate heightForText:self.collectionView atIndexPath:indexPath] + self.extraHeightInCell;
         CGFloat cellHeight = self.textHeight + 2 * self.cellPadding;
         CGRect itemFrame = CGRectMake([xOffsets[column] floatValue], [yOffsets[column] floatValue], self.columnWidth, cellHeight);

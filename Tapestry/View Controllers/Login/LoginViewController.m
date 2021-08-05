@@ -28,7 +28,6 @@
 
 // After validating that the username and password fields are not empty, this function logs the user in after authenticating them with Parse.
 - (IBAction)onTapLogin:(id)sender {
-    NSLog(@"Started login process");
     BOOL validated = [self validateFields];
     if (validated) {
         [PFUser logInWithUsernameInBackground:self.usernameField.text password:self.passwordField.text block:^(PFUser * user, NSError * error) {

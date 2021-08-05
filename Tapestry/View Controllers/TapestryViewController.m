@@ -49,7 +49,9 @@
     [self getStories];
 }
 
-- (void) getStories {
+- (void)getStories {
+    [self.stringsToGetSizeFrom removeAllObjects];
+    [self.extraMediaExists removeAllObjects];
     PFQuery *query = [PFQuery queryWithClassName:@"Story"];
     [query whereKey:@"groupsArray" containsAllObjectsInArray:@[self.group]];
     [query whereKey:@"createdAt" greaterThanOrEqualTo:self.startDatePicker.date];
@@ -72,6 +74,7 @@
                     [self.extraMediaExists addObject:@""];
                 }
             }
+            [self.collectionView setNeedsLayout];
             [self.collectionView reloadData];
             [self.refreshControl endRefreshing];
         }

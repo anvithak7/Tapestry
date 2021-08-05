@@ -41,7 +41,6 @@
     [addPhotoAction addAction:fromCameraAction];
     [addPhotoAction addAction:fromPhotosAction];
     [addPhotoAction addAction:fromURL];
-    NSLog(@"Needs color! %i", (int) self.needsColor);
     if (self.needsColor) {
         UIAlertAction* selectColorAction = [UIAlertAction actionWithTitle:@"Choose Color" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             [self chooseColorForView:viewController];

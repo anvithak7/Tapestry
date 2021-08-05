@@ -210,8 +210,6 @@
                         [PFUser.currentUser addObject:groupToJoin forKey:@"groups"];
                         [PFObject saveAllInBackground:@[groupToJoin, PFUser.currentUser] block:^(BOOL succeeded, NSError * _Nullable error) {
                             if (succeeded) {
-                                NSLog(@"Current user groups %@", PFUser.currentUser[@"groups"]);
-                                NSLog(@"%@", groupToJoin.membersArray);
                                 self.doneJoining.alpha = 1;
                             } else {
                                 NSLog(@"Error: %@", error.localizedDescription);

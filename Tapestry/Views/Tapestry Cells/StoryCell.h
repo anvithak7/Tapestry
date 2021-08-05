@@ -23,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *storyDateLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTopToTextTop;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *captionTopToImageBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeight;
 @property (nonatomic, strong) NSLayoutConstraint *maxWidthConstraint;
 
 
