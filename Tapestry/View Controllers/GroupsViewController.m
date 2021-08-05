@@ -12,7 +12,7 @@
 #import "TapestriesHeaderReusableView.h"
 #import "Group.h"
 
-@interface GroupsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate>
+@interface GroupsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout>
 // Add <UICollectionViewDragDelegate, UICollectionViewDropDelegate> for drag and drop functionality
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *userTapestries;
@@ -31,17 +31,6 @@
     //self.collectionView.dropDelegate = self;
     //self.collectionView.dragInteractionEnabled = true;
     // The above three lines are for drag and drop.
-    
-    //self.searchBar.delegate = self;
-    // We're setting the sizes of the items.
-    // The width of the collectionView will change according to the size of the phone.
-    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.collectionView.collectionViewLayout;
-    layout.minimumInteritemSpacing = 3;
-    layout.minimumLineSpacing = 3;
-    CGFloat groupsPerRow = 3;
-    CGFloat itemWidth = (self.collectionView.frame.size.width - layout.minimumInteritemSpacing * (groupsPerRow - 1)) / groupsPerRow;
-    CGFloat itemHeight = itemWidth;
-    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
     [self getTapestries];
     // TODO: do we need refresh control here? Since groups get added elsewhere anyways. Might be more useful in the newsletter view?
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -103,6 +92,21 @@
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.userTapestries.count;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 3;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 3;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat groupsPerRow = 3;
+    CGFloat itemWidth = (collectionView.frame.size.width - 3 * (groupsPerRow + 1)) / groupsPerRow;
+    CGFloat itemHeight = itemWidth;
+    return CGSizeMake(itemWidth, itemHeight);
 }
 
 - (IBAction)onTapProfile:(id)sender {

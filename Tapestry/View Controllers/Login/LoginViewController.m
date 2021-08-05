@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
+@property (weak, nonatomic) IBOutlet UIView *signUpView;
 
 @end
 
@@ -24,6 +25,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.alertManager = [AlertManager new];
+    /*UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.signUpView.bounds byRoundingCorners:(UIRectCornerTopRight | UIRectCornerTopLeft) cornerRadii:CGSizeMake(40.0, 40.0)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.view.bounds;
+    maskLayer.path  = maskPath.CGPath;
+    self.signUpView.layer.mask = maskLayer; */
 }
 
 // After validating that the username and password fields are not empty, this function logs the user in after authenticating them with Parse.
