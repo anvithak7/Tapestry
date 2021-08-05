@@ -112,19 +112,19 @@
             HKQuantity *quantity = [result sumQuantity];
             if ([type.identifier isEqual:HKQuantityTypeIdentifierStepCount]) {
                 double count = [quantity doubleValueForUnit:[HKUnit countUnit]];
-                self.fitnessUpdate = [NSString stringWithFormat:@"Today I walked %f steps!", count];
+                self.fitnessUpdate = [NSString stringWithFormat:@"Today I walked %.02f steps!", count];
             } else if ([type.identifier isEqual:HKQuantityTypeIdentifierFlightsClimbed]) {
                 double count = [quantity doubleValueForUnit:[HKUnit countUnit]];
-                self.fitnessUpdate = [NSString stringWithFormat:@"Today I climbed %f flights of stairs!", count];
+                self.fitnessUpdate = [NSString stringWithFormat:@"Today I climbed %.02f flights of stairs!", count];
             } else if ([type.identifier isEqual:HKQuantityTypeIdentifierDistanceWalkingRunning]) {
                 double count = [quantity doubleValueForUnit:[HKUnit unitFromLengthFormatterUnit:NSLengthFormatterUnitMile]];
                 self.fitnessUpdate = [NSString stringWithFormat:@"Today I walked and ran %f miles!", count]; //TODO: change distance metrics based on place?
             } else if ([type.identifier isEqual:HKQuantityTypeIdentifierPushCount]) {
                 double count = [quantity doubleValueForUnit:[HKUnit countUnit]];
-                self.fitnessUpdate = [NSString stringWithFormat:@"Today I pushed my wheelchair %f times!", count];
+                self.fitnessUpdate = [NSString stringWithFormat:@"Today I pushed my wheelchair %.02f times!", count];
             } else if ([type.identifier isEqual:HKQuantityTypeIdentifierDistanceWheelchair]) {
                 double count = [quantity doubleValueForUnit:[HKUnit unitFromLengthFormatterUnit:NSLengthFormatterUnitMile]];
-                self.fitnessUpdate = [NSString stringWithFormat:@"Today I moved %f miles!", count];
+                self.fitnessUpdate = [NSString stringWithFormat:@"Today I pushed myself %f miles!", count];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.delegate displayHealthDataFromString:self.fitnessUpdate];

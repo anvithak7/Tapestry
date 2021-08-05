@@ -246,15 +246,15 @@
             [self.APIManager updateObject:user withProperties:properties :^(BOOL succeeded, NSError * _Nonnull error) {
                 if (succeeded) {
                     NSLog(@"User left the tapestry.");
+                    UINavigationController *nav = [self navigationController];
+                    [nav popViewControllerAnimated:YES];
+                    [nav popViewControllerAnimated:YES];
                 } else {
                     [self.alertManager createAlert:self withMessage:error.description error:@"Error"];
                 }
             }];
         }
     }];
-    UINavigationController *nav = [self navigationController];
-    [nav popViewControllerAnimated:YES];
-    [nav popViewControllerAnimated:YES];
 }
 
 #pragma mark Change Group Image Methods

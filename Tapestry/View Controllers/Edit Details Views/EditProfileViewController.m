@@ -42,12 +42,12 @@
     [self.APIManager updateObject:self.user withProperties:properties :^(BOOL succeeded, NSError * _Nonnull error) {
         if (succeeded) {
             NSLog(@"User profile was updated");
+            UINavigationController *nav = [self navigationController];
+            [nav popViewControllerAnimated:YES]; // Allows us to go back without stacking too many views over each other each time.
         } else {
-            [self.alertManager createAlert:self withMessage:error.description error:@"Error"];
+            [self.alertManager createAlert:self withMessage:error.localizedDescription error:@"Error"];
         }
     }];
-    UINavigationController *nav = [self navigationController];
-    [nav popViewControllerAnimated:YES]; // Allows us to go back without stacking too many views over each other each time.
 }
 
 /*
