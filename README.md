@@ -154,7 +154,6 @@
                 NSLog(@"User registered successfully");
             }
         }];
-         ```
 * Log In 
    * (Read/GET) Log in the user with the given credentials
    ```Objective C
@@ -165,7 +164,6 @@
                 NSLog(@"User logged in successfully!");
             }
         }];
-         ```
 * Story Creation
    * (Create/POST) Create a new story with the given text, images, and background color
 * Group Creation
@@ -188,7 +186,6 @@
                 NSLog(@"Stories: %@", objects);
             }
         }];
-         ```
 * User Profile
    * (Read/GET) Query the current user object
    * (Update/PUT) Edit the user's profile image, name, username, and email
@@ -196,8 +193,3 @@
    * (Read/GET) Query the current group object
    * (Update/PUT) Edit the group image and name
    * (Delete/DELETE) Remove the current user from the group
-
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
-
-
