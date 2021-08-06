@@ -8,7 +8,7 @@
 
 ## Overview
 ### Description
-[Description of your app]
+Tapestry is a cross between a journaling and social media application, where users can create shared journals to strengthen and maintain the meaningful connections in their lives no matter where they are. A tapestry can be private, documenting personal accomplishments like fitness milestones or learning a new skill, or shared with a select group of people to receive daily updates on their lives.
 
 ### App Evaluation
 
@@ -92,7 +92,6 @@
   *  Group Settings
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
 <img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
 
 ## Schema 
