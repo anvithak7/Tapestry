@@ -38,6 +38,7 @@
     // Do any additional setup after loading the view.
     self.alertManager = [AlertManager new];
     self.APIManager = [TapestryAPIManager new];
+    self.colorManager = [AppColorManager new];
     self.createNewView.alpha = 0;
     self.joinGroupView.alpha = 0;
     self.doneCreating.alpha = 0;
@@ -46,6 +47,12 @@
     self.joinGroupShow = NO;
     self.joinMoved = NO;
     self.inviteStringField.delegate = self;
+    [self.justMeButton setImage:[self.colorManager imageFromColor:[self.colorManager getRandomColorForTheme]] forState:UIControlStateSelected];
+    [self.justMeButton addTarget:self action:@selector(onTapTypeButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.friendsButton setImage:[self.colorManager imageFromColor:[self.colorManager getRandomColorForTheme]] forState:UIControlStateSelected];
+    [self.friendsButton addTarget:self action:@selector(onTapTypeButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.familyButton setImage:[self.colorManager imageFromColor:[self.colorManager getRandomColorForTheme]] forState:UIControlStateSelected];
+    [self.familyButton addTarget:self action:@selector(onTapTypeButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (IBAction)onTapAnywhere:(id)sender {
@@ -82,6 +89,9 @@
     self.createGroupShow = YES;
 }
 
+- (void)onTapTypeButton:(UIButton*)button {
+    [button setSelected:YES];
+}
 - (void)closeCreateView {
     [UIView animateWithDuration:0.1 animations:^{
         CGRect joinButtonFrame = self.joinGroupButton.frame;

@@ -1476,14 +1476,14 @@
                                                         </connections>
                                                     </tableViewCell>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InviteCodeCell" id="NPW-ki-E2u" customClass="InviteCodeCell">
-                                                        <rect key="frame" x="0.0" y="215" width="414" height="35.5"/>
+                                                        <rect key="frame" x="0.0" y="215" width="414" height="35"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NPW-ki-E2u" id="OxL-A5-I8r">
-                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="35.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="35"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="Ni9-EA-PfP">
-                                                                    <rect key="frame" x="8" y="8" width="398" height="19.5"/>
+                                                                    <rect key="frame" x="8" y="8" width="398" height="19"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits"/>
                                                                 </textField>
@@ -1500,7 +1500,7 @@
                                                         </connections>
                                                     </tableViewCell>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberCell" rowHeight="72" id="1KG-6x-dq8" customClass="MemberCell">
-                                                        <rect key="frame" x="0.0" y="250.5" width="414" height="72"/>
+                                                        <rect key="frame" x="0.0" y="250" width="414" height="72"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1KG-6x-dq8" id="ykC-5j-5tW">
                                                             <rect key="frame" x="0.0" y="0.0" width="414" height="72"/>
