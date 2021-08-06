@@ -15,9 +15,12 @@
     self.APIManager = [TapestryAPIManager new];
     self.memberProfileImageView.layer.masksToBounds = YES;
     self.memberProfileImageView.layer.cornerRadius = self.memberProfileImageView.frame.size.width / 2;
+    self.memberProfileImageView.layer.borderColor = [UIColor blackColor].CGColor;
+    self.memberProfileImageView.layer.borderWidth = 0.1;
 }
 
 - (void)setUser:(PFUser *)user {
+    _user = user;
     [self.APIManager fetchUser:user :^(PFUser * _Nonnull user, NSError * _Nonnull error) {
         if (error) {
             NSLog(@"Error: %@", error.localizedDescription);

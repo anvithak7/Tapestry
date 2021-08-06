@@ -33,6 +33,7 @@
     [self.APIManager updateObject:self.group withProperties:properties :^(BOOL succeeded, NSError * _Nonnull error) {
         if (succeeded) {
             NSLog(@"Group name was updated");
+            [self.previousView fetchTableData];
         } else {
             [self.alertManager createAlert:self withMessage:error.description error:@"Error"];
         }

@@ -185,8 +185,10 @@
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             ChangeGroupNameViewController *changeGroupNameViewController = [storyboard instantiateViewControllerWithIdentifier:@"ChangeGroupNameViewController"];
             changeGroupNameViewController.group = self.group;
+            changeGroupNameViewController.previousView = self;
             [self presentViewController:changeGroupNameViewController animated:YES completion:^{
                 [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+                [self fetchTableData];
             }];
         }
     }
@@ -208,6 +210,66 @@
             [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         }
     }
+}
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    PFUser *user = [PFUser currentUser];
+    [user fetchIfNeededInBackground];
+    PFUser *admin = self.group.administrator;
+    [admin fetchIfNeededInBackground];
+    BOOL adminAccess = [PFUser.currentUser.objectId isEqual:self.group.administrator.objectId];
+    if (!self.privateGroup && adminAccess && indexPath.section == 2) {
+        UIContextualAction *removeUser = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Remove" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [self createAlertForRemovingUserFromTapestryFor:indexPath];
+        }];
+        UISwipeActionsConfiguration *actions = [UISwipeActionsConfiguration configurationWithActions:[[NSArray alloc] initWithObjects:removeUser, nil]];
+        return actions;
+    }
+    return nil;
+}
+
+- (void)createAlertForRemovingUserFromTapestryFor:(NSIndexPath*)indexPath {
+    MemberCell *memberCell = [self.tableView cellForRowAtIndexPath:indexPath];
+    NSString *removingUser = [@"Are you sure you want to remove " stringByAppendingString:memberCell.memberName.text];
+    NSString *removingUserQuestion = [removingUser stringByAppendingString:@" from this tapestry?"];
+    UIAlertController* removeUserController = [UIAlertController alertControllerWithTitle:removingUserQuestion message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction* removeUserAction = [UIAlertAction actionWithTitle:@"Remove" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+        PFUser *member = memberCell.user;
+        [self removeMember:member];
+    }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+    }];
+    [removeUserController addAction:removeUserAction];
+    [removeUserController addAction:cancelAction];
+    [self presentViewController:removeUserController animated:YES completion:nil];
+}
+
+- (void)removeMember:(PFUser*)member {
+    NSLog(@"member %@", member);
+    [self.APIManager fetchUser:member :^(PFUser * _Nonnull user, NSError * _Nonnull error) {
+        if (error) {
+            NSLog(@"Error: %@", error.localizedDescription);
+        } else {
+            [self.group removeObject:user forKey:@"membersArray"];
+            [self.group setObject:@1 forKey:@"groupMembersEdited"];
+            [self.group saveInBackground];
+            [self fetchTableData];
+            /* I need to figure out how to remove the group from the user who was removed too!
+            NSMutableArray *groups = user[@"groups"];
+            [groups removeObject:self.group];
+            NSMutableDictionary *properties = [NSMutableDictionary new];
+            [properties setObject:groups
+                      forKey:@"groups"];
+            [self.APIManager updateObject:user withProperties:properties :^(BOOL succeeded, NSError * _Nonnull error) {
+                if (succeeded) {
+                    NSLog(@"Member removed from tapestry.");
+                    [self fetchTableData];
+                } else {
+                    [self.alertManager createAlert:self withMessage:error.description error:@"Error"];
+                }
+            }]; */
+        }
+    }];
 }
 
 - (void)copyTextFieldContent:(id)sender {

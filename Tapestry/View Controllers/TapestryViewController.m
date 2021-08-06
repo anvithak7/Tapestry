@@ -34,7 +34,6 @@
     self.endDatePicker.maximumDate = [NSDate date];
     self.endDatePicker.minimumDate = self.startDatePicker.date;
     self.startDatePicker.maximumDate = self.endDatePicker.date;
-    self.groupNameTitle.text = self.group.groupName;
     self.layout = [StoriesLayout new];
     self.collectionView.collectionViewLayout = self.layout;
     self.layout.delegate = self;
@@ -46,6 +45,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    self.groupNameTitle.text = self.group.groupName;
     [self getStories];
 }
 

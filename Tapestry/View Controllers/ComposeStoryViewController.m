@@ -17,7 +17,8 @@
 
 // This view controller allows a user to compose a story, with text, and add additional media and attributes.
 
-@interface ComposeStoryViewController () <UITextViewDelegate, UIColorPickerViewControllerDelegate, AddImageDelegate, GroupButtonsDelegate, HealthDataDelegate, UICollectionViewDelegate, UICollectionViewDataSource, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+@interface ComposeStoryViewController () <UITextViewDelegate, UIColorPickerViewControllerDelegate, AddImageDelegate, GroupButtonsDelegate, HealthDataDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
+// In the future, add <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, strong) NSMutableDictionary *storyProperties;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonsViewHeightConstraint;
@@ -79,6 +80,35 @@
     [self.storyImageView setTintColor:[UIColor systemGray6Color]];
     [self.storyTextView endEditing:true];
     self.storyTextView.text = @"What would you like to remember from today? Or, answer one of the prompts above!";
+}
+
+- (void)updateUserIfNecessaryForGroup:(Group*)group {
+    PFUser *user = [PFUser currentUser];
+    [self.APIManager fetchUser:user :^(PFUser * _Nonnull user, NSError * _Nonnull error) {
+        if (error == nil) {
+            for (PFUser* member in group.membersArray) {
+                [member fetchIfNeededInBackground];
+                if ([member.objectId isEqual:user.objectId]) {
+                    return;
+                }
+            }
+            NSMutableArray *groups = user[@"groups"];
+            [groups removeObject:group];
+            NSMutableDictionary *properties = [NSMutableDictionary new];
+            [properties setObject:groups
+                      forKey:@"groups"];
+            [self.APIManager updateObject:user withProperties:properties :^(BOOL succeeded, NSError * _Nonnull error) {
+                if (succeeded) {
+                    NSLog(@"Member removed from tapestry.");
+                    [group setObject:@0 forKey:@"groupMembersEdited"];
+                    [group saveInBackground];
+                    return;
+                } else {
+                    [self.alertManager createAlert:self withMessage:error.description error:@"Error"];
+                }
+            }];
+        }
+    }];
 }
 
 #pragma mark UITextViewDelegate Methods
@@ -159,6 +189,9 @@
                         NSLog(@"Error: %@", error.localizedDescription);
                         [self.alertManager createAlert:self withMessage:@"Please check your internet connection and try again!" error:@"Unable to load groups"];
                     } else {
+                        if ([[group objectForKey:@"groupMembersEdited"] isEqual:@(1)]) {
+                            [self updateUserIfNecessaryForGroup:(Group*)group];
+                        }
                         NSString *groupId = group.objectId;
                         if (![groupId isEqual:userStoriesId]) {
                             [self.buttonsManager createButtonforObject:group withTag:count];

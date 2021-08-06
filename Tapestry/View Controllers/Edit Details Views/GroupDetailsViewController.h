@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) TapestryAPIManager *APIManager;
 @property (strong, nonatomic) AddImageManager *imageManager;
 @property (strong, nonatomic) Group *group;
+
+- (void)fetchTableData;
+
 @end
 
 NS_ASSUME_NONNULL_END
