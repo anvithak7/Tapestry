@@ -13,7 +13,8 @@
     // lowerBound + ((float)arc4random() / UINT32_MAX) * (upperBound - lowerBound);
     CGFloat hue = ((float)arc4random() / UINT32_MAX);
     CGFloat saturation = 0.1 + ((float)arc4random() / UINT32_MAX) * (0.7 - 0.1);
-    CGFloat brightness = 0.68 + ((float)arc4random() / UINT32_MAX) * (1.0 - 0.68);
+    //CGFloat brightness = 0.68 + ((float)arc4random() / UINT32_MAX) * (1.0 - 0.68);
+    CGFloat brightness = 0.75 + ((float)arc4random() / UINT32_MAX) * (1.0 - 0.75);
     UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
     return color;
 }

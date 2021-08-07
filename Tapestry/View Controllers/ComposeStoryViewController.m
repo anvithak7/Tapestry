@@ -57,7 +57,7 @@
     self.todayPrompts = [NSMutableArray new];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [self resetComposeView];
     [self addGroupButtons];
 }
@@ -79,7 +79,6 @@
     self.addColorView.backgroundColor = [UIColor systemGray6Color];
     [self.storyImageView setTintColor:[UIColor systemGray6Color]];
     [self.storyTextView endEditing:true];
-    self.storyTextView.text = @"What would you like to remember from today? Or, answer one of the prompts above!";
 }
 
 - (void)updateUserIfNecessaryForGroup:(Group*)group {
@@ -203,11 +202,6 @@
             }
         }
     }];
-    //self.groupButtonsView.frame = CGRectMake(self.groupButtonsView.frame.origin.x, self.groupButtonsView.frame.origin.y, self.groupButtonsView.frame.size.width, [self.buttonsManager resizeParentViewToButtons:self.groupButtonsView]);
-    //self.textViewToMediaView.constant = 16; // 54 includes 30 (button height) + 24 (3 * 8 away)
-    //self.storyImageView.frame = CGRectMake(8.0, self.currentYLine + 46, 50.0, 50.0);
-    //TODO: redo autolayout constraints in program
-    //TODO: can I add some constraints programmatically and others through autolayout?
 }
 
 #pragma mark Add Image Methods

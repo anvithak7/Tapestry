@@ -145,6 +145,9 @@
         self.doneCreating.alpha = 0;
         self.inviteStringField.text = @"";
         self.inviteStringField.placeholder = @"Press create to generate an invite code!";
+        [self.justMeButton setSelected:NO];
+        [self.friendsButton setSelected:NO];
+        [self.familyButton setSelected:NO];
     }
 }
 

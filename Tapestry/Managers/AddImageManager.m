@@ -83,9 +83,10 @@
     CGSize imageSize = CGSizeMake(mediaView.frame.size.width, mediaView.frame.size.height);
     UIImage *resizedImage = [self resizeImage:originalImage withSize:imageSize];
     self.imageForViewController = resizedImage;
-    [self.delegate setMediaUponPicking:resizedImage];
     // Dismiss UIImagePickerController to go back to your original view controller
-    [self.myViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.myViewController dismissViewControllerAnimated:YES completion:^{
+        [self.delegate setMediaUponPicking:resizedImage];
+    }];
 }
 
 - (void)createImageFromWebControllerFor:(UIViewController<ImagesFromWebDelegate>*)viewController {
