@@ -23,8 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) HKHealthStore *healthStore;
 @property (strong, nonatomic) NSString* fitnessUpdate;
+@property (nonatomic, strong) UIAlertController *healthController;
 
-- (UIAlertController*)addHealthOptionsControllerTo:(UIViewController*)viewController;
+- (void)addHealthOptionsControllerTo :(void(^)(UIAlertController *healthAction, NSError *error))completion;
 
 @end
 

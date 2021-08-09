@@ -249,7 +249,17 @@
 #pragma mark Health Manager
 
 - (IBAction)onTapFromHealth:(id)sender {
-    [self presentViewController:[self.healthManager addHealthOptionsControllerTo:self] animated:YES completion:nil];
+    // Not sure about this below line but it prevents this warning from showing up: "Capturing 'self' strongly in this block is likely to lead to a retain cycle"
+    __weak typeof(self) weakSelf = self;
+    [self.healthManager addHealthOptionsControllerTo :^(UIAlertController * _Nonnull healthAction, NSError * _Nonnull error) {
+            if (error == nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf presentViewController:healthAction animated:YES completion:nil];
+                });
+            } else {
+                NSLog(@"Error: %@", error.description);
+            }
+    }];
 }
 
 - (void)displayHealthDataFromString:(NSString *)update {

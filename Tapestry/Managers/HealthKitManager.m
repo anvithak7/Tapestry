@@ -19,13 +19,63 @@
 
 #pragma mark Create Health Data Options Controller
 
-- (UIAlertController*)addHealthOptionsControllerTo:(UIViewController*)viewController {
+- (void)addHealthOptionsControllerTo :(void(^)(UIAlertController *healthAction, NSError *error))completion {
     if (HKHealthStore.isHealthDataAvailable) {
-        [self requestAuthorizationForWheelchairInformation];
-        BOOL wheelchairUse = [self.healthStore wheelchairUseWithError:nil].wheelchairUse == HKWheelchairUseYes;
-        [self requestAuthorizationFor:wheelchairUse];
-        UIAlertController* addHealthAction = [UIAlertController alertControllerWithTitle:@"Add Health Data" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+        [self requestAuthorizationForWheelchairInformation:^(UIAlertController *healthAction, NSError *error) {
+            if (error == nil) {
+                completion(healthAction, nil);
+            } else {
+                completion(nil, error);
+            }
+        }];
+    }
+}
+
+- (void)requestAuthorizationForWheelchairInformation :(void(^)(UIAlertController *healthAction, NSError *error))completion {
+    HKCharacteristicType *wheelchairUse = [HKObjectType characteristicTypeForIdentifier:HKCharacteristicTypeIdentifierWheelchairUse];
+    NSSet *types = [NSSet setWithObject:wheelchairUse];
+    [self.healthStore requestAuthorizationToShareTypes:nil readTypes:types completion:^(BOOL success, NSError * _Nullable error) {
+        if (success) {
+            BOOL wheelchairUse = [self.healthStore wheelchairUseWithError:nil].wheelchairUse == HKWheelchairUseYes;
+            [self requestAuthorizationForInformation:wheelchairUse :^(UIAlertController *healthAction, NSError *error) {
+                if (error == nil) {
+                    completion(healthAction, nil);
+                } else {
+                    completion(nil, error);
+                }
+            }];
+        } else {
+            NSLog(@"Error: %@", error.description);
+            completion(nil, error);
+        }
+    }];
+}
+
+- (void)requestAuthorizationForInformation:(BOOL)wheelchairUse :(void(^)(UIAlertController *healthAction, NSError *error))completion{
+        NSSet *types;
         if (wheelchairUse) {
+            HKQuantityType *pushCount = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierPushCount];
+            HKQuantityType *distanceTraveledWheelchair = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierDistanceWheelchair];
+            types = [NSSet setWithArray:@[pushCount, distanceTraveledWheelchair]];
+        } else {
+            HKQuantityType *stepCount = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
+            HKQuantityType *flightsClimbed = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierFlightsClimbed];
+            HKQuantityType *distanceTraveled = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierDistanceWalkingRunning];
+            types = [NSSet setWithArray:@[stepCount, flightsClimbed, distanceTraveled]];
+        }
+        [self.healthStore requestAuthorizationToShareTypes:types readTypes:types completion:^(BOOL success, NSError * _Nullable error) {
+            if (success) {
+                completion([self createHealthController:wheelchairUse], nil);
+            } else {
+                NSLog(@"Error: %@", error.description);
+                completion(nil, error);
+            }
+        }];
+}
+
+- (UIAlertController*)createHealthController:(BOOL)wheelchairUse {
+    UIAlertController* addHealthAction = [UIAlertController alertControllerWithTitle:@"Add Health Data" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    if (wheelchairUse) {
         UIAlertAction* pushCountAction = [UIAlertAction actionWithTitle:@"Add Daily Push Count" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             HKQuantityType *type = [HKSampleType quantityTypeForIdentifier:HKQuantityTypeIdentifierPushCount];
             [self getHealthDataForTodayOfType:type];
@@ -39,7 +89,7 @@
         [addHealthAction addAction:pushCountAction];
         [addHealthAction addAction:wheelchairDistanceTraveledAction];
         [addHealthAction addAction:cancelAction];
-        } else {
+    } else {
         UIAlertAction* stepCountAction = [UIAlertAction actionWithTitle:@"Add Daily Step Count" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             HKQuantityType *type = [HKSampleType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
             [self getHealthDataForTodayOfType:type];
@@ -58,43 +108,8 @@
         [addHealthAction addAction:flightsClimbedAction];
         [addHealthAction addAction:distanceTraveledAction];
         [addHealthAction addAction:cancelAction];
-        }
-        return addHealthAction;
     }
-    return nil;
-}
-
-- (void)requestAuthorizationForWheelchairInformation {
-    HKCharacteristicType *wheelchairUse = [HKObjectType characteristicTypeForIdentifier:HKCharacteristicTypeIdentifierWheelchairUse];
-    NSSet *types = [NSSet setWithObject:wheelchairUse];
-    [self.healthStore requestAuthorizationToShareTypes:nil readTypes:types completion:^(BOOL success, NSError * _Nullable error) {
-        if (success) {
-            return;
-        } else {
-            NSLog(@"Error: %@", error.description);
-        }
-    }];
-}
-
-- (void)requestAuthorizationFor:(BOOL)wheelchairUse {
-        NSSet *types;
-        if (wheelchairUse) {
-            HKQuantityType *pushCount = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierPushCount];
-            HKQuantityType *distanceTraveledWheelchair = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierDistanceWheelchair];
-            types = [NSSet setWithArray:@[pushCount, distanceTraveledWheelchair]];
-        } else {
-            HKQuantityType *stepCount = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierStepCount];
-            HKQuantityType *flightsClimbed = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierFlightsClimbed];
-            HKQuantityType *distanceTraveled = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierDistanceWalkingRunning];
-            types = [NSSet setWithArray:@[stepCount, flightsClimbed, distanceTraveled]];
-        }
-        [self.healthStore requestAuthorizationToShareTypes:types readTypes:types completion:^(BOOL success, NSError * _Nullable error) {
-            if (success) {
-                return;
-            } else {
-                NSLog(@"Error: %@", error.description);
-            }
-        }];
+    return addHealthAction;
 }
 
 - (void)getHealthDataForTodayOfType:(HKQuantityType*)type {
