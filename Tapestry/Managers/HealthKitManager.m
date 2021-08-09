@@ -22,6 +22,7 @@
 - (UIAlertController*)addHealthOptionsControllerTo:(UIViewController*)viewController {
     if (HKHealthStore.isHealthDataAvailable) {
         [self requestAuthorizationForWheelchairInformation];
+        // Add a completion block to the above and then return self.healthController in that
         return self.healthController;
     }
     return nil;
@@ -30,6 +31,7 @@
 - (void)createHealthController {
     BOOL wheelchairUse = [self.healthStore wheelchairUseWithError:nil].wheelchairUse == HKWheelchairUseYes;
     [self requestAuthorizationFor:wheelchairUse];
+    // Put the below inside the completion above 
     UIAlertController* addHealthAction = [UIAlertController alertControllerWithTitle:@"Add Health Data" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     if (wheelchairUse) {
         UIAlertAction* pushCountAction = [UIAlertAction actionWithTitle:@"Add Daily Push Count" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
